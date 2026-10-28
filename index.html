@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>أكاديمية HTML مع الأستاذ جواد بدري | منصة الحصص والبرمجة</title>
+  <title>أكاديمية HTML مع الأستاذ جواد بدري | منصة الحصص والبرمجة الشاملة</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Fira+Code:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300d2ff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='16 18 22 12 16 6'></polyline><polyline points='8 6 2 12 8 18'></polyline><line x1='14' y1='4' x2='10' y2='20'></line></svg>">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#030712">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#030712">
   <style>
     :root {
       --bg-primary: #0b0f19;
@@ -75,300 +75,232 @@
     body { font-family: var(--font-arabic); background-color: var(--bg-primary); color: var(--text-main); line-height: 1.6; direction: rtl; min-height: 100vh; overflow-x: hidden; transition: background-color 0.3s ease, color 0.3s ease; }
 
     .main-app-hidden { display: none !important; }
-    .nav-container, .hero-container, .section-container, .footer-container { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+    .nav-container, .hero-container, .section-container, .footer-container { max-width: 1240px; margin: 0 auto; padding: 0 16px; width: 100%; box-sizing: border-box; }
     .authorized-email-link { color: var(--brand-orange) !important; text-decoration: none; font-weight: 800; transition: var(--transition); display: inline-flex; align-items: center; gap: 6px; }
 
     /* Auth Gate Screen */
-    .auth-gate-overlay { position: fixed; inset: 0; background: radial-gradient(circle at center, #172138 0%, #080c16 100%); z-index: 5000; display: flex; align-items: center; justify-content: center; padding: 20px; overflow-y: auto; }
+    .auth-gate-overlay { position: fixed; inset: 0; background: radial-gradient(circle at center, #172138 0%, #080c16 100%); z-index: 5000; display: flex; align-items: center; justify-content: center; padding: 12px; overflow-y: auto; }
     .auth-gate-overlay.gate-unlocked { display: none !important; }
-    .auth-gate-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-lg); max-width: 500px; width: 100%; padding: 32px 28px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(255, 109, 0, 0.2); position: relative; }
-    .auth-gate-header { text-align: center; margin-bottom: 24px; }
-    .gate-logo { width: 58px; height: 58px; margin: 0 auto 14px; background: var(--brand-gradient); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 32px; box-shadow: 0 8px 24px rgba(255, 109, 0, 0.4); }
-    .auth-gate-header h2 { font-size: 24px; font-weight: 800; color: var(--text-heading); }
+    .auth-gate-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-lg); max-width: 480px; width: 100%; padding: 24px 16px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6); position: relative; }
+    .auth-gate-header { text-align: center; margin-bottom: 16px; }
+    .gate-logo { width: 48px; height: 48px; margin: 0 auto 10px; background: var(--brand-gradient); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px; }
+    .auth-gate-header h2 { font-size: 20px; font-weight: 800; color: var(--text-heading); }
     .auth-gate-header h2 span { color: var(--brand-orange); }
-    .auth-gate-header p { color: var(--text-muted); font-size: 13px; }
-    .gate-alert-info { background: rgba(2, 132, 199, 0.12); border: 1px solid rgba(2, 132, 199, 0.3); color: var(--accent-cyan); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 12px; font-weight: 600; margin-top: 14px; display: flex; align-items: center; gap: 8px; }
+    .auth-gate-header p { color: var(--text-muted); font-size: 11px; }
+    .gate-alert-info { background: rgba(2, 132, 199, 0.12); border: 1px solid rgba(2, 132, 199, 0.3); color: var(--accent-cyan); border-radius: var(--radius-sm); padding: 8px 10px; font-size: 11px; font-weight: 600; margin-top: 10px; display: flex; align-items: center; gap: 6px; }
 
-    .gate-tabs { display: flex; background: rgba(0, 0, 0, 0.25); border-radius: var(--radius-sm); padding: 4px; gap: 4px; margin-bottom: 20px; }
-    .gate-tab { flex: 1; background: transparent; border: none; color: var(--text-muted); font-family: var(--font-arabic); font-size: 13px; font-weight: 700; padding: 8px 6px; border-radius: 6px; cursor: pointer; transition: var(--transition); }
+    .gate-tabs { display: flex; background: rgba(0, 0, 0, 0.25); border-radius: var(--radius-sm); padding: 3px; gap: 3px; margin-bottom: 16px; }
+    .gate-tab { flex: 1; background: transparent; border: none; color: var(--text-muted); font-family: var(--font-arabic); font-size: 11px; font-weight: 700; padding: 8px 2px; border-radius: 6px; cursor: pointer; transition: var(--transition); text-align: center; }
     .gate-tab.active { background: var(--brand-gradient); color: #fff; box-shadow: 0 4px 12px rgba(255, 109, 0, 0.3); }
 
-    .gate-form { display: none; flex-direction: column; gap: 15px; }
+    .gate-form { display: none; flex-direction: column; gap: 12px; width: 100%; }
     .gate-form.active { display: flex; }
-    .secret-code-group { background: rgba(255, 109, 0, 0.08); border: 1px solid rgba(255, 109, 0, 0.3); padding: 12px 14px; border-radius: var(--radius-sm); }
-    .secret-input { letter-spacing: 2px; font-family: var(--font-mono); font-size: 15px !important; font-weight: 700; color: var(--brand-orange) !important; text-align: center; }
-    .input-hint { font-size: 11px; color: var(--text-muted); margin-top: 3px; display: block; }
+    .secret-code-group { background: rgba(255, 109, 0, 0.08); border: 1px solid rgba(255, 109, 0, 0.3); padding: 10px; border-radius: var(--radius-sm); width: 100%; }
+    .secret-input { letter-spacing: 2px; font-family: var(--font-mono); font-size: 13px !important; font-weight: 700; color: var(--brand-orange) !important; text-align: center; width: 100%; }
+    .input-hint { font-size: 10px; color: var(--text-muted); margin-top: 3px; display: block; }
 
     /* Navbar */
-    .navbar { position: sticky; top: 0; z-index: 1000; background-color: var(--bg-secondary); border-bottom: 1px solid var(--border-color); backdrop-filter: var(--glass-backdrop); padding: 14px 0; }
-    .nav-container { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-    .brand-logo { display: flex; align-items: center; gap: 12px; cursor: pointer; }
-    .logo-icon { width: 44px; height: 44px; background: var(--brand-gradient); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px; box-shadow: 0 4px 16px rgba(255, 109, 0, 0.4); }
-    .logo-text h1 { font-size: 20px; font-weight: 800; color: var(--text-heading); line-height: 1.2; }
+    .navbar { position: sticky; top: 0; z-index: 1000; background-color: var(--bg-secondary); border-bottom: 1px solid var(--border-color); backdrop-filter: var(--glass-backdrop); padding: 10px 0; width: 100%; }
+    .nav-container { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; position: relative; }
+    
+    .brand-logo { display: flex; align-items: center; gap: 8px; cursor: pointer; min-width: 0; flex: 1; max-width: 55%; }
+    .logo-icon { width: 36px; height: 36px; min-width: 36px; background: var(--brand-gradient); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px; box-shadow: 0 4px 14px rgba(255, 109, 0, 0.4); }
+    .logo-text { min-width: 0; flex: 1; }
+    .logo-text h1 { font-size: 13px; font-weight: 800; color: var(--text-heading); line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
     .logo-text h1 span { color: var(--brand-orange); }
-    .logo-text p { font-size: 12px; color: var(--text-muted); }
+    .logo-text p { font-size: 10px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
 
-    .nav-links { display: flex; align-items: center; gap: 16px; }
-    .nav-link { color: var(--text-muted); text-decoration: none; font-weight: 600; font-size: 14px; padding: 8px 12px; border-radius: var(--radius-sm); transition: var(--transition); display: flex; align-items: center; gap: 6px; border: none; background: transparent; font-family: var(--font-arabic); cursor: pointer; }
+    .nav-links { position: absolute; top: 100%; right: 0; left: 0; background: var(--bg-secondary); border-bottom: 1px solid var(--border-color); box-shadow: var(--shadow-lg); flex-direction: column; padding: 14px; display: none; gap: 6px; z-index: 2000; width: 100%; }
+    .nav-links.active { display: flex; animation: fadeInDown 0.2s ease-out; }
+    .nav-link { color: var(--text-muted); text-decoration: none; font-weight: 600; font-size: 13px; padding: 10px 14px; border-radius: var(--radius-sm); transition: var(--transition); display: flex; align-items: center; gap: 8px; border: none; background: transparent; font-family: var(--font-arabic); cursor: pointer; width: 100%; text-align: right; }
     .nav-link:hover, .nav-link.active { color: var(--brand-orange); background-color: rgba(255, 109, 0, 0.08); }
     .special-nav-link { background: rgba(2, 132, 199, 0.12); color: var(--brand-blue); font-weight: 700; }
     .special-nav-link:hover { background: var(--brand-blue); color: #fff !important; }
 
-    .nav-actions { display: flex; align-items: center; gap: 10px; }
-    .user-pill { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color); padding: 6px 14px; border-radius: var(--radius-full); font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 8px; color: var(--text-heading); cursor: pointer; position: relative; }
-    .user-pill i { color: var(--brand-orange); }
+    .nav-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; position: relative; z-index: 1050; }
+    
+    .user-pill { background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-color); padding: 6px 10px; border-radius: var(--radius-full); font-size: 11px; font-weight: 700; display: flex; align-items: center; gap: 5px; color: var(--text-heading); cursor: pointer; position: relative; max-width: 170px; user-select: none; transition: var(--transition); }
+    .user-pill:hover { background: rgba(255, 109, 0, 0.15); border-color: var(--brand-orange); }
+    .user-pill i { color: var(--brand-orange); flex-shrink: 0; }
+    .user-pill span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 110px; }
 
-    .icon-btn { background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main); width: 42px; height: 42px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; transition: var(--transition); font-size: 16px; }
-    .icon-btn:hover { background: var(--bg-card-hover); color: var(--brand-orange); border-color: var(--brand-orange); transform: translateY(-2px); }
+    .account-switcher-dropdown { position: absolute; top: calc(100% + 8px); left: 0; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); width: 220px; display: none; flex-direction: column; z-index: 3000; overflow: hidden; }
+    .account-switcher-dropdown.active { display: flex; }
+    .account-item { padding: 10px 12px; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: var(--transition); font-size: 11px; color: var(--text-main); width: 100%; box-sizing: border-box; }
+    .account-item:hover { background: rgba(255, 109, 0, 0.12); color: var(--brand-orange); }
+    .account-item.active-account { font-weight: 800; color: var(--brand-orange); background: rgba(255, 109, 0, 0.15); }
 
-    .badge { position: absolute; top: -4px; right: -4px; background: var(--brand-orange); color: #fff; font-size: 11px; font-weight: 800; width: 18px; height: 18px; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg-secondary); }
-    .badge-status { background: var(--color-success); color: #fff; padding: 3px 10px; border-radius: var(--radius-full); font-size: 11px; font-weight: 700; display: inline-block; }
-    .badge-danger { background: var(--color-danger); }
-    .badge-warning { background: var(--color-warning); color: #111; }
-    .badge-approved { background: rgba(16, 185, 129, 0.15); color: var(--color-success); border: 1px solid rgba(16, 185, 129, 0.3); padding: 4px 10px; border-radius: var(--radius-full); font-size: 12px; font-weight: 700; }
-    .badge-pending { background: rgba(245, 158, 11, 0.15); color: var(--color-warning); border: 1px solid rgba(245, 158, 11, 0.3); padding: 4px 10px; border-radius: var(--radius-full); font-size: 12px; font-weight: 700; }
-    .mobile-toggle { display: none; background: transparent; border: none; color: var(--text-main); font-size: 22px; cursor: pointer; }
+    .mobile-toggle { display: inline-flex; background: transparent; border: none; color: var(--text-main); font-size: 18px; cursor: pointer; width: 34px; height: 34px; min-width: 34px; border-radius: 8px; border: 1px solid var(--border-color); align-items: center; justify-content: center; }
 
     /* Buttons & Inputs */
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--font-arabic); font-weight: 700; padding: 10px 18px; border-radius: var(--radius-md); cursor: pointer; border: none; text-decoration: none; transition: var(--transition); font-size: 14px; }
-    .btn-lg { padding: 14px 28px; font-size: 16px; }
-    .btn-sm { padding: 6px 14px; font-size: 13px; border-radius: var(--radius-sm); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--font-arabic); font-weight: 700; padding: 10px 16px; border-radius: var(--radius-md); cursor: pointer; border: none; text-decoration: none; transition: var(--transition); font-size: 13px; width: 100%; }
+    @media(min-width: 768px) { .btn { width: auto; } }
+    .btn-lg { padding: 12px 24px; font-size: 14px; }
+    .btn-sm { padding: 5px 10px; font-size: 11px; border-radius: var(--radius-sm); width: auto; }
     .btn-primary { background: var(--brand-gradient); color: #fff; box-shadow: 0 4px 16px rgba(255, 109, 0, 0.35); }
-    .btn-primary:hover { background: var(--brand-gradient-hover); box-shadow: 0 6px 20px rgba(255, 109, 0, 0.5); transform: translateY(-2px); }
+    .btn-primary:hover { background: var(--brand-gradient-hover); transform: translateY(-2px); }
     .btn-primary-outline { background: transparent; border: 1px solid var(--brand-orange); color: var(--brand-orange); }
     .btn-primary-outline:hover { background: var(--brand-orange); color: #fff; }
     .btn-secondary { background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main); }
-    .btn-secondary:hover { background: var(--bg-card-hover); border-color: var(--text-muted); }
-    .btn-whatsapp { background: var(--color-whatsapp); color: #fff; text-decoration: none; }
-    .btn-whatsapp:hover { background: #1eb857; color: #fff; }
-    .btn-danger { background: var(--color-danger); color: #fff; }
+    .btn-secondary:hover { background: var(--bg-card-hover); }
+    .btn-whatsapp { background: var(--color-whatsapp); color: #fff; text-decoration: none; width: auto; }
+    .btn-danger { background: var(--color-danger); color: #fff; width: auto; }
     .btn-warning { background: var(--color-warning); color: #111; }
-    .btn-block { width: 100%; }
-    .text-btn { background: transparent; border: none; color: var(--brand-orange); font-size: 12px; font-weight: 700; cursor: pointer; }
+    .btn-block { width: 100% !important; }
 
-    .custom-input { width: 100%; padding: 12px 16px; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-main); font-family: var(--font-arabic); font-size: 14px; transition: var(--transition); }
+    .custom-input { width: 100%; padding: 10px 14px; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-main); font-family: var(--font-arabic); font-size: 13px; transition: var(--transition); }
     .custom-input:focus { outline: none; border-color: var(--brand-orange); box-shadow: 0 0 0 3px rgba(255, 109, 0, 0.2); }
-    .error-msg { color: var(--color-danger); font-size: 13px; background: rgba(239, 68, 68, 0.1); border-right: 3px solid var(--color-danger); padding: 10px 14px; border-radius: var(--radius-sm); font-weight: 600; }
+    .error-msg { color: var(--color-danger); font-size: 11px; background: rgba(239, 68, 68, 0.1); border-right: 3px solid var(--color-danger); padding: 8px; border-radius: var(--radius-sm); font-weight: 600; width: 100%; }
 
     /* Calendar & Slots */
-    .calendar-buttons-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 26px; box-shadow: var(--shadow-sm); }
-    .calendar-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; flex-wrap: wrap; gap: 16px; }
-    .current-month-display { display: flex; align-items: center; gap: 12px; }
-    .current-month-display i { font-size: 24px; color: var(--brand-orange); }
-    .current-month-display h3 { font-size: 22px; font-weight: 900; color: var(--text-heading); }
-    .calendar-nav-controls { display: flex; align-items: center; gap: 8px; }
+    .calendar-buttons-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 16px; box-shadow: var(--shadow-sm); width: 100%; box-sizing: border-box; }
+    .calendar-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; width: 100%; }
+    .current-month-display { display: flex; align-items: center; gap: 8px; }
+    .current-month-display i { font-size: 18px; color: var(--brand-orange); }
+    .current-month-display h3 { font-size: 16px; font-weight: 900; color: var(--text-heading); }
+    .calendar-nav-controls { display: flex; align-items: center; gap: 4px; }
 
-    .month-days-buttons-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
-    .day-btn { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px 10px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; transition: var(--transition); font-family: var(--font-arabic); position: relative; text-align: center; }
-    .day-btn .day-header-name { font-size: 13px; font-weight: 700; color: var(--brand-orange); }
-    .day-btn .day-number { font-size: 22px; font-weight: 900; color: var(--text-heading); line-height: 1; }
-    .day-btn .day-status-pill { font-size: 11px; font-weight: 700; color: var(--color-success); }
-    .day-btn:hover { border-color: var(--brand-orange); transform: translateY(-3px); box-shadow: 0 6px 16px rgba(255, 109, 0, 0.25); background: var(--bg-card-hover); }
-    .day-btn.is-selected { background: var(--brand-gradient) !important; border-color: var(--brand-orange) !important; color: #fff !important; box-shadow: 0 8px 24px rgba(255, 109, 0, 0.45); transform: translateY(-2px); }
+    .month-days-buttons-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(95px, 1fr)); gap: 8px; width: 100%; }
+    .day-btn { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 10px 6px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; transition: var(--transition); font-family: var(--font-arabic); position: relative; text-align: center; width: 100%; }
+    .day-btn .day-header-name { font-size: 11px; font-weight: 700; color: var(--brand-orange); }
+    .day-btn .day-number { font-size: 16px; font-weight: 900; color: var(--text-heading); line-height: 1; }
+    .day-btn .day-status-pill { font-size: 9px; font-weight: 700; color: var(--color-success); }
+    .day-btn:hover { border-color: var(--brand-orange); transform: translateY(-2px); background: var(--bg-card-hover); }
+    .day-btn.is-selected { background: var(--brand-gradient) !important; border-color: var(--brand-orange) !important; color: #fff !important; box-shadow: 0 4px 12px rgba(255, 109, 0, 0.4); }
     .day-btn.is-selected .day-header-name, .day-btn.is-selected .day-number, .day-btn.is-selected .day-status-pill { color: #fff !important; }
     .day-btn.is-weekend { background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.18); cursor: not-allowed; opacity: 0.65; }
     .day-btn.is-weekend .day-header-name, .day-btn.is-weekend .day-number { color: #9ca3af; }
     .day-btn.is-weekend .day-status-pill { color: var(--color-danger); }
     .day-btn.is-emergency { background: rgba(245, 158, 11, 0.1) !important; border: 2px dashed var(--color-warning) !important; cursor: not-allowed !important; }
     .day-btn.is-emergency .day-header-name { color: var(--color-warning) !important; }
-    .day-btn.is-emergency .day-status-pill { background: var(--color-warning); color: #111 !important; padding: 2px 8px; border-radius: var(--radius-full); font-weight: 800; }
+    .day-btn.is-emergency .day-status-pill { background: var(--color-warning); color: #111 !important; font-weight: 800; }
     .day-btn.is-past { opacity: 0.35; cursor: not-allowed; filter: grayscale(100%); }
 
-    .selected-day-banner { margin-top: 20px; padding: 14px 18px; background: rgba(255, 109, 0, 0.1); border: 1px solid rgba(255, 109, 0, 0.3); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .selected-day-banner { margin-top: 14px; padding: 10px 14px; background: rgba(255, 109, 0, 0.1); border: 1px solid rgba(255, 109, 0, 0.3); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; width: 100%; font-size: 12px; box-sizing: border-box; }
 
-    .slots-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 24px; margin-top: 24px; }
-    .slots-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
-    .slots-header h3 { font-size: 18px; font-weight: 800; color: var(--text-heading); }
-    .wednesday-notice-banner { background: rgba(2, 132, 199, 0.12); border: 1px solid var(--brand-blue); color: var(--accent-cyan); padding: 10px 16px; border-radius: var(--radius-sm); font-size: 13px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .slots-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 16px; margin-top: 16px; width: 100%; box-sizing: border-box; }
+    .slots-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; width: 100%; }
+    .slots-header h3 { font-size: 15px; font-weight: 800; color: var(--text-heading); }
+    .wednesday-notice-banner { background: rgba(2, 132, 199, 0.12); border: 1px solid var(--brand-blue); color: var(--accent-cyan); padding: 8px 12px; border-radius: var(--radius-sm); font-size: 11px; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; width: 100%; box-sizing: border-box; }
 
-    .slots-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
-    .slot-btn { background: var(--bg-secondary); border: 2px solid rgba(255, 109, 0, 0.4); border-radius: var(--radius-md); padding: 18px; text-align: right; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 8px; font-family: var(--font-arabic); }
-    .slot-btn::before { content: ''; position: absolute; top: 0; right: 0; width: 6px; height: 100%; background: var(--brand-gradient); }
-    .slot-btn:hover { transform: translateY(-3px); border-color: var(--brand-orange); background: var(--bg-card-hover); box-shadow: 0 8px 24px rgba(255, 109, 0, 0.25); }
-    .slot-time { font-size: 17px; font-weight: 800; color: var(--brand-orange); display: flex; align-items: center; gap: 8px; }
-    .slot-duration { font-size: 12px; color: var(--text-muted); }
-    .slot-btn.is-booked { background: var(--color-booked-dark) !important; border-color: var(--color-booked-border) !important; color: var(--color-booked-text) !important; cursor: not-allowed !important; box-shadow: none !important; transform: none !important; filter: grayscale(85%) brightness(0.65); opacity: 0.7; }
+    .slots-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; width: 100%; }
+    .slot-btn { background: var(--bg-secondary); border: 2px solid rgba(255, 109, 0, 0.4); border-radius: var(--radius-md); padding: 14px; text-align: right; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 5px; font-family: var(--font-arabic); width: 100%; box-sizing: border-box; }
+    .slot-btn::before { content: ''; position: absolute; top: 0; right: 0; width: 5px; height: 100%; background: var(--brand-gradient); }
+    .slot-btn:hover { transform: translateY(-2px); border-color: var(--brand-orange); background: var(--bg-card-hover); }
+    .slot-time { font-size: 15px; font-weight: 800; color: var(--brand-orange); display: flex; align-items: center; gap: 6px; }
+    .slot-duration { font-size: 10px; color: var(--text-muted); }
+    .slot-btn.is-booked { background: var(--color-booked-dark) !important; border-color: var(--color-booked-border) !important; color: var(--color-booked-text) !important; cursor: not-allowed !important; filter: grayscale(85%) brightness(0.65); opacity: 0.7; }
     .slot-btn.is-booked::before { background: #374151 !important; }
     .slot-btn.is-booked .slot-time { color: var(--color-booked-text) !important; text-decoration: line-through; }
 
     /* Bookings List */
-    .my-bookings-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 24px; margin-top: 24px; }
-    .my-bookings-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
-    .my-bookings-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
-    .booking-item-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px; transition: var(--transition); }
-    .booking-item-card:hover { border-color: var(--border-highlight); }
-    .booking-item-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-    .zoom-cta-box { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); }
-    .zoom-join-btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--color-meet); color: #fff; text-decoration: none; font-weight: 700; padding: 10px; border-radius: var(--radius-sm); font-size: 13px; transition: var(--transition); }
-    .zoom-join-btn:hover { background: #00695c; transform: translateY(-2px); }
+    .my-bookings-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 16px; margin-top: 16px; width: 100%; box-sizing: border-box; }
+    .my-bookings-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .my-bookings-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; width: 100%; }
+    .booking-item-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 12px; width: 100%; box-sizing: border-box; }
+    .zoom-cta-box { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border-color); }
+    .zoom-join-btn { display: flex; align-items: center; justify-content: center; gap: 6px; background: var(--color-meet); color: #fff; text-decoration: none; font-weight: 700; padding: 8px; border-radius: var(--radius-sm); font-size: 11px; width: 100%; }
 
     /* Full Page Chat */
-    .full-page-chat-modal { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(16px); z-index: 4000; display: none; align-items: center; justify-content: center; padding: 16px; }
-    .full-page-chat-modal.active { display: flex; animation: fadeIn 0.25s ease; }
-    .full-chat-wrapper { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-lg); width: 96vw; max-width: 1200px; height: 92vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: var(--shadow-lg); }
-    .full-chat-topbar { background: #0f172a; border-bottom: 1px solid var(--border-color); padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; color: #fff; }
-    .full-chat-layout { flex: 1; display: grid; grid-template-columns: 320px 1fr; overflow: hidden; }
-    .chat-sidebar { background: rgba(0, 0, 0, 0.15); border-left: 1px solid var(--border-color); display: flex; flex-direction: column; overflow: hidden; }
-    .sidebar-search { padding: 14px; border-bottom: 1px solid var(--border-color); }
-    .students-roster-list { flex: 1; overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
-    .student-roster-item { padding: 12px 14px; border-radius: var(--radius-sm); background: var(--bg-card); border: 1px solid var(--border-color); cursor: pointer; display: flex; align-items: center; gap: 12px; transition: var(--transition); }
-    .student-roster-item:hover, .student-roster-item.active { border-color: var(--brand-orange); background: rgba(255, 109, 0, 0.12); }
-    .roster-avatar { width: 40px; height: 40px; background: var(--brand-gradient); color: #fff; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; }
-    .chat-conversation-area { display: flex; flex-direction: column; background: var(--bg-primary); overflow: hidden; }
-    .conversation-messages-stream { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
-    .msg-bubble { max-width: 70%; padding: 12px 16px; border-radius: 16px; font-size: 14px; line-height: 1.6; word-break: break-word; }
+    .full-page-chat-modal { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(16px); z-index: 4000; display: none; align-items: center; justify-content: center; padding: 8px; }
+    .full-page-chat-modal.active { display: flex; }
+    .full-chat-wrapper { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-lg); width: 100%; max-width: 1050px; height: 88vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: var(--shadow-lg); }
+    .full-chat-topbar { background: #0f172a; border-bottom: 1px solid var(--border-color); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; color: #fff; width: 100%; box-sizing: border-box; }
+    .full-chat-layout { flex: 1; display: grid; grid-template-columns: 1fr; overflow: hidden; width: 100%; }
+    @media(min-width: 768px) { .full-chat-layout { grid-template-columns: 260px 1fr; } }
+    .chat-sidebar { background: rgba(0, 0, 0, 0.15); border-left: 1px solid var(--border-color); display: flex; flex-direction: column; overflow: hidden; max-height: 30vh; }
+    @media(min-width: 768px) { .chat-sidebar { max-height: none; } }
+    .sidebar-search { padding: 10px; border-bottom: 1px solid var(--border-color); width: 100%; box-sizing: border-box; }
+    .students-roster-list { flex: 1; overflow-y: auto; padding: 6px; display: flex; flex-direction: column; gap: 5px; width: 100%; }
+    .student-roster-item { padding: 8px 10px; border-radius: var(--radius-sm); background: var(--bg-card); border: 1px solid var(--border-color); cursor: pointer; display: flex; align-items: center; gap: 8px; width: 100%; box-sizing: border-box; }
+    .student-roster-item.active { border-color: var(--brand-orange); background: rgba(255, 109, 0, 0.12); }
+    .roster-avatar { width: 32px; height: 32px; min-width: 32px; background: var(--brand-gradient); color: #fff; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; }
+    .chat-conversation-area { display: flex; flex-direction: column; background: var(--bg-primary); overflow: hidden; width: 100%; }
+    .conversation-messages-stream { flex: 1; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; width: 100%; box-sizing: border-box; }
+    .msg-bubble { max-width: 85%; padding: 10px 12px; border-radius: 12px; font-size: 12px; line-height: 1.5; word-break: break-word; }
     .msg-bubble.from-me { align-self: flex-start; background: var(--brand-blue); color: #fff; border-bottom-right-radius: 2px; }
     .msg-bubble.from-other { align-self: flex-end; background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main); border-bottom-left-radius: 2px; }
-    .conversation-input-bar { padding: 14px 20px; background: var(--bg-secondary); border-top: 1px solid var(--border-color); display: flex; gap: 12px; }
-    .conversation-input-bar input { flex: 1; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: var(--radius-full); padding: 12px 20px; color: var(--text-main); font-family: var(--font-arabic); font-size: 14px; }
+    .conversation-input-bar { padding: 10px 14px; background: var(--bg-secondary); border-top: 1px solid var(--border-color); display: flex; gap: 6px; width: 100%; box-sizing: border-box; }
+    .conversation-input-bar input { flex: 1; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: var(--radius-full); padding: 8px 14px; color: var(--text-main); font-size: 12px; min-width: 0; }
 
     /* Modals & Admin Panel */
-    .modal { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); backdrop-filter: var(--glass-backdrop); display: none; align-items: center; justify-content: center; z-index: 3000; padding: 20px; }
-    .modal.active { display: flex; animation: fadeIn 0.2s ease; }
-    .modal-content { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-lg); max-width: 520px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); }
-    .full-modal .modal-content { max-width: 1180px; width: 95%; height: 88vh; display: flex; flex-direction: column; }
-    .modal-header { padding: 18px 24px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; }
-    .close-modal-btn { background: transparent; border: none; color: var(--text-muted); font-size: 26px; cursor: pointer; }
-    .close-modal-btn:hover { color: var(--color-danger); }
+    .modal { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); backdrop-filter: var(--glass-backdrop); display: none; align-items: center; justify-content: center; z-index: 3000; padding: 8px; }
+    .modal.active { display: flex; }
+    .modal-content { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-lg); max-width: 480px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); box-sizing: border-box; }
+    .full-modal .modal-content { max-width: 1050px; width: 98%; height: 88vh; display: flex; flex-direction: column; }
+    .modal-header { padding: 12px 16px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; width: 100%; box-sizing: border-box; }
+    .close-modal-btn { background: transparent; border: none; color: var(--text-muted); font-size: 22px; cursor: pointer; }
 
-    .admin-dash-tabs { display: flex; background: rgba(0, 0, 0, 0.15); border-bottom: 1px solid var(--border-color); padding: 0 16px; overflow-x: auto; }
-    .dash-tab { background: transparent; border: none; border-bottom: 3px solid transparent; color: var(--text-muted); font-family: var(--font-arabic); font-weight: 700; font-size: 14px; padding: 14px 20px; cursor: pointer; white-space: nowrap; }
+    .admin-dash-tabs { display: flex; background: rgba(0, 0, 0, 0.15); border-bottom: 1px solid var(--border-color); padding: 0 10px; overflow-x: auto; width: 100%; box-sizing: border-box; }
+    .dash-tab { background: transparent; border: none; border-bottom: 3px solid transparent; color: var(--text-muted); font-family: var(--font-arabic); font-weight: 700; font-size: 12px; padding: 10px 12px; cursor: pointer; white-space: nowrap; }
     .dash-tab.active { color: var(--brand-orange); border-bottom-color: var(--brand-orange); }
 
-    .admin-dash-body { flex: 1; overflow-y: auto; padding: 24px; }
-    .dash-tab-pane { display: none; }
+    .admin-dash-body { flex: 1; overflow-y: auto; padding: 14px; width: 100%; box-sizing: border-box; }
+    .dash-tab-pane { display: none; width: 100%; }
     .dash-tab-pane.active { display: block; }
-    .table-responsive { overflow-x: auto; }
+    .table-responsive { overflow-x: auto; width: 100%; }
 
-    .admin-table { width: 100%; border-collapse: collapse; text-align: right; font-size: 13px; }
-    .admin-table th { background: rgba(0, 0, 0, 0.2); color: var(--text-heading); padding: 12px 14px; border-bottom: 2px solid var(--border-color); }
-    .admin-table td { padding: 12px 14px; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
+    .admin-table { width: 100%; border-collapse: collapse; text-align: right; font-size: 11px; min-width: 550px; }
+    .admin-table th { background: rgba(0, 0, 0, 0.2); color: var(--text-heading); padding: 8px 10px; border-bottom: 2px solid var(--border-color); }
+    .admin-table td { padding: 8px 10px; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
 
     /* Notifications */
-    .toast-container { position: fixed; top: 24px; left: 24px; display: flex; flex-direction: column; gap: 12px; z-index: 9999; max-width: 380px; }
-    .toast { background: var(--bg-secondary); border: 1px solid var(--border-color); border-left: 5px solid var(--brand-orange); border-radius: var(--radius-md); padding: 16px; box-shadow: var(--shadow-lg); animation: slideInLeft 0.3s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column; gap: 8px; }
+    .toast-container { position: fixed; top: 14px; left: 14px; right: 14px; display: flex; flex-direction: column; gap: 8px; z-index: 9999; max-width: 340px; margin: 0 auto; box-sizing: border-box; }
+    @media(min-width: 768px) { .toast-container { right: auto; left: 20px; margin: 0; } }
+    .toast { background: var(--bg-secondary); border: 1px solid var(--border-color); border-left: 4px solid var(--brand-orange); border-radius: var(--radius-md); padding: 12px; box-shadow: var(--shadow-lg); display: flex; flex-direction: column; gap: 5px; width: 100%; box-sizing: border-box; }
     .toast.toast-urgent { border-left-color: var(--color-danger); background: #1b1722; }
-    .toast-btn { align-self: flex-start; padding: 8px 14px; font-size: 12px; border-radius: var(--radius-sm); background: var(--brand-blue); color: #fff; border: none; cursor: pointer; display: flex; align-items: center; gap: 6px; font-weight: 700; font-family: var(--font-arabic); }
 
-    .notification-wrapper { position: relative; }
-    .notification-dropdown { position: absolute; top: calc(100% + 12px); left: 0; width: 350px; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); display: none; flex-direction: column; z-index: 1050; max-height: 420px; overflow: hidden; }
-    .notification-dropdown.active { display: flex; animation: fadeInDown 0.2s ease-out; }
-    .dropdown-header { padding: 14px 16px; background: rgba(0, 0, 0, 0.15); border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 14px; }
-    .dropdown-list { overflow-y: auto; max-height: 350px; padding: 8px; }
-    .notif-item { padding: 12px; border-radius: var(--radius-sm); background: var(--bg-card); border: 1px solid var(--border-color); margin-bottom: 8px; }
-
-    /* Hero */
-    .hero-section { padding: 70px 0 50px; }
-    .hero-container { display: grid; grid-template-columns: 1.15fr 0.85fr; align-items: center; gap: 40px; }
-    .badge-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 109, 0, 0.12); border: 1px solid rgba(255, 109, 0, 0.3); color: var(--brand-orange); padding: 6px 14px; border-radius: var(--radius-full); font-size: 13px; font-weight: 700; margin-bottom: 20px; }
-    .hero-title { font-size: 40px; font-weight: 900; line-height: 1.3; color: var(--text-heading); margin-bottom: 18px; }
+    /* Hero Section الأصلي */
+    .hero-section { padding: 30px 0 20px; width: 100%; box-sizing: border-box; }
+    .hero-container { display: grid; grid-template-columns: 1fr; align-items: center; gap: 24px; width: 100%; box-sizing: border-box; }
+    @media (min-width: 992px) { .hero-container { grid-template-columns: 1.15fr 0.85fr; } }
+    .badge-tag { display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 109, 0, 0.12); border: 1px solid rgba(255, 109, 0, 0.3); color: var(--brand-orange); padding: 5px 10px; border-radius: var(--radius-full); font-size: 11px; font-weight: 700; margin-bottom: 12px; }
+    .hero-title { font-size: 24px; font-weight: 900; line-height: 1.3; color: var(--text-heading); margin-bottom: 10px; word-break: break-word; width: 100%; }
+    @media(min-width: 768px) { .hero-title { font-size: 34px; } }
     .hero-title span { color: var(--brand-orange); }
-    .hero-desc { font-size: 17px; color: var(--text-muted); line-height: 1.8; margin-bottom: 30px; }
-    .hero-meta-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 34px; }
-    .meta-card { background: var(--bg-card); border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-md); display: flex; align-items: center; gap: 12px; }
-    .meta-card i { font-size: 24px; color: var(--brand-orange); }
-    .meta-card strong { display: block; font-size: 14px; color: var(--text-heading); }
-    .meta-card span { font-size: 11px; color: var(--text-muted); }
-    .hero-cta { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .hero-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; word-break: break-word; width: 100%; }
+    .hero-meta-cards { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 20px; width: 100%; }
+    @media(min-width: 550px) { .hero-meta-cards { grid-template-columns: repeat(3, 1fr); } }
+    .meta-card { background: var(--bg-card); border: 1px solid var(--border-color); padding: 12px; border-radius: var(--radius-md); display: flex; align-items: center; gap: 8px; width: 100%; box-sizing: border-box; }
+    .meta-card i { font-size: 20px; color: var(--brand-orange); flex-shrink: 0; }
+    .meta-card strong { display: block; font-size: 12px; color: var(--text-heading); }
+    .meta-card span { font-size: 10px; color: var(--text-muted); }
+    .hero-cta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; width: 100%; box-sizing: border-box; }
+    .hero-cta .btn { flex: 1; min-width: 180px; }
 
-    .code-window { background: #141824; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg), 0 0 30px rgba(255, 109, 0, 0.15); }
-    .window-header { background: #0d111b; padding: 12px 16px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
-    .dots { display: flex; gap: 6px; }
-    .dot { width: 10px; height: 10px; border-radius: var(--radius-full); }
+    .code-window { background: #141824; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg); width: 100%; box-sizing: border-box; }
+    .window-header { background: #0d111b; padding: 10px 12px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); width: 100%; box-sizing: border-box; }
+    .dots { display: flex; gap: 5px; }
+    .dot { width: 8px; height: 8px; border-radius: var(--radius-full); }
     .dot.red { background: #ff5f56; } .dot.yellow { background: #ffbd2e; } .dot.green { background: #27c93f; }
-    .code-body { padding: 22px; font-family: var(--font-mono); font-size: 13px; line-height: 1.7; color: #e6edf3; direction: ltr; text-align: left; }
+    .code-body { padding: 14px; font-family: var(--font-mono); font-size: 11px; line-height: 1.5; color: #e6edf3; direction: ltr; text-align: left; overflow-x: auto; width: 100%; box-sizing: border-box; }
 
-    .playground-section, .booking-section { padding: 60px 0; }
-    .section-header { text-align: center; max-width: 650px; margin: 0 auto 40px; }
-    .section-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(2, 132, 199, 0.1); color: var(--brand-blue); border: 1px solid rgba(2, 132, 199, 0.2); padding: 4px 14px; border-radius: var(--radius-full); font-size: 12px; font-weight: 700; margin-bottom: 12px; }
-    .section-header h2 { font-size: 30px; font-weight: 800; color: var(--text-heading); margin-bottom: 10px; }
+    .playground-section, .booking-section { padding: 35px 0; width: 100%; box-sizing: border-box; }
+    .section-header { text-align: center; max-width: 580px; margin: 0 auto 24px; padding: 0 10px; width: 100%; box-sizing: border-box; }
+    .section-badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(2, 132, 199, 0.1); color: var(--brand-blue); border: 1px solid rgba(2, 132, 199, 0.2); padding: 3px 10px; border-radius: var(--radius-full); font-size: 10px; font-weight: 700; margin-bottom: 8px; }
+    .section-header h2 { font-size: 22px; font-weight: 800; color: var(--text-heading); margin-bottom: 6px; word-break: break-word; }
+    .section-header p { font-size: 12px; color: var(--text-muted); word-break: break-word; }
 
-    .editor-embed-container { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg); }
-    .editor-embed-topbar { padding: 14px 20px; background: rgba(0, 0, 0, 0.2); border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-    .editor-embed-iframe { width: 100%; height: 600px; border: none; background: #ffffff; }
+    .editor-embed-container { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg); width: 100%; box-sizing: border-box; }
+    .editor-embed-topbar { padding: 10px 14px; background: rgba(0, 0, 0, 0.2); border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; width: 100%; box-sizing: border-box; }
+    .editor-embed-iframe { width: 100%; height: 400px; border: none; background: #ffffff; }
 
-    .footer { background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 50px 0 20px; margin-top: 60px; }
-    .footer-container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 30px; padding-bottom: 30px; border-bottom: 1px solid var(--border-color); }
-    .footer-bottom { text-align: center; padding-top: 20px; color: var(--text-muted); font-size: 12px; }
-    .checkbox-container { display: flex; align-items: center; gap: 10px; margin-top: 8px; font-size: 13px; cursor: pointer; }
-    .checkbox-container input { width: 18px; height: 18px; cursor: pointer; }
+    .footer { background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 30px 0 15px; margin-top: 30px; width: 100%; box-sizing: border-box; }
+    .footer-container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border-color); width: 100%; box-sizing: border-box; }
+    .footer-bottom { text-align: center; padding-top: 12px; color: var(--text-muted); font-size: 10px; width: 100%; }
+    .checkbox-container { display: flex; align-items: center; gap: 6px; margin-top: 6px; font-size: 11px; cursor: pointer; }
+    .checkbox-container input { width: 15px; height: 15px; cursor: pointer; }
 
-    .account-switcher-dropdown { position: absolute; top: calc(100% + 8px); right: 0; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); width: 240px; display: none; flex-direction: column; z-index: 1060; overflow: hidden; }
-    .account-switcher-dropdown.active { display: flex; animation: fadeInDown 0.2s ease-out; }
-    .account-item { padding: 10px 14px; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: var(--transition); font-size: 13px; }
-    .account-item:hover { background: rgba(255, 109, 0, 0.1); }
-    .account-item.active-account { font-weight: 800; color: var(--brand-orange); background: rgba(255, 109, 0, 0.15); }
-
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes slideInLeft { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
-
-    @media (max-width: 992px) {
-      .hero-container, .full-chat-layout { grid-template-columns: 1fr; }
-      .chat-sidebar { display: none; }
-    }
-
-    @media (max-width: 768px) {
-      .mobile-toggle { display: block; }
-      .nav-links { position: fixed; top: 70px; right: 0; left: 0; background: var(--bg-secondary); flex-direction: column; padding: 20px; display: none; }
-      .nav-links.active { display: flex; }
-      .hero-title { font-size: 28px; }
-      .hero-meta-cards { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 400px) {
-      .nav-container, .hero-container, .section-container, .footer-container { padding-left: 12px; padding-right: 12px; }
-      .nav-container { gap: 8px; }
-      .brand-logo { gap: 8px; min-width: 0; }
-      .logo-text h1 { font-size: 14px; white-space: nowrap; }
-      .logo-icon { width: 34px; height: 34px; font-size: 18px; }
-      .icon-btn { width: 36px; height: 36px; }
-      .nav-actions .btn { padding: 6px 10px; font-size: 12px; }
-      .btn { padding: 8px 12px; font-size: 13px; }
-      .btn-lg { padding: 11px 14px; font-size: 14px; }
-      .hero-title { font-size: 22px; line-height: 1.35; }
-      .hero-cta .btn { flex: 1 1 100%; }
-      .meta-card { padding: 12px; }
-      .code-body { font-size: 11px; padding: 12px; }
-      .auth-gate-overlay { padding: 8px; }
-      .auth-gate-card { padding: 20px 14px; }
-      .auth-gate-header h2 { font-size: 18px; }
-      .gate-logo { width: 46px; height: 46px; font-size: 24px; }
-      .gate-tab { font-size: 12px; padding: 8px 2px; }
-      .secret-input { letter-spacing: 1px; }
-      .calendar-buttons-card { padding: 14px; }
-      .calendar-nav-controls { width: 100%; justify-content: space-between; }
-      .month-days-buttons-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
-      .day-btn { padding: 10px 4px; }
-      .day-btn .day-status-pill { font-size: 9px; padding: 2px 6px; }
-      .slot-btn { padding: 12px; }
-      .selected-day-banner { padding: 12px; flex-wrap: wrap; }
-      .booking-item-card { padding: 12px; }
-      .modal, .full-page-chat-modal { padding: 4px; }
-      .modal-header { padding: 12px 14px; }
-      .modal-content { border-radius: 14px; }
-      .full-chat-wrapper { height: 98vh; border-radius: 14px; }
-      .chat-sidebar { max-height: 28vh; }
-      .conversation-input-bar { padding: 10px; gap: 8px; }
-      .conversation-input-bar input { padding: 10px 14px; min-width: 0; }
-      .msg-bubble { max-width: 92%; }
-      .admin-dash-body { padding: 10px; }
-      .dash-tab { padding: 10px 12px; font-size: 12px; }
-      .admin-table th, .admin-table td { padding: 6px 8px; font-size: 11px; }
-      .notification-dropdown { left: 6px; right: 6px; }
-      .toast-container { left: 6px; right: 6px; }
-      .editor-embed-iframe { height: 360px; }
-      .editor-embed-topbar { padding: 10px 12px; }
-      .footer-container { gap: 18px; }
-      .authorized-email-link { word-break: break-all; }
-      .custom-input, input, select, textarea { max-width: 100%; }
-      #emergencyDateInput { max-width: 100% !important; }
-    }
+    .badge-approved { background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: var(--color-success); font-size: 10px; padding: 2px 8px; border-radius: var(--radius-full); font-weight: 700; }
+    .badge-pending { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: var(--color-warning); font-size: 10px; padding: 2px 8px; border-radius: var(--radius-full); font-weight: 700; }
+    .badge-status { font-size: 10px; padding: 2px 8px; border-radius: var(--radius-full); font-weight: 700; background: rgba(255,255,255,0.05); color: var(--text-main); }
+    .badge-warning { background: rgba(245, 158, 11, 0.15); color: var(--color-warning); }
+    .badge-danger { background: rgba(239, 68, 68, 0.15); color: var(--color-danger); }
   </style>
 </head>
 <body>
 
-  <!-- 1. بوابة الدخول الإلزامية -->
+  <!-- بوابة الدخول الإلزامية الشاملة -->
   <div class="auth-gate-overlay" id="authGateOverlay">
     <div class="auth-gate-card">
       <div class="auth-gate-header">
@@ -376,7 +308,7 @@
         <h2>أكاديمية <span>HTML</span></h2>
         <p>مع الأستاذ جواد بدري</p>
         <div class="gate-alert-info">
-          <i class="fa-solid fa-shield-halved"></i> المنصة مخصصة لطلاب الأستاذ جواد وتتطلب الكود السري المعتمد
+          <i class="fa-solid fa-cloud"></i> المنصة متصلة بالسحابة المباشرة (Firebase Realtime Database)
         </div>
       </div>
 
@@ -391,12 +323,12 @@
         <div class="form-group">
           <label><i class="fa-solid fa-user-pen"></i> الاسم الثلاثي للطالب (إلزامي):</label>
           <input type="text" id="regStudentFullName" class="custom-input" placeholder="اكتب اسمك الثلاثي كاملاً" required>
-          <small class="input-hint">يجب كتابة ثلاثة أسماء على الأقل لتوثيق ملفك لدى الأستاذ</small>
+          <small class="input-hint">يجب كتابة ثلاثة أسماء لتوثيق ملفك</small>
         </div>
 
         <div class="form-group">
           <label><i class="fa-brands fa-whatsapp" style="color:var(--color-whatsapp)"></i> رقم الواتساب (إلزامي للتواصل):</label>
-          <input type="text" id="regStudentWhatsapp" class="custom-input" placeholder="مثال: 05xxxxxxxx أو +966..." required>
+          <input type="text" id="regStudentWhatsapp" class="custom-input" placeholder="05xxxxxxxx" required>
         </div>
 
         <div class="form-group">
@@ -405,19 +337,19 @@
         </div>
 
         <div class="form-group">
-          <label><i class="fa-solid fa-key"></i> كلمة المرور لحسابك:</label>
+          <label><i class="fa-solid fa-key"></i> كلمة المرور:</label>
           <input type="password" id="regStudentPass" class="custom-input" placeholder="••••••••" required>
         </div>
 
         <div class="form-group secret-code-group">
           <label><i class="fa-solid fa-shield-cat"></i> كود الدخول السري (6 أرقام):</label>
-          <div style="display: flex; gap: 8px;">
-            <input type="text" id="regSecretCode" class="custom-input secret-input" placeholder="أدخل الكود السري" required style="flex:1;">
-            <button type="button" class="btn btn-secondary btn-sm" id="requestSecretCodeBtn" title="طلب الرمز السري من الأستاذ">
-              <i class="fa-solid fa-paper-plane" style="color:var(--brand-orange);"></i> طلب الرمز السري
+          <div style="display: flex; gap: 6px; width:100%;">
+            <input type="text" id="regSecretCode" class="custom-input secret-input" placeholder="أدخل الكود" required style="flex:1;">
+            <button type="button" class="btn btn-secondary btn-sm" id="requestSecretCodeBtn" title="طلب الكود من الأستاذ">
+              <i class="fa-solid fa-paper-plane" style="color:var(--brand-orange);"></i> طلب الكود
             </button>
           </div>
-          <small class="input-hint" id="secretCodeStatusHint">اضغط "طلب الرمز السري" ليظهر طلبك مباشرة في لوحة صلاحيات الأستاذ جواد!</small>
+          <small class="input-hint" id="secretCodeStatusHint">اضغط "طلب الكود" لإرساله سراً إلى لوحة الأستاذ جواد بعد الدفع!</small>
         </div>
 
         <div id="regErrorMsg" class="error-msg" style="display:none"></div>
@@ -430,13 +362,13 @@
       <!-- نموذج دخول طالب مسجل -->
       <form id="studentLoginForm" class="gate-form">
         <div class="form-group">
-          <label><i class="fa-solid fa-address-book"></i> البريد الإلكتروني أو رقم الواتساب:</label>
-          <input type="text" id="loginStudentContact" class="custom-input" placeholder="أدخل بريدك أو رقمك المسجل" required>
+          <label><i class="fa-solid fa-address-book"></i> البريد أو رقم الواتساب:</label>
+          <input type="text" id="loginStudentContact" class="custom-input" placeholder="أدخل بريدك أو رقمك" required>
         </div>
 
         <div class="form-group">
           <label><i class="fa-solid fa-lock"></i> كلمة المرور:</label>
-          <input type="password" id="loginStudentPass" class="custom-input" placeholder="أدخل كلمة المرور" required>
+          <input type="password" id="loginStudentPass" class="custom-input" placeholder="••••••••" required>
         </div>
 
         <div id="loginErrorMsg" class="error-msg" style="display:none"></div>
@@ -467,10 +399,11 @@
     </div>
   </div>
 
-  <!-- 2. التطبيق الرئيسي -->
+  <!-- المنصة الرئيسية بالكامل -->
   <div id="mainAppWrapper" class="main-app-hidden">
     <header class="navbar">
       <div class="nav-container">
+        <!-- الشعار -->
         <div class="brand-logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
           <div class="logo-icon"><i class="fa-brands fa-html5"></i></div>
           <div class="logo-text">
@@ -479,22 +412,26 @@
           </div>
         </div>
 
+        <!-- القائمة الجانبية المكتملة -->
         <nav class="nav-links" id="navLinks">
           <a href="#hero" class="nav-link active"><i class="fa-solid fa-house"></i> الرئيسية</a>
           <a href="#booking" class="nav-link"><i class="fa-solid fa-calendar-check"></i> جدول الحصص</a>
           <a href="#code-playground" class="nav-link"><i class="fa-solid fa-laptop-code"></i> مختبر الأكواد</a>
           <button id="navOpenChatBtn" class="nav-link special-nav-link"><i class="fa-solid fa-comments"></i> <span id="navChatLabel">الرسائل المباشرة</span></button>
+          <button id="teacherPermissionsMenuBtn" class="nav-link" style="color:var(--brand-orange); font-weight:800; display:none;"><i class="fa-solid fa-user-shield"></i> لوحة الصلاحيات وإدارة الحصص</button>
+          <button id="mobileSettingsBtn" class="nav-link"><i class="fa-solid fa-gear"></i> إعدادات المنصة</button>
+          <button id="mobileTriggerLogoutBtn" class="nav-link" style="color:var(--color-danger);"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج</button>
         </nav>
 
         <div class="nav-actions">
           <div class="user-pill" id="currentUserPill">
             <i class="fa-solid fa-circle-user"></i>
             <span id="currentUserNameLabel">طالب</span>
-            <i class="fa-solid fa-caret-down" style="font-size:10px; margin-right:4px;"></i>
+            <i class="fa-solid fa-caret-down" style="font-size:8px;"></i>
             
             <div class="account-switcher-dropdown" id="accountSwitcherDropdown">
-              <div style="padding:8px 12px; font-size:11px; font-weight:800; color:var(--text-muted); border-bottom:1px solid var(--border-color);">
-                <i class="fa-solid fa-users"></i> تبديل الحساب:
+              <div style="padding:6px 10px; font-size:10px; font-weight:800; color:var(--text-muted); border-bottom:1px solid var(--border-color);">
+                تبديل الحساب:
               </div>
               <div id="accountsListContainer"></div>
               <div class="account-item" id="addAccountBtn" style="border-top:1px solid var(--border-color); color:var(--brand-orange);">
@@ -503,39 +440,21 @@
             </div>
           </div>
 
-          <div class="notification-wrapper">
-            <button id="notifBellBtn" class="icon-btn" title="الإشعارات والتنبيهات">
-              <i class="fa-solid fa-bell"></i>
-              <span class="badge" id="notifBadge">0</span>
-            </button>
-            <div class="notification-dropdown" id="notifDropdown">
-              <div class="dropdown-header">
-                <span><i class="fa-solid fa-bell"></i> تنبيهات الحصص والجهاز</span>
-                <button id="clearNotifsBtn" class="text-btn">مسح الكل</button>
-              </div>
-              <div class="dropdown-list" id="notifList">
-                <div style="text-align:center; padding:20px; color:var(--text-muted);">لا توجد إشعارات جديدة</div>
-              </div>
-            </div>
-          </div>
-
-          <button id="fullChatIconBtn" class="icon-btn" title="فتح المحادثة الكاملة"><i class="fa-solid fa-comments"></i></button>
-          <button id="settingsBtn" class="icon-btn" title="الإعدادات"><i class="fa-solid fa-gear"></i></button>
-          <button id="adminHeaderBtn" class="btn btn-primary-outline" style="display:none;"><i class="fa-solid fa-user-shield"></i> <span>الصلاحيات وإدارة الحصص</span></button>
-          <button id="triggerLogoutBtn" class="icon-btn" title="تسجيل الخروج"><i class="fa-solid fa-right-from-bracket"></i></button>
-          <button class="mobile-toggle" id="mobileMenuBtn"><i class="fa-solid fa-bars"></i></button>
+          <button class="mobile-toggle" id="mobileMenuBtn" aria-label="القائمة">
+            <i class="fa-solid fa-bars" id="mobileMenuIcon"></i>
+          </button>
         </div>
       </div>
     </header>
 
-    <!-- Hero -->
+    <!-- Hero Section المكتمل -->
     <section class="hero-section" id="hero">
       <div class="hero-container">
-        <div class="hero-content">
+        <div class="hero-content" style="width:100%;">
           <div class="badge-tag" id="heroBadgeTag"><i class="fa-solid fa-award"></i> حصص فردية ومباشرة مع الأستاذ جواد بدري</div>
           <h1 class="hero-title" id="heroTitle">تعلم واحتراف لغة <span>HTML5</span> من الصفر وحتى الإتقان</h1>
           <p class="hero-desc" id="heroDesc">
-            حصص فردية ومباشرة عبر Google Meet مع الأستاذ <strong>جواد بدري</strong>. نركز على التطبيق العملي لبناء صفحات الويب مع إشعارات ذكية بالصوت والجهاز.
+            حصص فردية ومباشرة عبر Google Meet مع الأستاذ <strong>جواد بدري</strong> لبناء صفحات الويب بمرونة واحترافية.
           </p>
 
           <div class="hero-meta-cards">
@@ -559,11 +478,11 @@
           </div>
         </div>
 
-        <div class="hero-preview">
+        <div class="hero-preview" style="width:100%;">
           <div class="code-window">
             <div class="window-header">
               <div class="dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
-              <span class="window-title" style="color:#8b949e; font-size:12px; font-family:var(--font-mono);">lesson.html</span>
+              <span class="window-title" style="color:#8b949e; font-size:11px; font-family:var(--font-mono);">lesson.html</span>
             </div>
             <pre class="code-body"><code>&lt;!DOCTYPE html&gt;
 &lt;html lang="ar" dir="rtl"&gt;
@@ -580,13 +499,13 @@
       </div>
     </section>
 
-    <!-- جدول الحجز -->
+    <!-- جدول الحجز المتكامل -->
     <section class="booking-section" id="booking">
       <div class="section-container">
         <div class="section-header">
           <span class="section-badge"><i class="fa-solid fa-calendar-week"></i> جدول المواعيد</span>
           <h2 id="bookingSectionHeading">جدول حجز الأيام للشهر الحالي</h2>
-          <p id="bookingSectionDesc">اضغط على أي زر يوم لمعاينة الفترات وحجز حصتك (الجمعة والسبت إجازة أسبوعية فقط)</p>
+          <p id="bookingSectionDesc">اختر اليوم لحجز حصتك (الجمعة والسبت إجازة أسبوعية)</p>
         </div>
 
         <div class="calendar-buttons-card">
@@ -597,7 +516,7 @@
             </div>
             <div class="calendar-nav-controls">
               <button class="btn btn-sm btn-secondary" id="prevMonthBtn"><i class="fa-solid fa-chevron-right"></i></button>
-              <button class="btn btn-sm btn-primary-outline" id="resetCurrentMonthBtn">الشهر الحالي</button>
+              <button class="btn btn-sm btn-primary-outline" id="resetCurrentMonthBtn">الحالي</button>
               <button class="btn btn-sm btn-secondary" id="nextMonthBtn"><i class="fa-solid fa-chevron-left"></i></button>
             </div>
           </div>
@@ -605,26 +524,26 @@
           <div class="month-days-buttons-grid" id="monthDaysButtonsGrid"></div>
 
           <div class="selected-day-banner" id="selectedDayBanner">
-            <div style="display:flex; align-items:center; gap:10px;">
+            <div style="display:flex; align-items:center; gap:6px;">
               <i class="fa-solid fa-circle-check" style="color:var(--brand-orange)"></i>
-              <span>اليوم المحدد: <strong id="selectedDayText">الرجاء اختيار يوم من الأزرار أعلاه</strong></span>
+              <span>اليوم المحدد: <strong id="selectedDayText">الرجاء اختيار يوم</strong></span>
             </div>
-            <span class="badge-status" id="selectedDayBadge">جاهز لاختيار الفترة</span>
+            <span class="badge-status" id="selectedDayBadge">متاح</span>
           </div>
         </div>
 
         <div class="slots-container">
           <div class="slots-header">
-            <h3><i class="fa-solid fa-clock"></i> الفترات المتاحة لهذا اليوم:</h3>
-            <div style="display:flex; gap:16px; font-size:12px;">
-              <span><span style="display:inline-block; width:12px; height:12px; background:var(--brand-gradient); border-radius:3px;"></span> متاح للحجز</span>
-              <span><span style="display:inline-block; width:12px; height:12px; background:var(--color-booked-dark); border:1px solid var(--color-booked-border); border-radius:3px;"></span> محجوز</span>
+            <h3><i class="fa-solid fa-clock"></i> الفترات المتاحة:</h3>
+            <div style="display:flex; gap:10px; font-size:10px;">
+              <span><span style="display:inline-block; width:9px; height:9px; background:var(--brand-gradient); border-radius:2px;"></span> متاح</span>
+              <span><span style="display:inline-block; width:9px; height:9px; background:var(--color-booked-dark); border:1px solid var(--color-booked-border); border-radius:2px;"></span> محجوز</span>
             </div>
           </div>
 
           <div id="shortSessionNotice" class="wednesday-notice-banner" style="display:none;">
             <i class="fa-solid fa-circle-info"></i>
-            <span><strong>ملاحظة (الأربعاء والخميس):</strong> الحصة مدتها ربع ساعة فقط (من 3:00 م إلى 3:15 م).</span>
+            <span><strong>ملاحظة (الأربعاء والخميس):</strong> الحصة مدتها ربع ساعة (3:00 م - 3:15 م).</span>
           </div>
 
           <div class="slots-grid" id="slotsGrid"></div>
@@ -632,7 +551,7 @@
 
         <div class="my-bookings-container" id="myBookingsContainerWrapper">
           <div class="my-bookings-header">
-            <h3 id="myBookingsTitle"><i class="fa-solid fa-ticket"></i> حصصي وجدولي المعتمد</h3>
+            <h3 id="myBookingsTitle"><i class="fa-solid fa-ticket"></i> حصصي وجدولي المعتمد (متزامن عبر السحابة)</h3>
             <span class="badge-status" id="myBookingsCount">0</span>
           </div>
           <div id="myBookingsList" class="my-bookings-list"></div>
@@ -645,18 +564,18 @@
       <div class="section-container">
         <div class="section-header">
           <span class="section-badge"><i class="fa-solid fa-laptop-code"></i> مختبر كود حقيقي</span>
-          <h2>محرر الأكواد المباشر (Web Editor)</h2>
-          <p>مختبر كود تفاعلي متقدم مصمم بواسطة الأستاذ جواد بدري لتجربة أكواد HTML و CSS و JavaScript الحقيقية</p>
+          <h2>محرر الأكواد المباشر</h2>
+          <p>مختبر تفاعلي لتجربة أكواد HTML و CSS و JavaScript</p>
         </div>
 
         <div class="editor-embed-container">
           <div class="editor-embed-topbar">
-            <div style="display:flex; align-items:center; gap:10px;">
-              <span class="badge-status"><i class="fa-solid fa-circle-check"></i> متصل بالمختبر الرسمي</span>
-              <strong style="color:var(--text-heading); font-size:14px;">Web Editor by Jawad Badry</strong>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span class="badge-status"><i class="fa-solid fa-circle-check"></i> متصل</span>
+              <strong style="color:var(--text-heading); font-size:12px;">Web Editor by Jawad Badry</strong>
             </div>
             <a href="https://jawadbadry.github.io/Web-Editor/" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">
-              <i class="fa-solid fa-up-right-from-square"></i> فتح المحرر في نافذة كاملة
+              <i class="fa-solid fa-up-right-from-square"></i> نافذة كاملة
             </a>
           </div>
           <iframe src="https://jawadbadry.github.io/Web-Editor/" class="editor-embed-iframe" title="Web Editor By Jawad Badry"></iframe>
@@ -668,7 +587,7 @@
       <div class="footer-container">
         <div class="footer-brand">
           <h3>أكاديمية <span>HTML</span> مع الأستاذ جواد بدري</h3>
-          <p>منصة تعليمية متكاملة لتقديم حصص البرمجة الفردية والمباشرة.</p>
+          <p>منصة تعليمية متكاملة للحصص الفردية والمباشرة.</p>
         </div>
         <div class="footer-info">
           <p><i class="fa-solid fa-envelope" style="color:var(--brand-orange)"></i> البريد المعتمد: <a href="mailto:Jawadbadry8@gmail.com" class="authorized-email-link">Jawadbadry8@gmail.com</a></p>
@@ -683,50 +602,48 @@
 
   <!-- Modal Logout -->
   <div class="modal" id="logoutConfirmModal">
-    <div class="modal-content" style="max-width: 420px; text-align: center; padding: 28px 24px;">
-      <div style="font-size: 46px; color: var(--color-warning); margin-bottom: 14px;"><i class="fa-solid fa-triangle-exclamation"></i></div>
-      <h3 style="font-size: 20px; font-weight: 800; margin-bottom: 10px; color: var(--text-heading);">تأكيد تسجيل الخروج</h3>
-      <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 24px;">هل أنت متأكد من رغبتك في تسجيل الخروج من المنصة؟</p>
-      <div style="display:flex; justify-content:center; gap:12px;">
-        <button class="btn btn-secondary" id="cancelLogoutBtn">إلغاء</button>
-        <button class="btn btn-danger" id="confirmLogoutActionBtn"><i class="fa-solid fa-right-from-bracket"></i> نعم، تسجيل الخروج</button>
+    <div class="modal-content" style="max-width: 360px; text-align: center; padding: 20px 16px;">
+      <div style="font-size: 36px; color: var(--color-warning); margin-bottom: 10px;"><i class="fa-solid fa-triangle-exclamation"></i></div>
+      <h3 style="font-size: 17px; font-weight: 800; margin-bottom: 6px; color: var(--text-heading);">تأكيد تسجيل الخروج</h3>
+      <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 16px;">هل أنت متأكد من تسجيل الخروج؟</p>
+      <div style="display:flex; justify-content:center; gap:8px; width:100%;">
+        <button class="btn btn-secondary" id="cancelLogoutBtn" style="flex:1;">إلغاء</button>
+        <button class="btn btn-danger" id="confirmLogoutActionBtn" style="flex:1;"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal Full Page Chat -->
+  <!-- Modal Full Page Chat الشامل -->
   <div class="full-page-chat-modal" id="fullPageChatModal">
     <div class="full-chat-wrapper">
       <div class="full-chat-topbar">
-        <div style="display:flex; align-items:center; gap:12px;">
-          <i class="fa-solid fa-comments" style="font-size:24px; color:var(--brand-orange)"></i>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <i class="fa-solid fa-comments" style="font-size:20px; color:var(--brand-orange)"></i>
           <div>
-            <h3 style="font-size:16px; font-weight:800;">مركز الرسائل والمحادثات المباشرة</h3>
-            <span style="font-size:12px; color:#94a3b8;">تواصل فوري بين الأستاذ والطلاب</span>
+            <h3 style="font-size:14px; font-weight:800;">مركز الرسائل والمحادثات المباشرة</h3>
+            <span style="font-size:10px; color:#94a3b8;">تواصل بين الأستاذ والطلاب</span>
           </div>
         </div>
-        <div style="display:flex; align-items:center; gap:12px;">
-          <button class="close-modal-btn" id="closeFullChatBtn">&times;</button>
-        </div>
+        <button class="close-modal-btn" id="closeFullChatBtn">&times;</button>
       </div>
 
       <div class="full-chat-layout">
         <aside class="chat-sidebar">
           <div class="sidebar-search">
-            <input type="text" id="studentSearchInput" placeholder="بحث بالاسم الثلاثي..." class="custom-input">
+            <input type="text" id="studentSearchInput" placeholder="بحث بالاسم..." class="custom-input">
           </div>
-          <div style="padding:10px 16px; display:flex; justify-content:space-between; font-size:12px; font-weight:700; color:var(--text-muted);">
-            <span><i class="fa-solid fa-users"></i> قائمة الطلاب:</span>
+          <div style="padding:6px 10px; display:flex; justify-content:space-between; font-size:10px; font-weight:700; color:var(--text-muted);">
+            <span>الطلاب:</span>
             <span class="badge-status" id="registeredStudentsCount">0</span>
           </div>
           <div class="students-roster-list" id="studentsRosterList"></div>
         </aside>
 
         <main class="chat-conversation-area">
-          <div style="padding:14px 20px; background:var(--bg-secondary); border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center;">
+          <div style="padding:10px 14px; background:var(--bg-secondary); border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center;">
             <div>
-              <h4 id="activeContactName" style="font-weight:800; font-size:15px; color:var(--text-heading);">المحادثة</h4>
-              <p id="activeContactRole" style="font-size:12px; color:var(--text-muted);">حالة الاتصال</p>
+              <h4 id="activeContactName" style="font-weight:800; font-size:13px; color:var(--text-heading);">المحادثة</h4>
+              <p id="activeContactRole" style="font-size:10px; color:var(--text-muted);">حالة الاتصال</p>
             </div>
             <div id="activeContactWhatsappContainer"></div>
           </div>
@@ -734,42 +651,41 @@
           <div class="conversation-messages-stream" id="conversationStream"></div>
 
           <form class="conversation-input-bar" id="fullChatSendForm">
-            <input type="text" id="fullChatMessageInput" placeholder="اكتب رسالتك هنا..." autocomplete="off">
-            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> إرسال</button>
+            <input type="text" id="fullChatMessageInput" placeholder="اكتب رسالتك..." autocomplete="off">
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i></button>
           </form>
         </main>
       </div>
     </div>
   </div>
 
-  <!-- Admin Panel Dashboard -->
+  <!-- Admin Panel Dashboard المكتمل -->
   <div class="modal full-modal" id="adminDashboardModal">
     <div class="modal-content">
       <div class="modal-header" style="background:#0f172a; color:#fff;">
-        <div style="display:flex; align-items:center; gap:12px;">
-          <i class="fa-solid fa-user-shield" style="font-size:24px; color:var(--brand-orange)"></i>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <i class="fa-solid fa-user-shield" style="font-size:20px; color:var(--brand-orange)"></i>
           <div>
-            <h3>لوحة الصلاحيات والتحكم الكاملة (الأستاذ جواد بدري)</h3>
-            <span style="font-size:11px; color:var(--brand-orange);"><i class="fa-solid fa-robot"></i> إدارة الرموز السرية وطلبات الطلاب الخاصة</span>
+            <h3 style="font-size:14px;">لوحة الصلاحيات والتحكم (الأستاذ جواد)</h3>
+            <span style="font-size:10px; color:var(--brand-orange);">متابعة أكواد الطلاب والحجوزات</span>
           </div>
         </div>
-        <div style="display:flex; align-items:center; gap:10px;">
-          <button class="btn btn-sm btn-secondary" id="adminOpenChatBtn"><i class="fa-solid fa-comments"></i> فتح الشات</button>
+        <div style="display:flex; align-items:center; gap:6px;">
+          <button class="btn btn-sm btn-secondary" id="adminOpenChatBtn"><i class="fa-solid fa-comments"></i> الشات</button>
           <button class="close-modal-btn" id="closeAdminDashModal">&times;</button>
         </div>
       </div>
 
       <div class="admin-dash-tabs">
-        <button class="dash-tab active" data-tab="tab-permissions"><i class="fa-solid fa-sliders"></i> الصلاحيات وإدارة الطلاب والرموز</button>
-        <button class="dash-tab" data-tab="tab-bookings-admin"><i class="fa-solid fa-calendar-check"></i> الحجوزات وإلغاؤها و Google Meet</button>
-        <button class="dash-tab" data-tab="tab-emergency-controller"><i class="fa-solid fa-ban"></i> الظروف الطارئة (إغلاق يوم)</button>
+        <button class="dash-tab active" data-tab="tab-permissions"><i class="fa-solid fa-sliders"></i> الصلاحيات والأكواد</button>
+        <button class="dash-tab" data-tab="tab-bookings-admin"><i class="fa-solid fa-calendar-check"></i> الحجوزات و Meet</button>
+        <button class="dash-tab" data-tab="tab-emergency-controller"><i class="fa-solid fa-ban"></i> الظروف الطارئة</button>
       </div>
 
       <div class="admin-dash-body">
-        <!-- تبويب الصلاحيات -->
         <div class="dash-tab-pane active" id="tab-permissions">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
-            <h4><i class="fa-solid fa-users-gear"></i> إدارة صلاحيات الطلاب (أكواد الرمز السري المولد، الحصص، والحذف):</h4>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:6px;">
+            <h4 style="font-size:13px;"><i class="fa-solid fa-users-gear"></i> طلبات الطلاب (إذا مسحت طالباً سيتم إخراجه ومنعه من الدخول):</h4>
             <span class="badge-status" id="adminStudentsCountBadge">0 طالب</span>
           </div>
 
@@ -777,14 +693,14 @@
             <table class="admin-table">
               <thead>
                 <tr>
-                  <th>اسم الطالب الثلاثي</th>
-                  <th>رقم الواتساب</th>
-                  <th>الكود السري المطلب (الجديد)</th>
+                  <th>الاسم الثلاثي</th>
+                  <th>الواتساب</th>
+                  <th>الكود السري (لك وحدك)</th>
                   <th>ليميت الحصص</th>
                   <th>جدول الطالب</th>
-                  <th>واتساب مباشر</th>
+                  <th>واتساب</th>
                   <th>تعديل</th>
-                  <th>مسح الطالب</th>
+                  <th>مسح</th>
                 </tr>
               </thead>
               <tbody id="adminStudentsPermissionsTableBody"></tbody>
@@ -792,10 +708,9 @@
           </div>
         </div>
 
-        <!-- تبويب الحجوزات -->
         <div class="dash-tab-pane" id="tab-bookings-admin">
-          <div style="margin-bottom:16px;">
-            <h4>قائمة جميع الحجوزات (الموافقة، إرفاق رابط القاعة، أو إلغاء وحذف الحجز كمعلم):</h4>
+          <div style="margin-bottom:12px;">
+            <h4 style="font-size:13px;">قائمة الحجوزات وإدارتها:</h4>
           </div>
           <div class="table-responsive">
             <table class="admin-table">
@@ -805,10 +720,10 @@
                   <th>الواتساب</th>
                   <th>التاريخ</th>
                   <th>الفترة</th>
-                  <th>حالة الحصة</th>
-                  <th>إجراء الموافقة / الرفض بالسبب</th>
+                  <th>الحالة</th>
+                  <th>الموافقة / الرفض</th>
                   <th>رابط Google Meet</th>
-                  <th>إلغاء وحذف الحجز (معلم)</th>
+                  <th>إلغاء وحجز جديد</th>
                 </tr>
               </thead>
               <tbody id="adminAllBookingsTableBody"></tbody>
@@ -816,17 +731,16 @@
           </div>
         </div>
 
-        <!-- تبويب الطوارئ -->
         <div class="dash-tab-pane" id="tab-emergency-controller">
-          <div style="background:var(--bg-card); padding:20px; border-radius:var(--radius-md); border:1px solid var(--border-color); margin-bottom:20px;">
-            <h4 style="margin-bottom:12px; color:var(--text-heading);"><i class="fa-solid fa-calendar-xmark" style="color:var(--color-warning)"></i> تحديد يوم وإعلان ظرف طارئ (إغلاق اليوم):</h4>
-            <div style="display:flex; gap:10px; flex-wrap:wrap;">
-              <input type="date" id="emergencyDateInput" class="custom-input" style="max-width:200px;">
-              <input type="text" id="emergencyReasonInput" class="custom-input" placeholder="السبب (مثال: عندي ظرف طارئ)" style="flex:1;">
-              <button class="btn btn-warning" id="applyEmergencyDayBtn"><i class="fa-solid fa-lock"></i> تطبيق (ظرف) وإغلاق اليوم</button>
+          <div style="background:var(--bg-card); padding:14px; border-radius:var(--radius-md); border:1px solid var(--border-color); margin-bottom:14px; width:100%; box-sizing:border-box;">
+            <h4 style="font-size:13px; margin-bottom:8px; color:var(--text-heading);"><i class="fa-solid fa-calendar-xmark" style="color:var(--color-warning)"></i> إعلان ظرف طارئ (إغلاق يوم):</h4>
+            <div style="display:flex; gap:6px; flex-wrap:wrap; width:100%;">
+              <input type="date" id="emergencyDateInput" class="custom-input" style="max-width:160px;">
+              <input type="text" id="emergencyReasonInput" class="custom-input" placeholder="السبب (مثال: ظرف طارئ)" style="flex:1; min-width:120px;">
+              <button class="btn btn-warning" id="applyEmergencyDayBtn"><i class="fa-solid fa-lock"></i> إغلاق اليوم</button>
             </div>
           </div>
-          <h5 style="margin-bottom:12px;">الأيام المعتذر عنها حالياً:</h5>
+          <h5 style="font-size:12px; margin-bottom:8px;">الأيام المغلقة حالياً:</h5>
           <div id="emergencyDaysList"></div>
         </div>
       </div>
@@ -835,21 +749,21 @@
 
   <!-- Modal Student Schedule -->
   <div class="modal" id="studentScheduleModal">
-    <div class="modal-content" style="max-width: 820px;">
+    <div class="modal-content" style="max-width: 720px;">
       <div class="modal-header">
-        <h3 id="scheduleModalTitle"><i class="fa-solid fa-calendar-days"></i> جدول الطالب: </h3>
+        <h3 id="scheduleModalTitle" style="font-size:14px;"><i class="fa-solid fa-calendar-days"></i> جدول الطالب: </h3>
         <button class="close-modal-btn" id="closeStudentScheduleModal">&times;</button>
       </div>
-      <div style="padding:20px;">
+      <div style="padding:14px;">
         <div class="table-responsive">
           <table class="admin-table">
             <thead>
               <tr>
-                <th>اليوم والتاريخ</th>
-                <th>الفترة الزمنية</th>
-                <th>حالة الحصة</th>
-                <th>الموافقة / الرفض بالسبب</th>
-                <th>رابط Google Meet</th>
+                <th>التاريخ واليوم</th>
+                <th>الفترة</th>
+                <th>الحالة</th>
+                <th>الإجراء</th>
+                <th>رابط Meet</th>
               </tr>
             </thead>
             <tbody id="studentScheduleTableBody"></tbody>
@@ -861,12 +775,12 @@
 
   <!-- Modal Edit Student -->
   <div class="modal" id="editStudentModal">
-    <div class="modal-content" style="max-width: 500px;">
+    <div class="modal-content" style="max-width: 420px;">
       <div class="modal-header">
-        <h3><i class="fa-solid fa-user-pen"></i> تعديل بيانات وصلاحيات الطالب</h3>
+        <h3 style="font-size:14px;"><i class="fa-solid fa-user-pen"></i> تعديل طالب</h3>
         <button class="close-modal-btn" id="closeEditStudentModal">&times;</button>
       </div>
-      <form id="editStudentForm" style="padding:20px; display:flex; flex-direction:column; gap:14px;">
+      <form id="editStudentForm" style="padding:14px; display:flex; flex-direction:column; gap:10px; width:100%; box-sizing:border-box;">
         <input type="hidden" id="editStudentId">
         <div class="form-group">
           <label>الاسم الثلاثي:</label>
@@ -885,16 +799,16 @@
           <input type="text" id="editStudentPass" class="custom-input" required>
         </div>
         <div class="form-group">
-          <label>الرمز السري الخاص بالطلاب:</label>
+          <label>الكود السري (6 أرقام):</label>
           <input type="text" id="editStudentSecretCode" class="custom-input secret-input" required>
         </div>
         <div class="form-group">
-          <label>عدد الحصص المسموحة:</label>
+          <label>عدد الحصص:</label>
           <input type="number" id="editStudentLimit" class="custom-input" min="1" max="50" required>
         </div>
-        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:10px;">
-          <button type="button" class="btn btn-secondary" id="cancelEditStudentBtn">إلغاء</button>
-          <button type="submit" class="btn btn-primary"><i class="fa-solid fa-save"></i> حفظ التعديلات</button>
+        <div style="display:flex; justify-content:flex-end; gap:6px; margin-top:6px;">
+          <button type="button" class="btn btn-secondary btn-sm" id="cancelEditStudentBtn">إلغاء</button>
+          <button type="submit" class="btn btn-primary btn-sm"><i class="fa-solid fa-save"></i> حفظ</button>
         </div>
       </form>
     </div>
@@ -902,36 +816,35 @@
 
   <!-- Modal Book -->
   <div class="modal" id="bookModal">
-    <div class="modal-content">
+    <div class="modal-content" style="max-width: 420px;">
       <div class="modal-header">
-        <h3><i class="fa-solid fa-calendar-check"></i> تأكيد حجز الموعد</h3>
+        <h3 style="font-size:14px;"><i class="fa-solid fa-calendar-check"></i> تأكيد الحجز</h3>
         <button class="close-modal-btn" id="closeBookModal">&times;</button>
       </div>
-      <form id="bookForm" style="padding:20px; display:flex; flex-direction:column; gap:14px;">
-        <div style="background:rgba(255,109,0,0.08); padding:12px; border-radius:8px; border:1px solid rgba(255,109,0,0.3); font-size:13px;">
+      <form id="bookForm" style="padding:14px; display:flex; flex-direction:column; gap:10px; width:100%; box-sizing:border-box;">
+        <div style="background:rgba(255,109,0,0.08); padding:8px; border-radius:6px; border:1px solid rgba(255,109,0,0.3); font-size:11px;">
           <p><strong>اليوم:</strong> <span id="summaryDayName">-</span> (<span id="summaryDate">-</span>)</p>
           <p><strong>الفترة:</strong> <span id="summaryTime">-</span></p>
-          <p><strong>المعلم:</strong> الأستاذ جواد بدري</p>
         </div>
         <div class="form-group">
-          <label>اسم الطالب (الثلاثي):</label>
+          <label>اسم الطالب:</label>
           <input type="text" id="bookStudentName" class="custom-input" readonly>
         </div>
         <div class="form-group">
-          <label>رقم الواتساب المسجل:</label>
+          <label>رقم الواتساب:</label>
           <input type="text" id="bookStudentContact" class="custom-input" readonly>
         </div>
         <div class="form-group">
-          <label>ملاحظاتك للحصة:</label>
-          <textarea id="studentNotes" class="custom-input" rows="2" placeholder="مبتدئ، أود التركيز على بناء الصفحات..."></textarea>
+          <label>ملاحظات:</label>
+          <textarea id="studentNotes" class="custom-input" rows="2" placeholder="ملاحظاتك للحصة..."></textarea>
         </div>
         <label class="checkbox-container">
           <input type="checkbox" id="showMyNamePublicly" checked>
-          <span><strong>إظهار اسمي على الموعد المقفل</strong></span>
+          <span>إظهار اسمي على الموعد المقفل</span>
         </label>
-        <div style="display:flex; justify-content:flex-end; gap:10px;">
-          <button type="button" class="btn btn-secondary" id="cancelBookBtn">إلغاء</button>
-          <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check"></i> تأكيد الحجز</button>
+        <div style="display:flex; justify-content:flex-end; gap:6px;">
+          <button type="button" class="btn btn-secondary btn-sm" id="cancelBookBtn">إلغاء</button>
+          <button type="submit" class="btn btn-primary btn-sm"><i class="fa-solid fa-check"></i> تأكيد</button>
         </div>
       </form>
     </div>
@@ -939,22 +852,18 @@
 
   <!-- Modal Settings -->
   <div class="modal" id="settingsModal">
-    <div class="modal-content">
+    <div class="modal-content" style="max-width: 400px;">
       <div class="modal-header">
-        <h3><i class="fa-solid fa-gear"></i> إعدادات المنصة</h3>
+        <h3 style="font-size:14px;"><i class="fa-solid fa-gear"></i> الإعدادات</h3>
         <button class="close-modal-btn" id="closeSettingsModal">&times;</button>
       </div>
-      <div style="padding:24px; display:flex; flex-direction:column; gap:18px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-card); padding:14px; border-radius:12px; border:1px solid var(--border-color);">
-          <div><strong>مظهر الموقع (صباحي / مسائي)</strong></div>
-          <div style="display:flex; gap:4px; background:var(--bg-secondary); padding:4px; border-radius:8px;">
-            <button class="btn btn-sm btn-secondary" id="dayThemeBtn"><i class="fa-solid fa-sun"></i> صباحي</button>
-            <button class="btn btn-sm btn-primary" id="nightThemeBtn"><i class="fa-solid fa-moon"></i> مسائي</button>
+      <div style="padding:16px; display:flex; flex-direction:column; gap:12px; width:100%; box-sizing:border-box;">
+        <div style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-card); padding:10px; border-radius:8px; border:1px solid var(--border-color); width:100%; box-sizing:border-box;">
+          <span style="font-size:12px;">مظهر الموقع</span>
+          <div style="display:flex; gap:3px; background:var(--bg-secondary); padding:2px; border-radius:6px;">
+            <button class="btn btn-sm btn-secondary" id="dayThemeBtn"><i class="fa-solid fa-sun"></i></button>
+            <button class="btn btn-sm btn-primary" id="nightThemeBtn"><i class="fa-solid fa-moon"></i></button>
           </div>
-        </div>
-        <div style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-card); padding:14px; border-radius:12px; border:1px solid var(--border-color);">
-          <div><strong>إشعارات الجهاز الحقيقية (Push)</strong></div>
-          <button class="btn btn-sm btn-secondary" id="reqPushPermissionBtn"><i class="fa-solid fa-bell"></i> تفعيل إشعارات الجهاز</button>
         </div>
       </div>
     </div>
@@ -962,11 +871,10 @@
 
   <div class="toast-container" id="toastContainer"></div>
 
-  <!-- Firebase Integration -->
+  <!-- Firebase Integration الكاملة للسحابة المباشرة -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getDatabase, ref, set, get, onValue, push, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+    import { getDatabase, ref, set, onValue, push, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDYuDvEIFgLKFDld8DmL3InGVvtOEn0_-E",
@@ -980,9 +888,9 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
     const db = getDatabase(app);
 
+    // تفعيل الربط السحابي المباشر بالكامل
     window.FirebaseDB = {
       saveStudent(st) { set(ref(db, 'students/' + st.id), st); },
       listenStudents(callback) { onValue(ref(db, 'students'), (snap) => { callback(Object.values(snap.val() || {})); }); },
@@ -998,13 +906,13 @@
     };
   </script>
 
-  <!-- Main JavaScript -->
+  <!-- Main Application Logic مع المزامنة السحابية الشاملة -->
   <script>
     const CONFIG = {
       ADMIN_EMAIL: "Jawadbadry8@gmail.com",
       ADMIN_PASS: "J102013",
       DEFAULT_SECRET_CODE: "123456",
-      WEEKEND_DAYS: [5, 6], // الجمعة والسبت فقط إجازة، الخميس يوم عمل
+      WEEKEND_DAYS: [5, 6],
       STANDARD_SLOTS: [
         { id: "slot-1", start: "15:00", end: "15:45", label: "03:00 م - 03:45 م", duration: "45 دقيقة" },
         { id: "slot-2", start: "15:45", end: "16:30", label: "03:45 م - 04:30 م", duration: "45 دقيقة" },
@@ -1021,15 +929,14 @@
 
     const StorageService = {
       KEYS: {
-        STUDENTS: "jawad_html_students_v8",
-        CURRENT_USER: "jawad_html_user_v8",
-        SAVED_ACCOUNTS: "jawad_saved_accounts_v8",
-        BOOKINGS: "jawad_html_bookings_v8",
-        EMERGENCIES: "jawad_html_emergencies_v8",
-        NOTIFICATIONS: "jawad_html_notifs_v8",
-        CHAT: "jawad_html_chat_v8",
-        THEME: "jawad_html_theme_v8",
-        ALERTS_LOG: "jawad_html_alerts_v8"
+        STUDENTS: "jawad_html_students_v12",
+        CURRENT_USER: "jawad_html_user_v12",
+        SAVED_ACCOUNTS: "jawad_saved_accounts_v12",
+        BOOKINGS: "jawad_html_bookings_v12",
+        EMERGENCIES: "jawad_html_emergencies_v12",
+        NOTIFICATIONS: "jawad_html_notifs_v12",
+        CHAT: "jawad_html_chat_v12",
+        THEME: "jawad_html_theme_v12"
       },
       getStudents() { return JSON.parse(localStorage.getItem(this.KEYS.STUDENTS) || "[]"); },
       saveStudents(list) { localStorage.setItem(this.KEYS.STUDENTS, JSON.stringify(list)); },
@@ -1043,6 +950,15 @@
       deleteStudent(id) {
         let list = this.getStudents().filter(s => s.id !== id);
         this.saveStudents(list);
+        
+        let savedAccounts = this.getSavedAccounts().filter(acc => acc.id !== id);
+        localStorage.setItem(this.KEYS.SAVED_ACCOUNTS, JSON.stringify(savedAccounts));
+
+        const current = this.getCurrentUser();
+        if (current && current.id === id) {
+          this.clearCurrentUser();
+        }
+
         if (window.FirebaseDB) window.FirebaseDB.deleteStudent(id);
       },
       getSavedAccounts() { return JSON.parse(localStorage.getItem(this.KEYS.SAVED_ACCOUNTS) || "[]"); },
@@ -1092,15 +1008,6 @@
         const list = this.getNotifications();
         list.unshift(n);
         localStorage.setItem(this.KEYS.NOTIFICATIONS, JSON.stringify(list));
-      },
-      clearNotifications() { localStorage.setItem(this.KEYS.NOTIFICATIONS, JSON.stringify([])); },
-      getProcessedAlerts() { return JSON.parse(localStorage.getItem(this.KEYS.ALERTS_LOG) || "[]"); },
-      markAlertProcessed(k) {
-        const list = this.getProcessedAlerts();
-        if (!list.includes(k)) {
-          list.push(k);
-          localStorage.setItem(this.KEYS.ALERTS_LOG, JSON.stringify(list));
-        }
       }
     };
 
@@ -1115,25 +1022,6 @@
       activeChatStudentId: null
     };
 
-    function playNotificationChime() {
-      try {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        if (!AudioCtx) return;
-        const ctx = new AudioCtx();
-        const tone = (f, st, dur) => {
-          const osc = ctx.createOscillator();
-          const g = ctx.createGain();
-          osc.type = "sine";
-          osc.frequency.setValueAtTime(f, ctx.currentTime + st);
-          g.gain.setValueAtTime(0.2, ctx.currentTime + st);
-          g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + st + dur);
-          osc.connect(g); g.connect(ctx.destination);
-          osc.start(ctx.currentTime + st); osc.stop(ctx.currentTime + st + dur);
-        };
-        tone(587.33, 0, 0.2); tone(880, 0.15, 0.35);
-      } catch (e) {}
-    }
-
     function triggerDeviceNotificationForTarget(targetUserId, title, body, urgent = false) {
       StorageService.addNotification({
         id: "notif-" + Date.now(),
@@ -1142,19 +1030,10 @@
         time: new Date().toLocaleTimeString("ar-EG", { hour: "2-digit", minute: "2-digit" }),
         content: body
       });
-
       const user = AppState.currentUser;
       const isTargetOnline = user && ((targetUserId === "admin" && user.role === "admin") || user.id === targetUserId || targetUserId === "all");
       if (!isTargetOnline) return;
-
-      playNotificationChime();
-      if ("Notification" in window && Notification.permission === "granted") {
-        try {
-          new Notification(title, { body: body, icon: "https://cdn-icons-png.flaticon.com/512/1051/1051277.png" });
-        } catch (e) {}
-      }
-      createToast({ title, body, urgent, showTeacherBtn: (user.role === "student") });
-      renderNotificationsUI();
+      createToast({ title, body, urgent });
     }
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -1167,30 +1046,45 @@
       setupLogoutConfirmation();
       setupAccountSwitcher();
 
+      // الاستماع المباشر للتغييرات عبر الفايربيس للكمبيوتر والجوال بنفس اللحظة
       setTimeout(() => {
         if (window.FirebaseDB) {
           window.FirebaseDB.listenStudents((list) => {
             StorageService.saveStudents(list);
+            
+            const current = StorageService.getCurrentUser();
+            if (current && current.role === "student") {
+              const exists = list.some(s => s.id === current.id);
+              if (!exists) {
+                StorageService.clearCurrentUser();
+                checkAuthGate();
+                alert("تم حذف حسابك من قبل الإدارة. يرجى التواصل مع الأستاذ جواد.");
+              }
+            }
+
             renderAdminPermissionsTable();
             renderStudentsRoster();
           });
+          
           window.FirebaseDB.listenBookings((list) => {
             localStorage.setItem(StorageService.KEYS.BOOKINGS, JSON.stringify(list));
             renderMyBookings();
             renderAdminBookingsTable();
             if (AppState.selectedDateStr) renderSlotsForDay(AppState.selectedDateStr, AppState.selectedDayOfWeek);
           });
+
           window.FirebaseDB.listenChats((list) => {
             localStorage.setItem(StorageService.KEYS.CHAT, JSON.stringify(list));
             renderChatStream();
           });
+
           window.FirebaseDB.listenEmergencies((list) => {
             localStorage.setItem(StorageService.KEYS.EMERGENCIES, JSON.stringify(list));
             renderCalendar();
             renderEmergencyList();
           });
         }
-      }, 800);
+      }, 500);
     });
 
     function checkAuthGate() {
@@ -1198,9 +1092,20 @@
       const gate = document.getElementById("authGateOverlay");
       const app = document.getElementById("mainAppWrapper");
       const nameLabel = document.getElementById("currentUserNameLabel");
-      const adminHeaderBtn = document.getElementById("adminHeaderBtn");
+      const teacherPermissionsMenuBtn = document.getElementById("teacherPermissionsMenuBtn");
 
       if (user && user.isLoggedIn) {
+        if (user.role === "student") {
+          const students = StorageService.getStudents();
+          const validStudent = students.find(s => s.id === user.id);
+          if (!validStudent) {
+            StorageService.clearCurrentUser();
+            gate.classList.remove("gate-unlocked");
+            app.classList.add("main-app-hidden");
+            return;
+          }
+        }
+
         AppState.currentUser = user;
         gate.classList.add("gate-unlocked");
         app.classList.remove("main-app-hidden");
@@ -1208,27 +1113,26 @@
         const isTeacher = (user.role === "admin");
         if (isTeacher) {
           nameLabel.textContent = "الأستاذ جواد بدري (الإدارة)";
-          adminHeaderBtn.style.display = "inline-flex";
+          teacherPermissionsMenuBtn.style.display = "flex";
           document.getElementById("navChatLabel").textContent = "محادثات الطلاب";
           document.getElementById("heroBadgeTag").innerHTML = `<i class="fa-solid fa-user-shield"></i> لوحة تحكم الأستاذ جواد بدري`;
           document.getElementById("heroTitle").innerHTML = `إدارة حصص وبرمجة <span>HTML</span>`;
-          document.getElementById("heroDesc").textContent = `أهلاً بك أستاذ جواد، من هنا يمكنك مراجعة حجوزات الطلاب، إدارة الأكواد السرية بالصلاحيات، ومتابعة الشات.`;
+          document.getElementById("heroDesc").textContent = `أهلاً بك أستاذ جواد، يمكنك متابعة طلبات الأكواد وإدارة الحصص من قائمة الخيارات الجانبية (☰).`;
           document.getElementById("heroPrimaryAction").textContent = "معاينة جدول الحصص";
           document.getElementById("heroChatBtnLabel").textContent = "فتح محادثات الطلاب";
           document.getElementById("myBookingsContainerWrapper").style.display = "none";
         } else {
           nameLabel.textContent = user.fullName;
-          adminHeaderBtn.style.display = "none";
+          teacherPermissionsMenuBtn.style.display = "none";
           document.getElementById("navChatLabel").textContent = "الرسائل المباشرة";
           document.getElementById("heroBadgeTag").innerHTML = `<i class="fa-solid fa-award"></i> حصص فردية ومباشرة مع الأستاذ جواد بدري`;
           document.getElementById("heroTitle").innerHTML = `تعلم واحتراف لغة <span>HTML5</span> من الصفر وحتى الإتقان`;
-          document.getElementById("heroDesc").textContent = `حصص فردية ومباشرة عبر Google Meet مع الأستاذ جواد بدري مع إشعارات ذكية بالصوت والجهاز ومتابعة مستمرة.`;
+          document.getElementById("heroDesc").textContent = `حصص فردية ومباشرة عبر Google Meet مع الأستاذ جواد بدري مع متابعة مستمرة.`;
           document.getElementById("heroPrimaryAction").textContent = "احجز موعدك من جدول الأيام";
           document.getElementById("heroChatBtnLabel").textContent = "فتح الشات مع الأستاذ";
           document.getElementById("myBookingsContainerWrapper").style.display = "block";
         }
         renderMyBookings();
-        renderNotificationsUI();
         renderCalendar();
         renderAccountSwitcherUI();
       } else {
@@ -1243,7 +1147,10 @@
       const dropdown = document.getElementById("accountSwitcherDropdown");
       const addBtn = document.getElementById("addAccountBtn");
 
-      pill?.addEventListener("click", (e) => { e.stopPropagation(); dropdown.classList.toggle("active"); });
+      pill?.addEventListener("click", (e) => { 
+        e.stopPropagation(); 
+        dropdown.classList.toggle("active"); 
+      });
       document.addEventListener("click", () => dropdown?.classList.remove("active"));
       addBtn?.addEventListener("click", () => {
         document.getElementById("authGateOverlay").classList.remove("gate-unlocked");
@@ -1264,7 +1171,7 @@
         item.className = `account-item ${isActive ? "active-account" : ""}`;
         item.innerHTML = `
           <i class="fa-solid ${acc.role === 'admin' ? 'fa-user-shield' : 'fa-user'}"></i>
-          <span style="flex:1;">${acc.fullName || acc.email}</span>
+          <span style="flex:1; overflow:hidden; text-overflow:ellipsis;">${acc.fullName || acc.email}</span>
           ${isActive ? '<i class="fa-solid fa-check"></i>' : ''}
         `;
         item.addEventListener("click", () => {
@@ -1277,7 +1184,7 @@
     }
 
     function setupLogoutConfirmation() {
-      const triggerBtn = document.getElementById("triggerLogoutBtn");
+      const triggerBtn = document.getElementById("mobileTriggerLogoutBtn");
       const modal = document.getElementById("logoutConfirmModal");
       const cancelBtn = document.getElementById("cancelLogoutBtn");
       const confirmBtn = document.getElementById("confirmLogoutActionBtn");
@@ -1316,26 +1223,24 @@
         tabAdm.classList.add("active"); formAdm.classList.add("active");
       });
 
-      // زر طلب الكود السري (يولد الكود تلقائياً ويضعه في الصلاحيات مباشرة بدون إزعاج في الشات)
       document.getElementById("requestSecretCodeBtn")?.addEventListener("click", () => {
         const fullName = document.getElementById("regStudentFullName").value.trim();
         const whatsapp = document.getElementById("regStudentWhatsapp").value.trim();
         const email = document.getElementById("regStudentEmail").value.trim();
         const pass = document.getElementById("regStudentPass").value.trim();
 
-        if (!fullName || fullName.split(/\s+/).filter(Boolean).length < 2) {
-          alert("الرجاء إدخال اسمك ورقم الواتساب أولاً لطلب الرمز السري!");
+        if (!fullName || fullName.split(/\s+/).filter(Boolean).length < 2 || !whatsapp) {
+          alert("الرجاء إدخال اسمك ورقم الواتساب أولاً لطلب الكود!");
           return;
         }
 
         const randomCode = Math.floor(100000 + Math.random() * 900000).toString();
         
-        // حفظ الطالب بصفة "قيد الانتظار" مع الكود المولد ليظهر في لوحة الصلاحيات بالأستاذ
         const tempStudent = {
           id: "student-" + Date.now(),
           fullName: fullName,
           whatsapp: whatsapp,
-          email: email || `${Date.now()}$@student.com`,
+          email: email || `${Date.now()}@student.com`,
           password: pass || "123456",
           secretCode: randomCode,
           sessionsLimit: 3,
@@ -1345,13 +1250,10 @@
         };
 
         StorageService.addStudent(tempStudent);
-        document.getElementById("regSecretCode").value = randomCode;
-
-        document.getElementById("secretCodeStatusHint").innerHTML = `<span style="color:var(--color-success); font-weight:800;"><i class="fa-solid fa-circle-check"></i> تم توليد الكود السري بنجاح وأرسل إلى لوحة الصلاحيات لدى الأستاذ جواد! الكود الخاص بك: ${randomCode}</span>`;
-        alert(`تم طلب الرمز السري بنجاح! الكود المخصص لك هو: ${randomCode} وتم وضعه تلقائياً في خانة الكود.`);
+        document.getElementById("secretCodeStatusHint").innerHTML = `<span style="color:var(--color-success); font-weight:800;"><i class="fa-solid fa-circle-check"></i> تم إرسال طلبك للأستاذ جواد بنجاح! تواصل معه لإعطائك الكود بعد الدفع.</span>`;
+        alert(`تم إرسال طلبك بنجاح إلى لوحة الأستاذ جواد عبر السحابة! تواصل معه عبر الواتساب لتزويدك بالكود السري الخاص بك.`);
       });
 
-      // تسجيل طالب جديد
       formReg?.addEventListener("submit", (e) => {
         e.preventDefault();
         const errEl = document.getElementById("regErrorMsg");
@@ -1360,11 +1262,10 @@
         const fullName = document.getElementById("regStudentFullName").value.trim();
         const whatsapp = document.getElementById("regStudentWhatsapp").value.trim();
         const email = document.getElementById("regStudentEmail").value.trim();
-        const pass = document.getElementById("regStudentPass").value.trim();
         const code = document.getElementById("regSecretCode").value.trim();
 
         if (fullName.split(/\s+/).filter(Boolean).length < 3) {
-          errEl.textContent = "يجب كتابة الاسم الثلاثي كاملاً (3 أسماء على الأقل)";
+          errEl.textContent = "يجب كتابة الاسم الثلاثي كاملاً (3 أسماء)";
           errEl.style.display = "block";
           return;
         }
@@ -1373,32 +1274,24 @@
         let existing = students.find(s => s.whatsapp === whatsapp || s.email === email);
 
         if (existing) {
+          if (existing.secretCode && existing.secretCode !== code) {
+            errEl.textContent = "الكود السري غير صحيح! تواصل مع الأستاذ جواد للحصول على الكود الصحيح.";
+            errEl.style.display = "block";
+            return;
+          }
           existing.isLoggedIn = true;
-          existing.secretCode = code || existing.secretCode;
           StorageService.addStudent(existing);
           StorageService.setCurrentUser(existing);
         } else {
-          const newStudent = {
-            id: "student-" + Date.now(),
-            fullName: fullName,
-            whatsapp: whatsapp,
-            email: email,
-            password: pass,
-            secretCode: code || CONFIG.DEFAULT_SECRET_CODE,
-            sessionsLimit: 3,
-            role: "student",
-            isLoggedIn: true,
-            registeredAt: new Date().toLocaleDateString("ar-EG")
-          };
-          StorageService.addStudent(newStudent);
-          StorageService.setCurrentUser(newStudent);
+          errEl.textContent = "لم تقم بطلب كود سري مسبقاً! اضغط زر طلب الكود أولاً.";
+          errEl.style.display = "block";
+          return;
         }
 
-        triggerDeviceNotificationForTarget("admin", "طالب جديد انضم للأكاديمية!", `سجل الطالب: ${fullName}`);
+        triggerDeviceNotificationForTarget("admin", "محاولة تسجيل طالب!", `حاول الطالب ${fullName} تسجيل الدخول.`);
         checkAuthGate();
       });
 
-      // دخول طالب
       formLog?.addEventListener("submit", (e) => {
         e.preventDefault();
         const errEl = document.getElementById("loginErrorMsg");
@@ -1413,12 +1306,11 @@
           StorageService.setCurrentUser(st);
           checkAuthGate();
         } else {
-          errEl.textContent = "بيانات الدخول غير صحيحة!";
+          errEl.textContent = "بيانات الدخول غير صحيحة أو لم يتم اعتمادك بعد!";
           errEl.style.display = "block";
         }
       });
 
-      // دخول الأدمن (الأستاذ جواد)
       formAdm?.addEventListener("submit", (e) => {
         e.preventDefault();
         const errEl = document.getElementById("adminGateError");
@@ -1480,7 +1372,7 @@
         const dayName = ARABIC_DAYS[dayOfWeek];
         const dateStr = `${y}-${String(m + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
 
-        const isWeekend = CONFIG.WEEKEND_DAYS.includes(dayOfWeek); // الجمعة والسبت فقط إجازة
+        const isWeekend = CONFIG.WEEKEND_DAYS.includes(dayOfWeek);
         const isPast = dateObj < today;
         const emergencyObj = emergencies.find(e => e.date === dateStr);
         const isSelected = AppState.selectedDateStr === dateStr;
@@ -1493,10 +1385,10 @@
 
         if (emergencyObj) {
           btn.classList.add("is-emergency"); btn.disabled = true;
-          innerHtml += `<span class="day-status-pill">(ظرف طارئ)</span>`;
+          innerHtml += `<span class="day-status-pill">(ظرف)</span>`;
         } else if (isWeekend) {
           btn.classList.add("is-weekend"); btn.disabled = true;
-          innerHtml += `<span class="day-status-pill">إجازة أسبوعية</span>`;
+          innerHtml += `<span class="day-status-pill">إجازة</span>`;
         } else if (isPast) {
           btn.classList.add("is-past"); btn.disabled = true;
           innerHtml += `<span class="day-status-pill">انتهى</span>`;
@@ -1531,13 +1423,9 @@
       if (!container) return;
 
       container.innerHTML = "";
-      const isShortDay = (dayOfWeek === 3 || dayOfWeek === 4); // الأربعاء والخميس حصص لمدة ربع ساعة
+      const isShortDay = (dayOfWeek === 3 || dayOfWeek === 4);
 
-      if (isShortDay) {
-        notice.style.display = "flex";
-      } else {
-        notice.style.display = "none";
-      }
+      if (isShortDay) notice.style.display = "flex"; else notice.style.display = "none";
 
       const slots = isShortDay ? CONFIG.SHORT_SLOTS : CONFIG.STANDARD_SLOTS;
       const allBookings = StorageService.getBookings();
@@ -1552,16 +1440,16 @@
 
         if (booked) {
           card.disabled = true;
-          let bookedDisplayName = (booked.showNamePublicly || isTeacher) ? `محجوز لـ: ${booked.studentName}` : "محجوز لطالب";
+          let bookedDisplayName = (booked.showNamePublicly || isTeacher) ? `محجوز: ${booked.studentName}` : "محجوز";
           card.innerHTML = `
             <div class="slot-time"><i class="fa-solid fa-clock"></i> ${slot.label}</div>
-            <div class="slot-duration">المدة: ${slot.duration}</div>
+            <div class="slot-duration">${slot.duration}</div>
             <div class="badge-status badge-danger"><i class="fa-solid fa-ban"></i> ${bookedDisplayName}</div>
           `;
         } else {
           card.innerHTML = `
             <div class="slot-time"><i class="fa-regular fa-clock"></i> ${slot.label}</div>
-            <div class="slot-duration">المدة: ${slot.duration} عبر Google Meet</div>
+            <div class="slot-duration">${slot.duration} عبر Meet</div>
             <div class="badge-status"><i class="fa-solid fa-check"></i> متاح للحجز</div>
           `;
           card.addEventListener("click", () => openBookingModal(dateStr, slot));
@@ -1578,7 +1466,7 @@
         const studentBookings = StorageService.getBookings().filter(b => b.studentId === user.id);
         const limit = user.sessionsLimit || 3;
         if (studentBookings.length >= limit) {
-          alert(`عذراً يا ${user.fullName}، لقد وصلت إلى الحد الأقصى للحصص المسموحة لك (${limit} حصص).`);
+          alert(`وصلت للحد الأقصى من الحصص (${limit}).`);
           return;
         }
       }
@@ -1621,7 +1509,7 @@
       };
 
       StorageService.addBooking(newBooking);
-      triggerDeviceNotificationForTarget("admin", "طلب حجز حصة جديدة!", `طلب الطالب ${user.fullName} حجز حصة يوم ${newBooking.dayName} (${newBooking.date}).`);
+      triggerDeviceNotificationForTarget("admin", "طلب حجز حصة!", `طلب الطالب ${user.fullName} حجز يوم ${newBooking.dayName}.`);
       document.getElementById("bookModal").classList.remove("active");
       e.target.reset();
       renderSlotsForDay(AppState.selectedDateStr, AppState.selectedDayOfWeek);
@@ -1642,7 +1530,7 @@
       badge.textContent = myBookings.length;
 
       if (myBookings.length === 0) {
-        container.innerHTML = `<div style="padding:20px; text-align:center; color:var(--text-muted); grid-column:1/-1;">لا توجد لديك حصص محجوزة.</div>`;
+        container.innerHTML = `<div style="padding:14px; text-align:center; color:var(--text-muted); grid-column:1/-1;">لا توجد حصص محجوزة.</div>`;
         return;
       }
 
@@ -1651,23 +1539,23 @@
         const card = document.createElement("div");
         card.className = "booking-item-card";
 
-        let approvalBadge = b.status === "approved" ? `<span class="badge-approved">موافق عليه</span>` :
-                            b.status === "rejected" ? `<span class="badge-status badge-danger">مرفوض: ${b.rejectionReason}</span>` :
+        let approvalBadge = b.status === "approved" ? `<span class="badge-approved">موافق</span>` :
+                            b.status === "rejected" ? `<span class="badge-status badge-danger">مرفوض</span>` :
                             `<span class="badge-pending">قيد المراجعة</span>`;
 
         let meetSection = (b.status === "approved" && b.zoomLink) ? `
-          <div class="zoom-cta-box"><a href="${b.zoomLink}" target="_blank" class="zoom-join-btn"><i class="fa-solid fa-video"></i> الدخول للحصة عبر Google Meet</a></div>
-        ` : `<div class="zoom-cta-box" style="font-size:12px; color:var(--text-muted);">رابط Google Meet سيظهر بعد الموافقة</div>`;
+          <div class="zoom-cta-box"><a href="${b.zoomLink}" target="_blank" class="zoom-join-btn"><i class="fa-solid fa-video"></i> دخول الحصة (Meet)</a></div>
+        ` : `<div class="zoom-cta-box" style="font-size:10px; color:var(--text-muted);">رابط Meet سيظهر بعد الموافقة</div>`;
 
         card.innerHTML = `
-          <div class="booking-item-top">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px; width:100%;">
             <div>
-              <strong>${b.dayName} (${b.date})</strong>
-              <div style="color:var(--brand-orange); font-size:13px; font-weight:700;">${b.slotLabel}</div>
+              <strong style="font-size:12px;">${b.dayName} (${b.date})</strong>
+              <div style="color:var(--brand-orange); font-size:11px; font-weight:700;">${b.slotLabel}</div>
             </div>
             ${approvalBadge}
           </div>
-          <div style="font-size:13px; color:var(--text-muted);">
+          <div style="font-size:11px; color:var(--text-muted);">
             <div><strong>الطالب:</strong> ${b.studentName}</div>
             ${b.notes ? `<div><strong>ملاحظة:</strong> ${b.notes}</div>` : ""}
           </div>
@@ -1679,7 +1567,7 @@
 
     function initAdminPanel() {
       const modal = document.getElementById("adminDashboardModal");
-      const btn = document.getElementById("adminHeaderBtn");
+      const btn = document.getElementById("teacherPermissionsMenuBtn");
       const closeBtn = document.getElementById("closeAdminDashModal");
 
       btn?.addEventListener("click", () => {
@@ -1702,7 +1590,7 @@
       document.getElementById("applyEmergencyDayBtn")?.addEventListener("click", () => {
         const dateVal = document.getElementById("emergencyDateInput").value;
         const reasonVal = document.getElementById("emergencyReasonInput").value;
-        if (!dateVal) { alert("حدد التاريخ أولاً"); return; }
+        if (!dateVal) { alert("حدد التاريخ"); return; }
         StorageService.addEmergency(dateVal, reasonVal);
         renderEmergencyList();
         renderCalendar();
@@ -1715,9 +1603,9 @@
       const students = StorageService.getStudents();
       if (!tbody) return;
 
-      badge.textContent = `${students.length} طالب مسجل`;
+      badge.textContent = `${students.length} طالب`;
       if (students.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:20px; color:var(--text-muted);">لا يوجد طلاب</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:14px; color:var(--text-muted);">لا يوجد طلاب</td></tr>`;
         return;
       }
 
@@ -1725,17 +1613,17 @@
       students.forEach(s => {
         const tr = document.createElement("tr");
         const cleanWhatsapp = (s.whatsapp || "").replace(/[^0-9]/g, "");
-        const waBtn = cleanWhatsapp ? `<a href="https://wa.me/${cleanWhatsapp}" target="_blank" class="btn btn-sm btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> واتساب</a>` : "غير متوفر";
+        const waBtn = cleanWhatsapp ? `<a href="https://wa.me/${cleanWhatsapp}" target="_blank" class="btn btn-sm btn-whatsapp"><i class="fa-brands fa-whatsapp"></i></a>` : "-";
 
         tr.innerHTML = `
           <td><strong>${s.fullName}</strong></td>
-          <td>${s.whatsapp || "لا يوجد"}</td>
-          <td><span class="badge-status badge-warning" style="font-family:var(--font-mono); font-size:14px; letter-spacing:1px;">${s.secretCode || CONFIG.DEFAULT_SECRET_CODE}</span></td>
-          <td><span class="badge-status">${s.sessionsLimit || 3} حصص</span></td>
-          <td><button class="btn btn-sm btn-primary view-student-schedule-btn" data-id="${s.id}" data-name="${s.fullName}">جدول الطالب</button></td>
+          <td>${s.whatsapp || "-"}</td>
+          <td><span class="badge-status badge-warning" style="font-family:var(--font-mono); font-size:11px; letter-spacing:1px;">${s.secretCode || CONFIG.DEFAULT_SECRET_CODE}</span></td>
+          <td><span class="badge-status">${s.sessionsLimit || 3}</span></td>
+          <td><button class="btn btn-sm btn-primary view-student-schedule-btn" data-id="${s.id}" data-name="${s.fullName}">الجدول</button></td>
           <td>${waBtn}</td>
           <td><button class="btn btn-sm btn-secondary edit-student-btn" data-id="${s.id}">تعديل</button></td>
-          <td><button class="btn btn-sm btn-danger delete-student-btn" data-id="${s.id}"><i class="fa-solid fa-trash"></i></button></td>
+          <td><button class="btn btn-sm btn-danger delete-student-btn" data-id="${s.id}"><i class="fa-solid fa-trash"></i> مسح ومنع</button></td>
         `;
         tbody.appendChild(tr);
       });
@@ -1748,9 +1636,12 @@
       });
       tbody.querySelectorAll(".delete-student-btn").forEach(b => {
         b.addEventListener("click", () => {
-          if (confirm("هل أنت متأكد من حذف الطالب نهائياً؟")) {
-            StorageService.deleteStudent(b.getAttribute("data-id"));
+          if (confirm("هل تريد حقاً مسح هذا الطالب؟ سيتم طرده ومنعه من الدخول ولن يتمكن من الدخول إلا بتسجيل جديد.")) {
+            const studentIdToDelete = b.getAttribute("data-id");
+            StorageService.deleteStudent(studentIdToDelete);
             renderAdminPermissionsTable();
+            checkAuthGate();
+            createToast({ title: "تم حذف الطالب بنجاح", body: "تم إيقاف صلاحية وحساب الطالب ومنعه من الدخول.", urgent: true });
           }
         });
       });
@@ -1766,14 +1657,14 @@
 
       const studentBookings = StorageService.getBookings().filter(b => b.studentId === studentId);
       if (studentBookings.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:20px; color:var(--text-muted);">لا توجد حصص محجوزة لهذا الطالب</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:14px; color:var(--text-muted);">لا توجد حصص محجوزة</td></tr>`;
         return;
       }
 
       tbody.innerHTML = "";
       studentBookings.forEach(b => {
         const tr = document.createElement("tr");
-        let statusText = b.status === "approved" ? '<span class="badge-approved">موافق عليه</span>' :
+        let statusText = b.status === "approved" ? '<span class="badge-approved">موافق</span>' :
                          b.status === "rejected" ? `<span class="badge-status badge-danger">مرفوض</span>` :
                          '<span class="badge-pending">قيد الانتظار</span>';
 
@@ -1782,12 +1673,12 @@
           <td>${b.slotLabel}</td>
           <td>${statusText}</td>
           <td>
-            <button class="btn btn-sm btn-primary approve-session-btn" data-id="${b.id}" data-st="${studentId}">موافقة</button>
-            <button class="btn btn-sm btn-danger reject-session-btn" data-id="${b.id}" data-st="${studentId}">رفض</button>
+            <button class="btn btn-sm btn-primary approve-session-btn" data-id="${b.id}" style="width:auto; padding:3px 6px; font-size:10px;">موافقة</button>
+            <button class="btn btn-sm btn-danger reject-session-btn" data-id="${b.id}" style="width:auto; padding:3px 6px; font-size:10px;">رفض</button>
           </td>
           <td>
-            <input type="text" class="custom-input" id="zoom-in-${b.id}" value="${b.zoomLink || ""}" placeholder="Meet Link" style="padding:6px; font-size:12px; direction:ltr; display:inline-block; width:140px;">
-            <button class="btn btn-sm btn-primary save-zoom-action" data-id="${b.id}" data-st="${studentId}">حفظ</button>
+            <input type="text" class="custom-input" id="zoom-in-${b.id}" value="${b.zoomLink || ""}" placeholder="Meet Link" style="padding:4px; font-size:10px; direction:ltr; width:100px; display:inline-block;">
+            <button class="btn btn-sm btn-primary save-zoom-action" data-id="${b.id}" style="width:auto; padding:3px 6px; font-size:10px;">حفظ</button>
           </td>
         `;
         tbody.appendChild(tr);
@@ -1802,7 +1693,7 @@
       });
       tbody.querySelectorAll(".reject-session-btn").forEach(btn => {
         btn.addEventListener("click", () => {
-          const reason = prompt("سبب الاعتذار:", "ظرف طارئ");
+          const reason = prompt("سبب الرفض:", "ظرف طارئ");
           if (reason) {
             StorageService.updateBookingStatus(btn.getAttribute("data-id"), "rejected", undefined, reason);
             openStudentScheduleModal(studentId, studentName);
@@ -1814,7 +1705,7 @@
         btn.addEventListener("click", () => {
           const val = document.getElementById(`zoom-in-${btn.getAttribute("data-id")}`).value.trim();
           StorageService.updateBookingStatus(btn.getAttribute("data-id"), undefined, val);
-          alert("تم حفظ الرابط!");
+          alert("تم حفظ رابط Meet!");
           renderMyBookings();
         });
       });
@@ -1850,7 +1741,7 @@
         StorageService.addStudent(st);
         document.getElementById("editStudentModal").classList.remove("active");
         renderAdminPermissionsTable();
-        alert("تم حفظ التعديلات بنجاح!");
+        alert("تم الحفظ!");
       }
     });
 
@@ -1863,33 +1754,33 @@
       if (!tbody) return;
 
       if (bookings.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:20px; color:var(--text-muted);">لا توجد حجوزات</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:14px; color:var(--text-muted);">لا توجد حجوزات</td></tr>`;
         return;
       }
 
       tbody.innerHTML = "";
       bookings.forEach(b => {
         const tr = document.createElement("tr");
-        let statusBadge = b.status === "approved" ? '<span class="badge-approved">موافق عليه</span>' :
+        let statusBadge = b.status === "approved" ? '<span class="badge-approved">موافق</span>' :
                             b.status === "rejected" ? `<span class="badge-status badge-danger">مرفوض</span>` :
                             '<span class="badge-pending">قيد الانتظار</span>';
 
         tr.innerHTML = `
           <td><strong>${b.studentName}</strong></td>
-          <td>${b.studentWhatsapp || "لا يوجد"}</td>
+          <td>${b.studentWhatsapp || "-"}</td>
           <td>${b.dayName} (${b.date})</td>
           <td>${b.slotLabel}</td>
           <td>${statusBadge}</td>
           <td>
-            <button class="btn btn-sm btn-primary approve-btn" data-id="${b.id}">موافقة</button>
-            <button class="btn btn-sm btn-danger reject-btn" data-id="${b.id}">رفض</button>
+            <button class="btn btn-sm btn-primary approve-btn" data-id="${b.id}" style="width:auto; padding:3px 6px; font-size:10px;">موافقة</button>
+            <button class="btn btn-sm btn-danger reject-btn" data-id="${b.id}" style="width:auto; padding:3px 6px; font-size:10px;">رفض</button>
           </td>
           <td>
-            <input type="text" class="custom-input" id="zoom-all-${b.id}" value="${b.zoomLink || ""}" placeholder="Meet Link" style="padding:6px; font-size:12px; direction:ltr; width:130px; display:inline-block;">
-            <button class="btn btn-sm btn-primary save-zoom-all-btn" data-id="${b.id}">حفظ</button>
+            <input type="text" class="custom-input" id="zoom-all-${b.id}" value="${b.zoomLink || ""}" placeholder="Meet Link" style="padding:4px; font-size:10px; direction:ltr; width:90px; display:inline-block;">
+            <button class="btn btn-sm btn-primary save-zoom-all-btn" data-id="${b.id}" style="width:auto; padding:3px 6px; font-size:10px;">حفظ</button>
           </td>
           <td>
-            <button class="btn btn-sm btn-danger delete-booking-admin-btn" data-id="${b.id}" title="إلغاء وحذف الحجز كمعلم"><i class="fa-solid fa-trash-can"></i> حذف وحجز جديد</button>
+            <button class="btn btn-sm btn-danger delete-booking-admin-btn" data-id="${b.id}" style="width:auto; padding:3px 6px; font-size:10px;"><i class="fa-solid fa-trash-can"></i> إلغاء</button>
           </td>
         `;
         tbody.appendChild(tr);
@@ -1917,10 +1808,9 @@
           alert("تم حفظ الرابط!"); renderMyBookings();
         });
       });
-      // زر إلغاء وحذف الحجز من قبل المعلم
       tbody.querySelectorAll(".delete-booking-admin-btn").forEach(btn => {
         btn.addEventListener("click", () => {
-          if (confirm("هل أنت متأكد من إلغاء وحذف هذا الحجز كمعلم؟ (سيصبح الموعد متاحاً للحجز مجدداً)")) {
+          if (confirm("إلغاء وحذف هذا الحجز كمعلم؟")) {
             StorageService.deleteBooking(btn.getAttribute("data-id"));
             renderAdminBookingsTable(); renderMyBookings();
             if (AppState.selectedDateStr) renderSlotsForDay(AppState.selectedDateStr, AppState.selectedDayOfWeek);
@@ -1937,9 +1827,9 @@
       container.innerHTML = "";
       list.forEach(item => {
         const div = document.createElement("div");
-        div.style.cssText = "display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.2); padding:10px 14px; border-radius:8px; margin-bottom:8px;";
+        div.style.cssText = "display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.2); padding:6px 10px; border-radius:6px; margin-bottom:5px; font-size:11px; width:100%; box-sizing:border-box;";
         div.innerHTML = `<div><strong>${item.date}:</strong> <span style="color:var(--color-warning)">${item.reason}</span></div>
-          <button class="btn btn-sm btn-secondary" onclick="removeEmergencyDayAction('${item.date}')">إلغاء الظرف وإتاحة اليوم</button>`;
+          <button class="btn btn-sm btn-secondary" style="width:auto; padding:2px 6px; font-size:10px;" onclick="removeEmergencyDayAction('${item.date}')">إلغاء الظرف</button>`;
         container.appendChild(div);
       });
     }
@@ -1953,13 +1843,12 @@
       const modal = document.getElementById("fullPageChatModal");
       const closeBtn = document.getElementById("closeFullChatBtn");
       const openNav = document.getElementById("navOpenChatBtn");
-      const openIcon = document.getElementById("fullChatIconBtn");
       const heroBtn = document.getElementById("heroChatBtn");
-      const adminOpen = document.getElementById("adminOpenChatBtn");
 
       const openFn = () => { modal.classList.add("active"); renderStudentsRoster(); renderChatStream(); };
-      [openNav, openIcon, heroBtn, adminOpen].forEach(b => b?.addEventListener("click", openFn));
+      [openNav, heroBtn].forEach(b => b?.addEventListener("click", openFn));
       closeBtn?.addEventListener("click", () => modal.classList.remove("active"));
+      document.getElementById("adminOpenChatBtn")?.addEventListener("click", openFn);
 
       document.getElementById("fullChatSendForm")?.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -1998,7 +1887,7 @@
       const filtered = q ? students.filter(s => s.fullName.toLowerCase().includes(q.toLowerCase())) : students;
 
       if (filtered.length === 0) {
-        list.innerHTML = `<div style="padding:14px; text-align:center; font-size:12px; color:var(--text-muted)">لا يوجد طلاب</div>`;
+        list.innerHTML = `<div style="padding:8px; text-align:center; font-size:10px; color:var(--text-muted)">لا يوجد طلاب</div>`;
         return;
       }
 
@@ -2010,8 +1899,8 @@
         item.innerHTML = `
           <div class="roster-avatar">${initials}</div>
           <div style="flex:1; overflow:hidden;">
-            <strong style="display:block; font-size:13px; color:var(--text-heading);">${s.fullName}</strong>
-            <span style="font-size:11px; color:var(--color-whatsapp);"><i class="fa-brands fa-whatsapp"></i> ${s.whatsapp || s.email}</span>
+            <strong style="display:block; font-size:11px; color:var(--text-heading);">${s.fullName}</strong>
+            <span style="font-size:9px; color:var(--color-whatsapp);"><i class="fa-brands fa-whatsapp"></i> ${s.whatsapp || s.email}</span>
           </div>
         `;
         item.addEventListener("click", () => {
@@ -2038,17 +1927,17 @@
         const student = StorageService.getStudents().find(s => s.id === AppState.activeChatStudentId);
         if (student) {
           headerName.textContent = student.fullName;
-          headerRole.textContent = `طالب مسجل - الحصص: ${student.sessionsLimit || 3}`;
+          headerRole.textContent = `طالب - حصص: ${student.sessionsLimit || 3}`;
           const cleanWa = (student.whatsapp || "").replace(/[^0-9]/g, "");
-          waContainer.innerHTML = cleanWa ? `<a href="https://wa.me/${cleanWa}" target="_blank" class="btn btn-sm btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> واتساب</a>` : "";
+          waContainer.innerHTML = cleanWa ? `<a href="https://wa.me/${cleanWa}" target="_blank" class="btn btn-sm btn-whatsapp"><i class="fa-brands fa-whatsapp"></i></a>` : "";
         }
       } else if (isTeacher) {
-        headerName.textContent = "صندوق رسائل ومحادثات الطلاب";
-        headerRole.textContent = "اختر طالباً من القائمة الجانبية";
+        headerName.textContent = "صندوق رسائل الطلاب";
+        headerRole.textContent = "اختر طالباً";
         waContainer.innerHTML = "";
       } else {
-        headerName.textContent = "الأستاذ جواد بدري (المعلم)";
-        headerRole.textContent = "معلم لغة HTML - متلص ومتاح";
+        headerName.textContent = "الأستاذ جواد بدري";
+        headerRole.textContent = "المعلم - متصل";
         waContainer.innerHTML = "";
       }
 
@@ -2058,62 +1947,29 @@
         const bubble = document.createElement("div");
         bubble.className = `msg-bubble ${isMe ? "from-me" : "from-other"}`;
         bubble.innerHTML = `
-          <div style="font-size:11px; font-weight:800; opacity:0.8; margin-bottom:2px;">${m.senderName}</div>
+          <div style="font-size:9px; font-weight:800; opacity:0.8; margin-bottom:2px;">${m.senderName}</div>
           <div>${m.text}</div>
-          <div style="font-size:9px; opacity:0.6; text-align:left; margin-top:4px;">${m.time}</div>
+          <div style="font-size:8px; opacity:0.6; text-align:left; margin-top:2px;">${m.time}</div>
         `;
         stream.appendChild(bubble);
       });
       stream.scrollTop = stream.scrollHeight;
     }
 
-    function createToast({ title, body, urgent = false, showTeacherBtn = false }) {
+    function createToast({ title, body, urgent = false }) {
       const c = document.getElementById("toastContainer");
       if (!c) return;
       const toast = document.createElement("div");
       toast.className = `toast ${urgent ? "toast-urgent" : ""}`;
       toast.innerHTML = `
-        <div style="display:flex; justify-content:space-between; align-items:center; font-weight:800; font-size:14px; color:var(--text-heading);">
+        <div style="display:flex; justify-content:space-between; align-items:center; font-weight:800; font-size:12px; color:var(--text-heading);">
           <span><i class="fa-solid fa-bullhorn"></i> ${title}</span>
           <button style="background:none; border:none; color:var(--text-muted); cursor:pointer;" onclick="this.parentElement.parentElement.remove()">&times;</button>
         </div>
-        <div style="font-size:13px; color:var(--text-muted);">${body}</div>
+        <div style="font-size:11px; color:var(--text-muted);">${body}</div>
       `;
       c.appendChild(toast);
       setTimeout(() => toast.remove(), 10000);
-    }
-
-    function renderNotificationsUI() {
-      const list = document.getElementById("notifList");
-      const badge = document.getElementById("notifBadge");
-      const allNotifs = StorageService.getNotifications();
-      const user = AppState.currentUser;
-      if (!list) return;
-
-      const myNotifs = allNotifs.filter(n => {
-        if (!user) return false;
-        if (n.targetUserId === "all") return true;
-        if (user.role === "admin" && n.targetUserId === "admin") return true;
-        return n.targetUserId === user.id;
-      });
-
-      badge.textContent = myNotifs.length;
-      if (myNotifs.length === 0) {
-        list.innerHTML = `<div style="text-align:center; padding:20px; color:var(--text-muted)">لا توجد إشعارات جديدة</div>`;
-        return;
-      }
-
-      list.innerHTML = "";
-      myNotifs.forEach(n => {
-        const item = document.createElement("div");
-        item.className = "notif-item";
-        item.innerHTML = `
-          <div style="font-weight:700; font-size:13px; color:var(--text-heading);"><i class="fa-solid fa-bell"></i> ${n.title}</div>
-          <div style="font-size:11px; color:var(--text-muted);">${n.time}</div>
-          <div style="font-size:12px; margin:6px 0;">${n.content}</div>
-        `;
-        list.appendChild(item);
-      });
     }
 
     function initTheme() {
@@ -2121,22 +1977,9 @@
       document.getElementById("dayThemeBtn")?.addEventListener("click", () => setTheme("light"));
       document.getElementById("nightThemeBtn")?.addEventListener("click", () => setTheme("dark"));
 
-      const notifBell = document.getElementById("notifBellBtn");
-      const notifDropdown = document.getElementById("notifDropdown");
-      notifBell?.addEventListener("click", (e) => { e.stopPropagation(); notifDropdown.classList.toggle("active"); });
-      document.addEventListener("click", (e) => { if (!notifDropdown?.contains(e.target)) notifDropdown?.classList.remove("active"); });
-      document.getElementById("clearNotifsBtn")?.addEventListener("click", () => { StorageService.clearNotifications(); renderNotificationsUI(); });
-
       const setModal = document.getElementById("settingsModal");
-      document.getElementById("settingsBtn")?.addEventListener("click", () => setModal.classList.add("active"));
+      document.getElementById("mobileSettingsBtn")?.addEventListener("click", () => setModal.classList.add("active"));
       document.getElementById("closeSettingsModal")?.addEventListener("click", () => setModal.classList.remove("active"));
-      document.getElementById("reqPushPermissionBtn")?.addEventListener("click", () => {
-        if ("Notification" in window) {
-          Notification.requestPermission().then(p => {
-            if (p === "granted") alert("تم تفعيل إشعارات الجهاز بنجاح!");
-          });
-        }
-      });
     }
 
     function setTheme(t) {
@@ -2146,6 +1989,7 @@
     }
   </script>
 
+  <!-- Script التفاعل مع أزرار التنقل والقائمة الجانبية -->
   <script>
     (function () {
       var btn = document.getElementById('mobileMenuBtn');
@@ -2154,9 +1998,25 @@
       btn.addEventListener('click', function (e) {
         e.stopPropagation();
         links.classList.toggle('active');
+        var icon = btn.querySelector('i');
+        if (icon) {
+          icon.classList.toggle('fa-bars', !links.classList.contains('active'));
+          icon.classList.toggle('fa-xmark', links.classList.contains('active'));
+        }
       });
       document.addEventListener('click', function (e) {
-        if (!links.contains(e.target) && !btn.contains(e.target)) links.classList.remove('active');
+        if (!links.contains(e.target) && !btn.contains(e.target)) {
+          links.classList.remove('active');
+          var icon = btn.querySelector('i');
+          if (icon) { icon.classList.add('fa-bars'); icon.classList.remove('fa-xmark'); }
+        }
+      });
+      links.addEventListener('click', function(e) {
+        if (e.target.closest('a, button')) {
+          links.classList.remove('active');
+          var icon = btn.querySelector('i');
+          if (icon) { icon.classList.add('fa-bars'); icon.classList.remove('fa-xmark'); }
+        }
       });
     })();
   </script>
