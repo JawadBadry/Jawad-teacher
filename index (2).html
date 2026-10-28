@@ -1,0 +1,4053 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>أكاديمية HTML مع الأستاذ جواد بدري | منصة الحصص والبرمجة</title>
+  <!-- Google Fonts: Cairo & Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Fira+Code:wght@500;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* ========================================================
+       1. المتغيرات والأنماط العامة (CSS Variables & Resets)
+       ======================================================== */
+    :root {
+      --bg-primary: #0b0f19;
+      --bg-secondary: #131b2e;
+      --bg-card: rgba(22, 31, 52, 0.85);
+      --bg-card-hover: rgba(30, 42, 70, 0.95);
+      --border-color: rgba(255, 255, 255, 0.1);
+      --border-highlight: rgba(255, 109, 0, 0.4);
+      
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-heading: #ffffff;
+
+      --brand-orange: #ff6d00;
+      --brand-orange-light: #ff8533;
+      --brand-gradient: linear-gradient(135deg, #ff5722 0%, #ff8f00 100%);
+      --brand-gradient-hover: linear-gradient(135deg, #f4511e 0%, #ff6f00 100%);
+      --brand-blue: #0284c7;
+      --accent-cyan: #38bdf8;
+      
+      --color-success: #10b981;
+      --color-warning: #f59e0b;
+      --color-danger: #ef4444;
+      --color-whatsapp: #25d366;
+      
+      --color-booked-dark: #161822;
+      --color-booked-border: #282d3c;
+      --color-booked-text: #6b7280;
+
+      --font-arabic: 'Cairo', system-ui, -apple-system, sans-serif;
+      --font-mono: 'Fira Code', monospace;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.2);
+      --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.45);
+      --glass-backdrop: blur(14px);
+      --transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.95);
+      --bg-card-hover: #f1f5f9;
+      --border-color: rgba(0, 0, 0, 0.08);
+      --border-highlight: rgba(255, 109, 0, 0.35);
+
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --text-heading: #0f172a;
+
+      --color-booked-dark: #e2e8f0;
+      --color-booked-border: #cbd5e1;
+      --color-booked-text: #94a3b8;
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 14px 34px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-arabic);
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      line-height: 1.6;
+      direction: rtl;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .main-app-hidden {
+      display: none !important;
+    }
+
+    .nav-container,
+    .hero-container,
+    .section-container,
+    .footer-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* البريد المعتمد باللون البرتقالي ورابط مباشر */
+    .authorized-email-link {
+      color: var(--brand-orange) !important;
+      text-decoration: none;
+      font-weight: 800;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .authorized-email-link:hover {
+      color: var(--brand-orange-light) !important;
+      text-decoration: underline;
+    }
+
+    /* ========================================================
+       2. شاشة تسجيل الدخول الإلزامية (Auth Gate Screen)
+       ======================================================== */
+    .auth-gate-overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, #172138 0%, #080c16 100%);
+      z-index: 5000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .auth-gate-overlay.gate-unlocked {
+      display: none !important;
+    }
+
+    .auth-gate-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      max-width: 500px;
+      width: 100%;
+      padding: 32px 28px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(255, 109, 0, 0.2);
+      position: relative;
+      animation: fadeInDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .auth-gate-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .gate-logo {
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 14px;
+      background: var(--brand-gradient);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 32px;
+      box-shadow: 0 8px 24px rgba(255, 109, 0, 0.4);
+    }
+
+    .auth-gate-header h2 {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text-heading);
+    }
+
+    .auth-gate-header h2 span {
+      color: var(--brand-orange);
+    }
+
+    .auth-gate-header p {
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .gate-alert-info {
+      background: rgba(2, 132, 199, 0.12);
+      border: 1px solid rgba(2, 132, 199, 0.3);
+      color: var(--accent-cyan);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .gate-tabs {
+      display: flex;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: var(--radius-sm);
+      padding: 4px;
+      gap: 4px;
+      margin-bottom: 20px;
+    }
+
+    .gate-tab {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--font-arabic);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 6px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .gate-tab.active {
+      background: var(--brand-gradient);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(255, 109, 0, 0.3);
+    }
+
+    .gate-form {
+      display: none;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .gate-form.active {
+      display: flex;
+    }
+
+    .secret-code-group {
+      background: rgba(255, 109, 0, 0.08);
+      border: 1px solid rgba(255, 109, 0, 0.3);
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+    }
+
+    .secret-input {
+      letter-spacing: 2px;
+      font-family: var(--font-mono);
+      font-size: 15px !important;
+      font-weight: 700;
+      color: var(--brand-orange) !important;
+      text-align: center;
+    }
+
+    .input-hint {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 3px;
+      display: block;
+    }
+
+    /* ========================================================
+       3. شريط التنقل العلوي (Navbar)
+       ======================================================== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: var(--glass-backdrop);
+      padding: 14px 0;
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .logo-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--brand-gradient);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 24px;
+      box-shadow: 0 4px 16px rgba(255, 109, 0, 0.4);
+    }
+
+    .logo-text h1 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-heading);
+      line-height: 1.2;
+    }
+
+    .logo-text h1 span {
+      color: var(--brand-orange);
+    }
+
+    .logo-text p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border: none;
+      background: transparent;
+      font-family: var(--font-arabic);
+      cursor: pointer;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--brand-orange);
+      background-color: rgba(255, 109, 0, 0.08);
+    }
+
+    .special-nav-link {
+      background: rgba(2, 132, 199, 0.12);
+      color: var(--brand-blue);
+      font-weight: 700;
+    }
+
+    .special-nav-link:hover {
+      background: var(--brand-blue);
+      color: #fff !important;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-heading);
+    }
+
+    .user-pill i {
+      color: var(--brand-orange);
+    }
+
+    .icon-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition);
+      font-size: 16px;
+    }
+
+    .icon-btn:hover {
+      background: var(--bg-card-hover);
+      color: var(--brand-orange);
+      border-color: var(--brand-orange);
+      transform: translateY(-2px);
+    }
+
+    .badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: var(--brand-orange);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      width: 18px;
+      height: 18px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--bg-secondary);
+    }
+
+    .badge-status {
+      background: var(--color-success);
+      color: #fff;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-block;
+    }
+
+    .badge-danger {
+      background: var(--color-danger);
+    }
+
+    .badge-warning {
+      background: var(--color-warning);
+      color: #111;
+    }
+
+    .badge-approved {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--color-success);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .badge-pending {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--color-warning);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .mobile-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    /* ========================================================
+       4. الأزرار والحقول (Buttons & Inputs)
+       ======================================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font-arabic);
+      font-weight: 700;
+      padding: 10px 18px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: var(--transition);
+      font-size: 14px;
+    }
+
+    .btn-lg {
+      padding: 14px 28px;
+      font-size: 16px;
+    }
+
+    .btn-sm {
+      padding: 6px 14px;
+      font-size: 13px;
+      border-radius: var(--radius-sm);
+    }
+
+    .btn-primary {
+      background: var(--brand-gradient);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(255, 109, 0, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: var(--brand-gradient-hover);
+      box-shadow: 0 6px 20px rgba(255, 109, 0, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .btn-primary-outline {
+      background: transparent;
+      border: 1px solid var(--brand-orange);
+      color: var(--brand-orange);
+    }
+
+    .btn-primary-outline:hover {
+      background: var(--brand-orange);
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--text-muted);
+    }
+
+    .btn-whatsapp {
+      background: var(--color-whatsapp);
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .btn-whatsapp:hover {
+      background: #1eb857;
+      transform: translateY(-2px);
+      color: #fff;
+    }
+
+    .btn-danger {
+      background: var(--color-danger);
+      color: #fff;
+    }
+
+    .btn-warning {
+      background: var(--color-warning);
+      color: #111;
+    }
+
+    .btn-block {
+      width: 100%;
+    }
+
+    .text-btn {
+      background: transparent;
+      border: none;
+      color: var(--brand-orange);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .custom-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      font-family: var(--font-arabic);
+      font-size: 14px;
+      transition: var(--transition);
+    }
+
+    .custom-input:focus {
+      outline: none;
+      border-color: var(--brand-orange);
+      box-shadow: 0 0 0 3px rgba(255, 109, 0, 0.2);
+    }
+
+    .error-msg {
+      color: var(--color-danger);
+      font-size: 13px;
+      background: rgba(239, 68, 68, 0.1);
+      border-right: 3px solid var(--color-danger);
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+    }
+
+    /* ========================================================
+       5. جدول اختيار الأيام مع أسماء الأيام (Calendar Buttons)
+       ======================================================== */
+    .calendar-buttons-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 26px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .calendar-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .current-month-display {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .current-month-display i {
+      font-size: 24px;
+      color: var(--brand-orange);
+    }
+
+    .current-month-display h3 {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--text-heading);
+    }
+
+    .calendar-nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .month-days-buttons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 12px;
+    }
+
+    .day-btn {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px 10px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: var(--transition);
+      font-family: var(--font-arabic);
+      position: relative;
+      text-align: center;
+    }
+
+    .day-btn .day-header-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--brand-orange);
+    }
+
+    .day-btn .day-number {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--text-heading);
+      line-height: 1;
+    }
+
+    .day-btn .day-status-pill {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--color-success);
+    }
+
+    .day-btn:hover {
+      border-color: var(--brand-orange);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(255, 109, 0, 0.25);
+      background: var(--bg-card-hover);
+    }
+
+    .day-btn.is-selected {
+      background: var(--brand-gradient) !important;
+      border-color: var(--brand-orange) !important;
+      color: #fff !important;
+      box-shadow: 0 8px 24px rgba(255, 109, 0, 0.45);
+      transform: translateY(-2px);
+    }
+
+    .day-btn.is-selected .day-header-name,
+    .day-btn.is-selected .day-number,
+    .day-btn.is-selected .day-status-pill {
+      color: #fff !important;
+    }
+
+    .day-btn.is-weekend {
+      background: rgba(239, 68, 68, 0.05);
+      border-color: rgba(239, 68, 68, 0.18);
+      cursor: not-allowed;
+      opacity: 0.65;
+    }
+
+    .day-btn.is-weekend .day-header-name,
+    .day-btn.is-weekend .day-number {
+      color: #9ca3af;
+    }
+
+    .day-btn.is-weekend .day-status-pill {
+      color: var(--color-danger);
+    }
+
+    .day-btn.is-emergency {
+      background: rgba(245, 158, 11, 0.1) !important;
+      border: 2px dashed var(--color-warning) !important;
+      cursor: not-allowed !important;
+    }
+
+    .day-btn.is-emergency .day-header-name {
+      color: var(--color-warning) !important;
+    }
+
+    .day-btn.is-emergency .day-status-pill {
+      background: var(--color-warning);
+      color: #111 !important;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      font-weight: 800;
+    }
+
+    .day-btn.is-past {
+      opacity: 0.35;
+      cursor: not-allowed;
+      filter: grayscale(100%);
+    }
+
+    .selected-day-banner {
+      margin-top: 20px;
+      padding: 14px 18px;
+      background: rgba(255, 109, 0, 0.1);
+      border: 1px solid rgba(255, 109, 0, 0.3);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* ========================================================
+       6. فترات الحصص (إظهار اسم الحاجز بحسب اختياره)
+       ======================================================== */
+    .slots-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-top: 24px;
+    }
+
+    .slots-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .slots-header h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-heading);
+    }
+
+    .wednesday-notice-banner {
+      background: rgba(2, 132, 199, 0.12);
+      border: 1px solid var(--brand-blue);
+      color: var(--accent-cyan);
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .slots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .slot-btn {
+      background: var(--bg-secondary);
+      border: 2px solid rgba(255, 109, 0, 0.4);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      text-align: right;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-family: var(--font-arabic);
+    }
+
+    .slot-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 6px;
+      height: 100%;
+      background: var(--brand-gradient);
+    }
+
+    .slot-btn:hover {
+      transform: translateY(-3px);
+      border-color: var(--brand-orange);
+      background: var(--bg-card-hover);
+      box-shadow: 0 8px 24px rgba(255, 109, 0, 0.25);
+    }
+
+    .slot-time {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--brand-orange);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .slot-duration {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .slot-booked-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* الزر محجوز - مظلم ومقفل تماماً */
+    .slot-btn.is-booked {
+      background: var(--color-booked-dark) !important;
+      border-color: var(--color-booked-border) !important;
+      color: var(--color-booked-text) !important;
+      cursor: not-allowed !important;
+      box-shadow: none !important;
+      transform: none !important;
+      filter: grayscale(85%) brightness(0.65);
+      opacity: 0.7;
+    }
+
+    .slot-btn.is-booked::before {
+      background: #374151 !important;
+    }
+
+    .slot-btn.is-booked .slot-time {
+      color: var(--color-booked-text) !important;
+      text-decoration: line-through;
+    }
+
+    /* ========================================================
+       7. الحصص المحجوزة
+       ======================================================== */
+    .my-bookings-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-top: 24px;
+    }
+
+    .my-bookings-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .my-bookings-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+    }
+
+    .booking-item-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      transition: var(--transition);
+    }
+
+    .booking-item-card:hover {
+      border-color: var(--border-highlight);
+    }
+
+    .booking-item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .zoom-cta-box {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .zoom-join-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #2d8cff;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      padding: 10px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      transition: var(--transition);
+    }
+
+    .zoom-join-btn:hover {
+      background: #1a73e8;
+      transform: translateY(-2px);
+    }
+
+    /* ========================================================
+       8. صفحة المحادثة الكاملة (Full-Page Chat)
+       ======================================================== */
+    .full-page-chat-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(16px);
+      z-index: 4000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .full-page-chat-modal.active {
+      display: flex;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .full-chat-wrapper {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      width: 96vw;
+      max-width: 1200px;
+      height: 92vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .full-chat-topbar {
+      background: #0f172a;
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #fff;
+    }
+
+    .full-chat-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      overflow: hidden;
+    }
+
+    .chat-sidebar {
+      background: rgba(0, 0, 0, 0.15);
+      border-left: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .sidebar-search {
+      padding: 14px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .students-roster-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .student-roster-item {
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: var(--transition);
+    }
+
+    .student-roster-item:hover,
+    .student-roster-item.active {
+      border-color: var(--brand-orange);
+      background: rgba(255, 109, 0, 0.12);
+    }
+
+    .roster-avatar {
+      width: 40px;
+      height: 40px;
+      background: var(--brand-gradient);
+      color: #fff;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .chat-conversation-area {
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-primary);
+      overflow: hidden;
+    }
+
+    .conversation-messages-stream {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .msg-bubble {
+      max-width: 70%;
+      padding: 12px 16px;
+      border-radius: 16px;
+      font-size: 14px;
+      line-height: 1.6;
+      word-break: break-word;
+    }
+
+    .msg-bubble.from-me {
+      align-self: flex-start;
+      background: var(--brand-blue);
+      color: #fff;
+      border-bottom-right-radius: 2px;
+    }
+
+    .msg-bubble.from-other {
+      align-self: flex-end;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      border-bottom-left-radius: 2px;
+    }
+
+    .conversation-input-bar {
+      padding: 14px 20px;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      gap: 12px;
+    }
+
+    .conversation-input-bar input {
+      flex: 1;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-full);
+      padding: 12px 20px;
+      color: var(--text-main);
+      font-family: var(--font-arabic);
+      font-size: 14px;
+    }
+
+    /* ========================================================
+       9. لوحة تحكم الإدارة والصلاحيات (Permissions & Admin)
+       ======================================================== */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: var(--glass-backdrop);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+      padding: 20px;
+    }
+
+    .modal.active {
+      display: flex;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .modal-content {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      max-width: 520px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .full-modal .modal-content {
+      max-width: 1180px;
+      width: 95%;
+      height: 88vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .close-modal-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 26px;
+      cursor: pointer;
+    }
+
+    .close-modal-btn:hover {
+      color: var(--color-danger);
+    }
+
+    .admin-dash-tabs {
+      display: flex;
+      background: rgba(0, 0, 0, 0.15);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0 16px;
+      overflow-x: auto;
+    }
+
+    .dash-tab {
+      background: transparent;
+      border: none;
+      border-bottom: 3px solid transparent;
+      color: var(--text-muted);
+      font-family: var(--font-arabic);
+      font-weight: 700;
+      font-size: 14px;
+      padding: 14px 20px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .dash-tab.active {
+      color: var(--brand-orange);
+      border-bottom-color: var(--brand-orange);
+    }
+
+    .admin-dash-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+    }
+
+    .dash-tab-pane {
+      display: none;
+    }
+
+    .dash-tab-pane.active {
+      display: block;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: right;
+      font-size: 13px;
+    }
+
+    .admin-table th {
+      background: rgba(0, 0, 0, 0.2);
+      color: var(--text-heading);
+      padding: 12px 14px;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .admin-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: middle;
+    }
+
+    /* ========================================================
+       10. الإشعارات والـ Toasts
+       ======================================================== */
+    .toast-container {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 9999;
+      max-width: 380px;
+    }
+
+    .toast {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-left: 5px solid var(--brand-orange);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      box-shadow: var(--shadow-lg);
+      animation: slideInLeft 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toast.toast-urgent {
+      border-left-color: var(--color-danger);
+      background: #1b1722;
+    }
+
+    .toast-btn {
+      align-self: flex-start;
+      padding: 8px 14px;
+      font-size: 12px;
+      border-radius: var(--radius-sm);
+      background: var(--brand-blue);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+      font-family: var(--font-arabic);
+    }
+
+    .notification-wrapper {
+      position: relative;
+    }
+
+    .notification-dropdown {
+      position: absolute;
+      top: calc(100% + 12px);
+      left: 0;
+      width: 350px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      display: none;
+      flex-direction: column;
+      z-index: 1050;
+      max-height: 420px;
+      overflow: hidden;
+    }
+
+    .notification-dropdown.active {
+      display: flex;
+      animation: fadeInDown 0.2s ease-out;
+    }
+
+    .dropdown-header {
+      padding: 14px 16px;
+      background: rgba(0, 0, 0, 0.15);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .dropdown-list {
+      overflow-y: auto;
+      max-height: 350px;
+      padding: 8px;
+    }
+
+    .notif-item {
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      margin-bottom: 8px;
+    }
+
+    /* Hero */
+    .hero-section {
+      padding: 70px 0 50px;
+    }
+
+    .hero-container {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .badge-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 109, 0, 0.12);
+      border: 1px solid rgba(255, 109, 0, 0.3);
+      color: var(--brand-orange);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-size: 40px;
+      font-weight: 900;
+      line-height: 1.3;
+      color: var(--text-heading);
+      margin-bottom: 18px;
+    }
+
+    .hero-title span {
+      color: var(--brand-orange);
+    }
+
+    .hero-desc {
+      font-size: 17px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
+
+    .hero-meta-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 34px;
+    }
+
+    .meta-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 16px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .meta-card i {
+      font-size: 24px;
+      color: var(--brand-orange);
+    }
+
+    .meta-card strong {
+      display: block;
+      font-size: 14px;
+      color: var(--text-heading);
+    }
+
+    .meta-card span {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .hero-cta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .code-window {
+      background: #141824;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg), 0 0 30px rgba(255, 109, 0, 0.15);
+    }
+
+    .window-header {
+      background: #0d111b;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: var(--radius-full);
+    }
+
+    .dot.red { background: #ff5f56; }
+    .dot.yellow { background: #ffbd2e; }
+    .dot.green { background: #27c93f; }
+
+    .code-body {
+      padding: 22px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.7;
+      color: #e6edf3;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .playground-section,
+    .booking-section {
+      padding: 60px 0;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 650px;
+      margin: 0 auto 40px;
+    }
+
+    .section-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(2, 132, 199, 0.1);
+      color: var(--brand-blue);
+      border: 1px solid rgba(2, 132, 199, 0.2);
+      padding: 4px 14px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .section-header h2 {
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--text-heading);
+      margin-bottom: 10px;
+    }
+
+    /* قسم مختبر الأستاذ جواد الحقيقي */
+    .editor-embed-container {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .editor-embed-topbar {
+      padding: 14px 20px;
+      background: rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .editor-embed-iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      background: #ffffff;
+    }
+
+    .footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+      padding: 50px 0 20px;
+      margin-top: 60px;
+    }
+
+    .footer-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 20px;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .checkbox-container input {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideInLeft { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+
+    @media (max-width: 992px) {
+      .hero-container, .full-chat-layout {
+        grid-template-columns: 1fr;
+      }
+      .chat-sidebar {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .mobile-toggle { display: block; }
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        right: 0;
+        left: 0;
+        background: var(--bg-secondary);
+        flex-direction: column;
+        padding: 20px;
+        display: none;
+      }
+      .nav-links.active { display: flex; }
+      .hero-title { font-size: 28px; }
+      .hero-meta-cards { grid-template-columns: 1fr; }
+    }
+
+    /* ========================================================
+       Responsive additions (all screen sizes)
+       ======================================================== */
+    img, video, canvas, svg, iframe { max-width: 100%; }
+    .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .admin-dash-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .dash-tab { white-space: nowrap; }
+    .code-body, pre { overflow-x: auto; }
+
+    @media (min-width: 1400px) {
+      .hero-title { font-size: 44px; }
+    }
+
+    @media (max-width: 1100px) {
+      .nav-container { flex-wrap: wrap; }
+      .nav-links { gap: 10px; }
+      .my-bookings-list { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+    }
+
+    @media (max-width: 992px) {
+      .hero-section { padding: 50px 0 36px; }
+      .hero-container { gap: 28px; }
+      .hero-meta-cards { grid-template-columns: repeat(3, 1fr); }
+      .full-chat-wrapper { width: 100%; height: 94vh; }
+      .full-modal .modal-content { width: 100%; height: 92vh; }
+      .editor-embed-iframe { height: 520px; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-container { flex-wrap: nowrap; }
+      .nav-links { max-height: calc(100vh - 70px); overflow-y: auto; z-index: 1001; }
+      .nav-actions { gap: 6px; }
+      .user-pill { padding: 5px 10px; font-size: 11px; max-width: 130px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+      .logo-text p { display: none; }
+      .logo-text h1 { font-size: 16px; }
+      .logo-icon { width: 38px; height: 38px; }
+      .hero-section { padding: 36px 0 28px; }
+      .hero-desc { font-size: 14px; }
+      .hero-cta { flex-wrap: wrap; }
+      .section-header h2 { font-size: 24px; }
+      .month-days-buttons-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 8px; }
+      .slots-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+      .my-bookings-list { grid-template-columns: 1fr; }
+      .calendar-card-top, .slots-header, .my-bookings-header { flex-wrap: wrap; gap: 10px; }
+      .current-month-display h3 { font-size: 18px; }
+      .editor-embed-iframe { height: 460px; }
+      .modal, .full-page-chat-modal { padding: 8px; }
+      .modal-content { max-height: 94vh; }
+      .admin-dash-body { padding: 14px; }
+      .admin-table th, .admin-table td { padding: 8px 10px; font-size: 12px; }
+      .notification-dropdown { position: fixed; top: 70px; left: 10px; right: 10px; width: auto; max-width: none; }
+      .toast-container { left: 10px; right: 10px; max-width: none; }
+      .msg-bubble { max-width: 85%; }
+      .full-chat-topbar { padding: 12px 14px; }
+      .footer { padding: 36px 0 16px; margin-top: 40px; }
+      .footer-container { flex-direction: column; text-align: center; justify-content: center; }
+      .auth-gate-card { max-height: 96vh; overflow-y: auto; }
+      /* keep chat contacts list reachable on phones */
+      .chat-sidebar { display: flex; max-height: 32vh; border-left: none; border-bottom: 1px solid var(--border-color); }
+      .full-chat-layout { grid-template-rows: auto 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title { font-size: 24px; }
+      .hero-meta-cards { grid-template-columns: 1fr; }
+      .btn-lg { padding-left: 16px; padding-right: 16px; }
+      .month-days-buttons-grid { grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); }
+      .day-btn .day-number { font-size: 18px; }
+      .slots-grid { grid-template-columns: 1fr; }
+      .section-header h2 { font-size: 21px; }
+      .user-pill { display: none; }
+      .gate-tab { font-size: 13px; padding-left: 6px; padding-right: 6px; }
+      .auth-gate-header h2 { font-size: 20px; }
+      .editor-embed-iframe { height: 400px; }
+      .zoom-cta-box { flex-wrap: wrap; }
+    }
+
+    @media (max-width: 360px) {
+      .nav-actions .btn span { display: none; }
+      .logo-text h1 { font-size: 14px; }
+    }
+
+    /* ========================================================
+       Small phones (320px width and up)
+       ======================================================== */
+    @media (max-width: 400px) {
+      .nav-container, .hero-container, .section-container, .footer-container { padding-left: 12px; padding-right: 12px; }
+      .nav-container { gap: 8px; }
+      .brand-logo { gap: 8px; min-width: 0; }
+      .logo-text h1 { font-size: 14px; white-space: nowrap; }
+      .logo-icon { width: 34px; height: 34px; font-size: 18px; }
+      .icon-btn { width: 36px; height: 36px; }
+      .nav-actions .btn { padding: 6px 10px; font-size: 12px; }
+      .btn { padding: 8px 12px; font-size: 13px; }
+      .btn-lg { padding: 11px 14px; font-size: 14px; }
+      .hero-title { font-size: 22px; line-height: 1.35; }
+      .hero-cta .btn { flex: 1 1 100%; }
+      .meta-card { padding: 12px; }
+      .code-body { font-size: 11px; padding: 12px; }
+      .auth-gate-overlay { padding: 8px; }
+      .auth-gate-card { padding: 20px 14px; }
+      .auth-gate-header h2 { font-size: 18px; }
+      .gate-logo { width: 46px; height: 46px; font-size: 24px; }
+      .gate-tab { font-size: 12px; padding: 8px 2px; }
+      .secret-input { letter-spacing: 1px; }
+      .calendar-buttons-card { padding: 14px; }
+      .calendar-nav-controls { width: 100%; justify-content: space-between; }
+      .month-days-buttons-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+      .day-btn { padding: 10px 4px; }
+      .day-btn .day-status-pill { font-size: 9px; padding: 2px 6px; }
+      .slot-btn { padding: 12px; }
+      .slots-legend { flex-wrap: wrap; }
+      .selected-day-banner { padding: 12px; flex-wrap: wrap; }
+      .booking-item-card { padding: 12px; }
+      .modal, .full-page-chat-modal { padding: 4px; }
+      .modal-header { padding: 12px 14px; }
+      .modal-content { border-radius: 14px; }
+      .full-chat-wrapper { height: 98vh; border-radius: 14px; }
+      .chat-sidebar { max-height: 28vh; }
+      .conversation-input-bar { padding: 10px; gap: 8px; }
+      .conversation-input-bar input { padding: 10px 14px; min-width: 0; }
+      .msg-bubble { max-width: 92%; }
+      .admin-dash-body { padding: 10px; }
+      .dash-tab { padding: 10px 12px; font-size: 12px; }
+      .admin-table th, .admin-table td { padding: 6px 8px; font-size: 11px; }
+      .notification-dropdown { left: 6px; right: 6px; }
+      .toast-container { left: 6px; right: 6px; }
+      .editor-embed-iframe { height: 360px; }
+      .editor-embed-topbar { padding: 10px 12px; }
+      .footer-container { gap: 18px; }
+      .authorized-email-link { word-break: break-all; }
+      .custom-input, input, select, textarea { max-width: 100%; }
+      /* inline-styled inputs/rows inside modals */
+      #emergencyDateInput { max-width: 100% !important; }
+      form [style*="justify-content:flex-end"] { flex-wrap: wrap; }
+    }
+
+    /* ========================================================
+       Mobile fixes: overflow + working hamburger menu
+       ======================================================== */
+    html { overflow-x: hidden; }
+    .hero-container > *, .full-chat-layout > *, .hero-meta-cards > *,
+    .month-days-buttons-grid > *, .slots-grid > *, .my-bookings-list > * { min-width: 0; }
+    .hero-title, .hero-desc, .meta-card strong, .meta-card span { overflow-wrap: anywhere; }
+    .code-body { overflow-x: auto; white-space: pre; max-width: 100%; }
+    .code-window { max-width: 100%; }
+
+    @media (max-width: 768px) {
+      .navbar { padding: 10px 0; }
+      .nav-container { flex-wrap: wrap; row-gap: 8px; }
+      .brand-logo { flex: 1 1 auto; }
+      .nav-actions { flex: 0 1 auto; flex-wrap: wrap; justify-content: flex-end; }
+      .mobile-toggle { display: inline-flex; align-items: center; justify-content: center;
+        width: 40px; height: 40px; border: 1px solid var(--border-color); border-radius: 10px;
+        background: var(--bg-card); }
+      .nav-links {
+        position: absolute; top: 100%; right: 0; left: 0;
+        background: var(--bg-secondary); border-bottom: 1px solid var(--border-color);
+        box-shadow: var(--shadow-lg); align-items: stretch; gap: 8px;
+        max-height: calc(100vh - 80px); overflow-y: auto; z-index: 1001;
+      }
+      .nav-links .nav-link { padding: 12px 14px; text-align: right; width: 100%; }
+    }
+
+    @media (max-width: 480px) {
+      .brand-logo { flex: 1 1 100%; }
+      .nav-actions { flex: 1 1 100%; justify-content: space-between; flex-wrap: nowrap; }
+      .nav-actions > * { flex-shrink: 0; }
+      #adminHeaderBtn span { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================
+       1. بوابة الدخول الإلزامية بالكود السري والاسم الثلاثي
+       ======================================================== -->
+  <div class="auth-gate-overlay" id="authGateOverlay">
+    <div class="auth-gate-card">
+      <div class="auth-gate-header">
+        <div class="gate-logo">
+          <i class="fa-brands fa-html5"></i>
+        </div>
+        <h2>أكاديمية <span>HTML</span></h2>
+        <p>مع الأستاذ جواد بدري</p>
+        <div class="gate-alert-info">
+          <i class="fa-solid fa-shield-halved"></i> المنصة مخصصة لطلاب الأستاذ جواد وتتطلب الكود السري المعتمد
+        </div>
+      </div>
+
+      <div class="gate-tabs">
+        <button class="gate-tab active" id="tabStudentRegisterBtn">تسجيل طالب جديد</button>
+        <button class="gate-tab" id="tabStudentLoginBtn">دخول طالب</button>
+        <button class="gate-tab" id="tabAdminGateBtn"><i class="fa-solid fa-lock"></i> الإدارة</button>
+      </div>
+
+      <!-- نموذج تسجيل الطالب (الاسم الثلاثي + رقم الواتساب + الكود السري) -->
+      <form id="studentRegisterForm" class="gate-form active">
+        <div class="form-group">
+          <label><i class="fa-solid fa-user-pen"></i> الاسم الثلاثي للطالب (إلزامي):</label>
+          <input type="text" id="regStudentFullName" class="custom-input" placeholder="اكتب اسمك الثلاثي كاملاً" required>
+          <small class="input-hint">يجب كتابة ثلاثة أسماء على الأقل لتوثيق ملفك لدى الأستاذ</small>
+        </div>
+
+        <div class="form-group">
+          <label><i class="fa-brands fa-whatsapp" style="color:var(--color-whatsapp)"></i> رقم الواتساب (إلزامي للتواصل):</label>
+          <input type="text" id="regStudentWhatsapp" class="custom-input" placeholder="مثال: 05xxxxxxxx أو +966..." required>
+          <small class="input-hint">سيتواصل معك الأستاذ جواد عبر الواتساب لتنسيق الحصة ورابط Zoom</small>
+        </div>
+
+        <div class="form-group">
+          <label><i class="fa-solid fa-envelope"></i> البريد الإلكتروني:</label>
+          <input type="email" id="regStudentEmail" class="custom-input" placeholder="email@example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label><i class="fa-solid fa-key"></i> كلمة المرور لحسابك:</label>
+          <input type="password" id="regStudentPass" class="custom-input" placeholder="••••••••" required>
+        </div>
+
+        <div class="form-group secret-code-group">
+          <label><i class="fa-solid fa-shield-cat"></i> كود الدخول السري المقدم من الأستاذ جواد:</label>
+          <input type="text" id="regSecretCode" class="custom-input secret-input" placeholder="أدخل الكود السري المعطى لك" required>
+        </div>
+
+        <div id="regErrorMsg" class="error-msg" style="display:none"></div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg">
+          <i class="fa-solid fa-user-check"></i> تسجيل وتفعيل الحساب
+        </button>
+      </form>
+
+      <!-- نموذج دخول طالب مسجل -->
+      <form id="studentLoginForm" class="gate-form">
+        <div class="form-group">
+          <label><i class="fa-solid fa-address-book"></i> البريد الإلكتروني أو رقم الواتساب:</label>
+          <input type="text" id="loginStudentContact" class="custom-input" placeholder="أدخل بريدك أو رقمك المسجل" required>
+        </div>
+
+        <div class="form-group">
+          <label><i class="fa-solid fa-lock"></i> كلمة المرور:</label>
+          <input type="password" id="loginStudentPass" class="custom-input" placeholder="أدخل كلمة المرور" required>
+        </div>
+
+        <div id="loginErrorMsg" class="error-msg" style="display:none"></div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg">
+          <i class="fa-solid fa-right-to-bracket"></i> دخول إلى المنصة
+        </button>
+      </form>
+
+      <!-- نموذج دخول الأستاذ جواد بدون كتابة الإيميل بالخفيف -->
+      <form id="adminGateForm" class="gate-form">
+        <div class="form-group">
+          <label><i class="fa-solid fa-envelope"></i> البريد الإلكتروني للإدارة:</label>
+          <input type="email" id="adminGateEmail" class="custom-input" placeholder="أدخل البريد الإلكتروني" required autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label><i class="fa-solid fa-lock"></i> كلمة المرور:</label>
+          <input type="password" id="adminGatePass" class="custom-input" placeholder="أدخل كلمة المرور" required autocomplete="off">
+        </div>
+
+        <div id="adminGateError" class="error-msg" style="display:none">بيانات الدخول غير صحيحة!</div>
+
+        <button type="submit" class="btn btn-warning btn-block btn-lg">
+          <i class="fa-solid fa-shield-halved"></i> دخول لوحة تحكم الأستاذ جواد
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       2. التطبيق الرئيسي (Main App)
+       ======================================================== -->
+  <div id="mainAppWrapper" class="main-app-hidden">
+    <!-- Navbar -->
+    <header class="navbar">
+      <div class="nav-container">
+        <div class="brand-logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+          <div class="logo-icon">
+            <i class="fa-brands fa-html5"></i>
+          </div>
+          <div class="logo-text">
+            <h1>أكاديمية <span>HTML</span></h1>
+            <p>مع الأستاذ جواد بدري</p>
+          </div>
+        </div>
+
+        <nav class="nav-links" id="navLinks">
+          <a href="#hero" class="nav-link active"><i class="fa-solid fa-house"></i> الرئيسية</a>
+          <a href="#booking" class="nav-link"><i class="fa-solid fa-calendar-check"></i> جدول الحصص</a>
+          <a href="#code-playground" class="nav-link"><i class="fa-solid fa-laptop-code"></i> مختبر الأكواد (Web Editor)</a>
+          <button id="navOpenChatBtn" class="nav-link special-nav-link"><i class="fa-solid fa-comments"></i> <span id="navChatLabel">الرسائل المباشرة</span></button>
+        </nav>
+
+        <div class="nav-actions">
+          <div class="user-pill" id="currentUserPill">
+            <i class="fa-solid fa-circle-user"></i>
+            <span id="currentUserNameLabel">طالب</span>
+          </div>
+
+          <!-- جرس الإشعارات -->
+          <div class="notification-wrapper">
+            <button id="notifBellBtn" class="icon-btn" title="الإشعارات والتنبيهات">
+              <i class="fa-solid fa-bell"></i>
+              <span class="badge" id="notifBadge">0</span>
+            </button>
+            <div class="notification-dropdown" id="notifDropdown">
+              <div class="dropdown-header">
+                <span><i class="fa-solid fa-bell"></i> تنبيهات الحصص</span>
+                <button id="clearNotifsBtn" class="text-btn">مسح الكل</button>
+              </div>
+              <div class="dropdown-list" id="notifList">
+                <div class="empty-notif" style="text-align:center; padding:20px; color:var(--text-muted);">لا توجد إشعارات جديدة</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- زر الشات الكامل -->
+          <button id="fullChatIconBtn" class="icon-btn" title="فتح المحادثة الكاملة">
+            <i class="fa-solid fa-comments"></i>
+          </button>
+
+          <!-- زر الإعدادات -->
+          <button id="settingsBtn" class="icon-btn" title="الإعدادات">
+            <i class="fa-solid fa-gear"></i>
+          </button>
+
+          <!-- زر لوحة الإدارة والصلاحيات (يظهر للأدمن فقط) -->
+          <button id="adminHeaderBtn" class="btn btn-primary-outline" style="display:none;">
+            <i class="fa-solid fa-user-shield"></i> <span>الصلاحيات وإدارة الحصص</span>
+          </button>
+
+          <!-- زر تسجيل الخروج مع التأكيد -->
+          <button id="triggerLogoutBtn" class="icon-btn" title="تسجيل الخروج">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+
+          <button class="mobile-toggle" id="mobileMenuBtn">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero-section" id="hero">
+      <div class="hero-container">
+        <div class="hero-content">
+          <div class="badge-tag" id="heroBadgeTag"><i class="fa-solid fa-award"></i> حصص فردية ومباشرة مع الأستاذ جواد بدري</div>
+          <h1 class="hero-title" id="heroTitle">تعلم واحتراف لغة <span>HTML5</span> من الصفر وحتى الإتقان</h1>
+          <p class="hero-desc" id="heroDesc">
+            حصص فردية ومباشرة عبر Zoom مع الأستاذ <strong>جواد بدري</strong>. نركز على التطبيق العملي لبناء صفحات الويب، مع إشعارات ذكية بالصوت تظهر في جهازك ومتابعة مستمرة عبر الواتساب والشات المباشر.
+          </p>
+
+          <div class="hero-meta-cards">
+            <div class="meta-card">
+              <i class="fa-regular fa-clock"></i>
+              <div>
+                <strong>45 دقيقة</strong>
+                <span>مدة الحصة (الأربعاء 15 د)</span>
+              </div>
+            </div>
+            <div class="meta-card">
+              <i class="fa-solid fa-calendar-days"></i>
+              <div>
+                <strong>الأحد إلى الأربعاء</strong>
+                <span>الخميس، الجمعة، والسبت إجازة</span>
+              </div>
+            </div>
+            <div class="meta-card">
+              <i class="fa-solid fa-business-time"></i>
+              <div>
+                <strong>3:00 م - 6:00 م</strong>
+                <span>ساعات تقديم الدروس</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-cta" id="heroCtaContainer">
+            <!-- سيتم تهيئته برمجياً حسب نوع المستخدم (أستاذ أو طالب) -->
+            <a href="#booking" class="btn btn-primary btn-lg" id="heroPrimaryAction"><i class="fa-solid fa-calendar-plus"></i> احجز موعدك من جدول الأيام</a>
+            <button id="heroChatBtn" class="btn btn-secondary btn-lg"><i class="fa-solid fa-comments"></i> <span id="heroChatBtnLabel">فتح الشات مع الأستاذ</span></button>
+          </div>
+        </div>
+
+        <div class="hero-preview">
+          <div class="code-window">
+            <div class="window-header">
+              <div class="dots">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+              </div>
+              <span class="window-title">lesson.html</span>
+            </div>
+            <pre class="code-body"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="ar" dir="rtl"&gt;
+  &lt;head&gt;
+    &lt;title&gt;أكاديمية الأستاذ جواد بدري&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;أتعلم كود الويب خطوة بخطوة 🚀&lt;/h1&gt;
+    &lt;button class="btn"&gt;انضم إلى الحصة عبر Zoom&lt;/button&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- جدول الحجز التفاعلي بالأيام مع أسماء الأيام وحالات الظرف -->
+    <section class="booking-section" id="booking">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-badge"><i class="fa-solid fa-calendar-week"></i> جدول المواعيد</span>
+          <h2 id="bookingSectionHeading">جدول حجز الأيام للشهر الحالي</h2>
+          <p id="bookingSectionDesc">اضغط على أي زر يوم لمعاينة الفترات وحجز حصتك (الخميس والجمعة والسبت إجازة أسبوعية)</p>
+        </div>
+
+        <div class="calendar-buttons-card">
+          <div class="calendar-card-top">
+            <div class="current-month-display">
+              <i class="fa-solid fa-calendar-day"></i>
+              <h3 id="currentMonthYearHeading">الشهر الحالي</h3>
+            </div>
+            <div class="calendar-nav-controls">
+              <button class="btn btn-sm btn-secondary" id="prevMonthBtn"><i class="fa-solid fa-chevron-right"></i></button>
+              <button class="btn btn-sm btn-primary-outline" id="resetCurrentMonthBtn">الشهر الحالي</button>
+              <button class="btn btn-sm btn-secondary" id="nextMonthBtn"><i class="fa-solid fa-chevron-left"></i></button>
+            </div>
+          </div>
+
+          <!-- شبكة أزرار أيام الشهر مع أسماء الأيام بالداخل -->
+          <div class="month-days-buttons-grid" id="monthDaysButtonsGrid">
+            <!-- أزرار الأيام -->
+          </div>
+
+          <div class="selected-day-banner" id="selectedDayBanner">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <i class="fa-solid fa-circle-check" style="color:var(--brand-orange)"></i>
+              <span>اليوم المحدد: <strong id="selectedDayText">الرجاء اختيار يوم من الأزرار أعلاه</strong></span>
+            </div>
+            <span class="badge-status" id="selectedDayBadge">جاهز لاختيار الفترة</span>
+          </div>
+        </div>
+
+        <!-- فترات الحصص (مع شرط الأربعاء حصه ربع ساعة فقط + إظهار اسم الحاجز بحسب رغبته) -->
+        <div class="slots-container">
+          <div class="slots-header">
+            <h3><i class="fa-solid fa-clock"></i> الفترات المتاحة لهذا اليوم:</h3>
+            <div class="slots-legend" style="display:flex; gap:16px; font-size:12px;">
+              <span><span style="display:inline-block; width:12px; height:12px; background:var(--brand-gradient); border-radius:3px;"></span> متاح للحجز</span>
+              <span><span style="display:inline-block; width:12px; height:12px; background:var(--color-booked-dark); border:1px solid var(--color-booked-border); border-radius:3px;"></span> محجوز (مظلم)</span>
+            </div>
+          </div>
+
+          <div id="wednesdayNotice" class="wednesday-notice-banner" style="display:none;">
+            <i class="fa-solid fa-circle-info"></i>
+            <span><strong>ملاحظة يوم الأربعاء:</strong> الحصة مدتها ربع ساعة فقط (من 3:00 م إلى 3:15 م).</span>
+          </div>
+
+          <div class="slots-grid" id="slotsGrid">
+            <!-- الفترات -->
+          </div>
+        </div>
+
+        <!-- حصص الطالب الحالية مع حالة موافقة الأستاذ جواد (يخفى عن الأستاذ ويعوض بلوحة الإدارة) -->
+        <div class="my-bookings-container" id="myBookingsContainerWrapper">
+          <div class="my-bookings-header">
+            <h3 id="myBookingsTitle"><i class="fa-solid fa-ticket"></i> حصصي وجدولي المعتمد</h3>
+            <span class="badge-status" id="myBookingsCount">0</span>
+          </div>
+          <div id="myBookingsList" class="my-bookings-list">
+            <!-- الحصص -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- قسم مختبر الأستاذ جواد الحقيقي (Web Editor المطور من قبله) -->
+    <section class="playground-section" id="code-playground">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-badge"><i class="fa-solid fa-laptop-code"></i> مختبر كود حقيقي</span>
+          <h2>محرر الأكواد المباشر (Web Editor)</h2>
+          <p>مختبر كود تفاعلي متقدم مصمم بواسطة الأستاذ جواد بدري لتجربة أكواد HTML و CSS و JavaScript الحقيقية</p>
+        </div>
+
+        <div class="editor-embed-container">
+          <div class="editor-embed-topbar">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="badge-status"><i class="fa-solid fa-circle-check"></i> متصل بالمختبر الرسمي</span>
+              <strong style="color:var(--text-heading); font-size:14px;">Web Editor by Jawad Badry</strong>
+            </div>
+            <a href="https://jawadbadry.github.io/Web-Editor/" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">
+              <i class="fa-solid fa-up-right-from-square"></i> فتح المحرر في نافذة كاملة جديدة
+            </a>
+          </div>
+          <iframe src="https://jawadbadry.github.io/Web-Editor/" class="editor-embed-iframe" title="Web Editor By Jawad Badry"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-brand">
+          <h3>أكاديمية <span>HTML</span> مع الأستاذ جواد بدري</h3>
+          <p>منصة تعليمية متكاملة لتقديم حصص البرمجة الفردية والمباشرة.</p>
+        </div>
+        <div class="footer-info">
+          <!-- البريد المعتمد بلون برتقالي ويدخل مباشرة للإيميل عند الضغط عليه -->
+          <p>
+            <i class="fa-solid fa-envelope" style="color:var(--brand-orange)"></i> البريد المعتمد: 
+            <a href="mailto:Jawadbadry8@gmail.com" class="authorized-email-link" title="اضغط لمراسلة الأستاذ جواد عبر البريد مباشرة">
+              Jawadbadry8@gmail.com
+            </a>
+          </p>
+          <p><i class="fa-solid fa-calendar-check"></i> مواعيد الحصص: الأحد إلى الأربعاء (3:00 م - 6:00 م)</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 جميع الحقوق محفوظة - منصة الأستاذ جواد بدري لتعليم HTML</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ========================================================
+       3. نافذة تأكيد تسجيل الخروج
+       ======================================================== -->
+  <div class="modal" id="logoutConfirmModal">
+    <div class="modal-content" style="max-width: 420px; text-align: center; padding: 28px 24px;">
+      <div style="font-size: 46px; color: var(--color-warning); margin-bottom: 14px;">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+      <h3 style="font-size: 20px; font-weight: 800; margin-bottom: 10px; color: var(--text-heading);">تأكيد تسجيل الخروج</h3>
+      <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 24px;">
+        هل أنت متأكد من رغبتك في تسجيل الخروج من المنصة؟
+      </p>
+      <div style="display:flex; justify-content:center; gap:12px;">
+        <button class="btn btn-secondary" id="cancelLogoutBtn">إلغاء والتراجع</button>
+        <button class="btn btn-danger" id="confirmLogoutActionBtn"><i class="fa-solid fa-right-from-bracket"></i> نعم، تسجيل الخروج</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       4. صفحة الرسائل الكاملة (Full-Page Chat)
+       ======================================================== -->
+  <div class="full-page-chat-modal" id="fullPageChatModal">
+    <div class="full-chat-wrapper">
+      <div class="full-chat-topbar">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <i class="fa-solid fa-comments" style="font-size:24px; color:var(--brand-orange)"></i>
+          <div>
+            <h3 id="fullChatTitle" style="font-size:16px; font-weight:800;">مركز الرسائل والمحادثات المباشرة</h3>
+            <span id="fullChatSubtitle" style="font-size:12px; color:#94a3b8;">تواصل فوري بين الأستاذ والطلاب</span>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <button class="btn btn-sm btn-secondary" id="testRealNotifBtn"><i class="fa-solid fa-bell"></i> تجربة إشعار بالجهاز</button>
+          <button class="close-modal-btn" id="closeFullChatBtn">&times;</button>
+        </div>
+      </div>
+
+      <div class="full-chat-layout">
+        <aside class="chat-sidebar">
+          <div class="sidebar-search">
+            <input type="text" id="studentSearchInput" placeholder="بحث بالاسم الثلاثي..." class="custom-input">
+          </div>
+          <div style="padding:10px 16px; display:flex; justify-content:space-between; font-size:12px; font-weight:700; color:var(--text-muted);">
+            <span><i class="fa-solid fa-users"></i> قائمة الطلاب:</span>
+            <span class="badge-status" id="registeredStudentsCount">0</span>
+          </div>
+          <div class="students-roster-list" id="studentsRosterList"></div>
+        </aside>
+
+        <main class="chat-conversation-area">
+          <div style="padding:14px 20px; background:var(--bg-secondary); border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <h4 id="activeContactName" style="font-weight:800; font-size:15px; color:var(--text-heading);">المحادثة</h4>
+              <p id="activeContactRole" style="font-size:12px; color:var(--text-muted);">حالة الاتصال</p>
+            </div>
+            <div id="activeContactWhatsappContainer"></div>
+          </div>
+
+          <div class="conversation-messages-stream" id="conversationStream"></div>
+
+          <form class="conversation-input-bar" id="fullChatSendForm">
+            <input type="text" id="fullChatMessageInput" placeholder="اكتب رسالتك هنا..." autocomplete="off">
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> إرسال</button>
+          </form>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       5. لوحة تحكم الأستاذ جواد والصلاحيات الكاملة للمطور
+       ======================================================== -->
+  <div class="modal full-modal" id="adminDashboardModal">
+    <div class="modal-content">
+      <div class="modal-header" style="background:#0f172a; color:#fff;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <i class="fa-solid fa-user-shield" style="font-size:24px; color:var(--brand-orange)"></i>
+          <div>
+            <h3>لوحة الصلاحيات والتحكم الكاملة (الأستاذ جواد بدري)</h3>
+            <span style="font-size:11px; color:var(--brand-orange);"><i class="fa-solid fa-code"></i> حساب المطور والمشرف العام</span>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <button class="btn btn-sm btn-secondary" id="adminOpenChatBtn"><i class="fa-solid fa-comments"></i> فتح الشات</button>
+          <button class="close-modal-btn" id="closeAdminDashModal">&times;</button>
+        </div>
+      </div>
+
+      <div class="admin-dash-tabs">
+        <button class="dash-tab active" data-tab="tab-permissions"><i class="fa-solid fa-sliders"></i> الصلاحيات وإدارة الطلاب</button>
+        <button class="dash-tab" data-tab="tab-bookings-admin"><i class="fa-solid fa-calendar-check"></i> الحجوزات والموافقة و Zoom</button>
+        <button class="dash-tab" data-tab="tab-emergency-controller"><i class="fa-solid fa-ban"></i> تحديد الظروف الطارئة (ظرف)</button>
+      </div>
+
+      <div class="admin-dash-body">
+        <!-- تبويب الصلاحيات -->
+        <div class="dash-tab-pane active" id="tab-permissions">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
+            <h4><i class="fa-solid fa-users-gear"></i> إدارة وتعديل صلاحيات الطلاب (تحديد عدد الحصص والواتس):</h4>
+            <span class="badge-status" id="adminStudentsCountBadge">0 طالب</span>
+          </div>
+
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>اسم الطالب الثلاثي</th>
+                  <th>رقم الواتساب</th>
+                  <th>البريد الإلكتروني</th>
+                  <th>ليميت الحصص المسموحة</th>
+                  <th>جدول الطالب</th>
+                  <th>واتساب مباشر</th>
+                  <th>تعديل</th>
+                  <th>مسح الطالب</th>
+                </tr>
+              </thead>
+              <tbody id="adminStudentsPermissionsTableBody">
+                <!-- جدول الطلاب -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- تبويب الحجوزات والموافقة والرفض بالسبب -->
+        <div class="dash-tab-pane" id="tab-bookings-admin">
+          <div style="margin-bottom:16px;">
+            <h4>قائمة جميع الحجوزات المسجلة (الموافقة / الرفض بالسبب / رابط Zoom بعد الموافقة):</h4>
+          </div>
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>الطالب</th>
+                  <th>الواتساب</th>
+                  <th>التاريخ</th>
+                  <th>الفترة</th>
+                  <th>حالة الحصة</th>
+                  <th>إجراء الموافقة / الرفض بالسبب</th>
+                  <th>رابط Zoom (بعد الموافقة فقط)</th>
+                  <th>حذف مع إشعار الطالب</th>
+                </tr>
+              </thead>
+              <tbody id="adminAllBookingsTableBody">
+                <!-- جدول الحجوزات -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- تبويب الظروف الطارئة (تحديد اليوم والضغط على ظرف) -->
+        <div class="dash-tab-pane" id="tab-emergency-controller">
+          <div style="background:var(--bg-card); padding:20px; border-radius:var(--radius-md); border:1px solid var(--border-color); margin-bottom:20px;">
+            <h4 style="margin-bottom:12px; color:var(--text-heading);"><i class="fa-solid fa-calendar-xmark" style="color:var(--color-warning)"></i> تحديد يوم والضغط على "ظرف":</h4>
+            <p style="color:var(--text-muted); font-size:13px; margin-bottom:16px;">
+              عند الضغط على ظرف لأي يوم، سيظهر تحت اسم اليوم ورقم اليوم شارة <strong>(ظرف)</strong> في جدول الحجز ولن يتمكن أي طالب من اختيار ذلك اليوم.
+            </p>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <input type="date" id="emergencyDateInput" class="custom-input" style="max-width:200px;">
+              <input type="text" id="emergencyReasonInput" class="custom-input" placeholder="السبب (مثال: عندي ظرف طارئ لن أستطيع الشرح)" style="flex:1;">
+              <button class="btn btn-warning" id="applyEmergencyDayBtn">
+                <i class="fa-solid fa-lock"></i> تطبيق (ظرف) وإغلاق اليوم
+              </button>
+            </div>
+          </div>
+
+          <h5 style="margin-bottom:12px;">قائمة الأيام المعتذر عنها حالياً:</h5>
+          <div id="emergencyDaysList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       6. نافذة جدول الطالب وموافقات الأستاذ
+       ======================================================== -->
+  <div class="modal" id="studentScheduleModal">
+    <div class="modal-content" style="max-width: 820px;">
+      <div class="modal-header">
+        <h3 id="scheduleModalTitle"><i class="fa-solid fa-calendar-days"></i> جدول الطالب: </h3>
+        <button class="close-modal-btn" id="closeStudentScheduleModal">&times;</button>
+      </div>
+      <div style="padding:20px;">
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">
+          يمكنك هنا مراجعة كل يوم اختاره الطالب في جدوله، والموافقة أو الرفض مع كتابة السبب، ولا يظهر حقل Zoom إلا بعد الموافقة:
+        </p>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>اليوم والتاريخ</th>
+                <th>الفترة الزمنية</th>
+                <th>حالة الحصة</th>
+                <th>الموافقة / الرفض بالسبب</th>
+                <th>رابط Zoom (متاح بعد الموافقة)</th>
+              </tr>
+            </thead>
+            <tbody id="studentScheduleTableBody">
+              <!-- الجدول الفردي -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       7. نافذة تعديل بيانات الطالب وصلاحياته
+       ======================================================== -->
+  <div class="modal" id="editStudentModal">
+    <div class="modal-content" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-user-pen"></i> تعديل بيانات وصلاحيات الطالب</h3>
+        <button class="close-modal-btn" id="closeEditStudentModal">&times;</button>
+      </div>
+      <form id="editStudentForm" style="padding:20px; display:flex; flex-direction:column; gap:14px;">
+        <input type="hidden" id="editStudentId">
+        <div class="form-group">
+          <label>الاسم الثلاثي:</label>
+          <input type="text" id="editStudentName" class="custom-input" required>
+        </div>
+        <div class="form-group">
+          <label>رقم الواتساب:</label>
+          <input type="text" id="editStudentWhatsapp" class="custom-input" required>
+        </div>
+        <div class="form-group">
+          <label>البريد الإلكتروني:</label>
+          <input type="email" id="editStudentEmail" class="custom-input" required>
+        </div>
+        <div class="form-group">
+          <label>كلمة المرور:</label>
+          <input type="text" id="editStudentPass" class="custom-input" required>
+        </div>
+        <div class="form-group">
+          <label><i class="fa-solid fa-hand-holding-dollar"></i> عدد الحصص المسموحة (الليميت حسب الدفع):</label>
+          <input type="number" id="editStudentLimit" class="custom-input" min="1" max="50" required>
+          <small class="input-hint">مثال: إذا دفع لـ 3 حصص في الشهر حدد 3، ولن يستطيع حجز أكثر منها.</small>
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:10px;">
+          <button type="button" class="btn btn-secondary" id="cancelEditStudentBtn">إلغاء</button>
+          <button type="submit" class="btn btn-primary"><i class="fa-solid fa-save"></i> حفظ التعديلات</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       8. نافذة تأكيد حجز الحصة (مع خيار إظهار أو إخفاء الاسم في الجدول)
+       ======================================================== -->
+  <div class="modal" id="bookModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-calendar-check"></i> تأكيد حجز الموعد</h3>
+        <button class="close-modal-btn" id="closeBookModal">&times;</button>
+      </div>
+      <form id="bookForm" style="padding:20px; display:flex; flex-direction:column; gap:14px;">
+        <div style="background:rgba(255,109,0,0.08); padding:12px; border-radius:8px; border:1px solid rgba(255,109,0,0.3); font-size:13px;">
+          <p><strong>اليوم:</strong> <span id="summaryDayName">-</span> (<span id="summaryDate">-</span>)</p>
+          <p><strong>الفترة:</strong> <span id="summaryTime">-</span></p>
+          <p><strong>المعلم:</strong> الأستاذ جواد بدري</p>
+        </div>
+
+        <div class="form-group">
+          <label>اسم الطالب (الثلاثي):</label>
+          <input type="text" id="bookStudentName" class="custom-input" readonly>
+        </div>
+
+        <div class="form-group">
+          <label>رقم الواتساب المسجل:</label>
+          <input type="text" id="bookStudentContact" class="custom-input" readonly>
+        </div>
+
+        <div class="form-group">
+          <label>ملاحظاتك للحصة:</label>
+          <textarea id="studentNotes" class="custom-input" rows="2" placeholder="مبتدئ، أود التركيز على بناء الصفحات..."></textarea>
+        </div>
+
+        <!-- خيار إظهار أو إخفاء الاسم في الجدول المقفل للآخرين -->
+        <label class="checkbox-container">
+          <input type="checkbox" id="showMyNamePublicly" checked>
+          <span><strong>إظهار اسمي على الموعد المقفل</strong> (إذا أزلت علامة الصح، سيظهر الموعد محجوزاً دون ظهور اسمك للآخرين)</span>
+        </label>
+
+        <div style="display:flex; justify-content:flex-end; gap:10px;">
+          <button type="button" class="btn btn-secondary" id="cancelBookBtn">إلغاء</button>
+          <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check"></i> تأكيد وإرسال للأستاذ</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- نافذة الإعدادات -->
+  <div class="modal" id="settingsModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-gear"></i> إعدادات المنصة</h3>
+        <button class="close-modal-btn" id="closeSettingsModal">&times;</button>
+      </div>
+      <div style="padding:24px; display:flex; flex-direction:column; gap:18px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-card); padding:14px; border-radius:12px; border:1px solid var(--border-color);">
+          <div>
+            <strong>مظهر الموقع (صباحي / مسائي)</strong>
+            <p style="font-size:12px; color:var(--text-muted)">التبديل بين المظهر الفاتح والداكن</p>
+          </div>
+          <div style="display:flex; gap:4px; background:var(--bg-secondary); padding:4px; border-radius:8px;">
+            <button class="btn btn-sm btn-secondary" id="dayThemeBtn"><i class="fa-solid fa-sun"></i> صباحي</button>
+            <button class="btn btn-sm btn-primary" id="nightThemeBtn"><i class="fa-solid fa-moon"></i> مسائي</button>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-card); padding:14px; border-radius:12px; border:1px solid var(--border-color);">
+          <div>
+            <strong>إشعارات النظام بالجهاز (مع صوت)</strong>
+            <p style="font-size:12px; color:var(--text-muted)">تنبيهك قبل الحصة بيوم وساعة ونصف وربع وبدأت الحصة</p>
+          </div>
+          <button class="btn btn-sm btn-secondary" id="reqPushPermissionBtn"><i class="fa-solid fa-bell"></i> تفعيل إشعارات الجهاز</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ========================================================
+       9. المحرك البرمجي المطور المدمج بالكامل (JavaScript)
+       ======================================================== -->
+  <script>
+    /**
+     * أكاديمية تعليم HTML - الأستاذ جواد بدري
+     * محرك المنصة المحدث والمستقل في ملف واحد للربط مع Firebase
+     */
+
+    const CONFIG = {
+      ADMIN_EMAIL: "Jawadbadry8@gmail.com",
+      ADMIN_PASS: "J102013",
+      STUDENT_SECRET_CODE: "123456789987654321",
+
+      WEEKEND_DAYS: [4, 5, 6], // الخميس، الجمعة، السبت
+
+      // الأحد، الإثنين، الثلاثاء: 4 فترات (45 دقيقة من 3:00 إلى 6:00 م)
+      STANDARD_SLOTS: [
+        { id: "slot-1", start: "15:00", end: "15:45", label: "03:00 م - 03:45 م", duration: "45 دقيقة" },
+        { id: "slot-2", start: "15:45", end: "16:30", label: "03:45 م - 04:30 م", duration: "45 دقيقة" },
+        { id: "slot-3", start: "16:30", end: "17:15", label: "04:30 م - 05:15 م", duration: "45 دقيقة" },
+        { id: "slot-4", start: "17:15", end: "18:00", label: "05:15 م - 06:00 م", duration: "45 دقيقة" }
+      ],
+
+      // الأربعاء فقط: حصه واحدة ربع ساعة من 3:00 إلى 3:15 م
+      WEDNESDAY_SLOTS: [
+        { id: "slot-wed-1", start: "15:00", end: "15:15", label: "03:00 م - 03:15 م", duration: "15 دقيقة (ربع ساعة)" }
+      ]
+    };
+
+    const ARABIC_DAYS = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
+    const ARABIC_MONTHS = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
+
+    // طبقة التخزين مع دعم توجيه الإشعارات للشخص المعني بدقة
+    const StorageService = {
+      KEYS: {
+        STUDENTS: "jawad_html_students_v5",
+        CURRENT_USER: "jawad_html_user_v5",
+        BOOKINGS: "jawad_html_bookings_v5",
+        EMERGENCIES: "jawad_html_emergencies_v5",
+        NOTIFICATIONS: "jawad_html_notifs_v5",
+        CHAT: "jawad_html_chat_v5",
+        THEME: "jawad_html_theme_v5",
+        ALERTS_LOG: "jawad_html_alerts_v5"
+      },
+
+      getStudents() {
+        return JSON.parse(localStorage.getItem(this.KEYS.STUDENTS) || "[]");
+      },
+      saveStudents(list) {
+        localStorage.setItem(this.KEYS.STUDENTS, JSON.stringify(list));
+      },
+      addStudent(st) {
+        const list = this.getStudents();
+        list.push(st);
+        this.saveStudents(list);
+      },
+      updateStudent(st) {
+        let list = this.getStudents();
+        const idx = list.findIndex(s => s.id === st.id);
+        if (idx !== -1) {
+          list[idx] = st;
+          this.saveStudents(list);
+        }
+      },
+      deleteStudent(stId) {
+        let list = this.getStudents();
+        list = list.filter(s => s.id !== stId);
+        this.saveStudents(list);
+
+        const curr = this.getCurrentUser();
+        if (curr && curr.id === stId) {
+          this.clearCurrentUser();
+        }
+      },
+
+      getCurrentUser() {
+        return JSON.parse(localStorage.getItem(this.KEYS.CURRENT_USER) || "null");
+      },
+      setCurrentUser(user) {
+        localStorage.setItem(this.KEYS.CURRENT_USER, JSON.stringify(user));
+      },
+      clearCurrentUser() {
+        localStorage.removeItem(this.KEYS.CURRENT_USER);
+      },
+
+      getBookings() {
+        return JSON.parse(localStorage.getItem(this.KEYS.BOOKINGS) || "[]");
+      },
+      saveBookings(list) {
+        localStorage.setItem(this.KEYS.BOOKINGS, JSON.stringify(list));
+      },
+      addBooking(b) {
+        const list = this.getBookings();
+        list.push(b);
+        this.saveBookings(list);
+      },
+      updateBookingStatus(bId, status, zoomLink, rejectionReason = "") {
+        let list = this.getBookings();
+        const target = list.find(b => b.id === bId);
+        if (target) {
+          if (status !== undefined) target.status = status; // "approved" أو "rejected" أو "pending"
+          if (zoomLink !== undefined) target.zoomLink = zoomLink;
+          if (rejectionReason !== undefined) target.rejectionReason = rejectionReason;
+          this.saveBookings(list);
+        }
+      },
+      deleteBooking(bId) {
+        let list = this.getBookings();
+        list = list.filter(b => b.id !== bId);
+        this.saveBookings(list);
+      },
+
+      getEmergencies() {
+        return JSON.parse(localStorage.getItem(this.KEYS.EMERGENCIES) || "[]");
+      },
+      addEmergency(dateStr, reason) {
+        const list = this.getEmergencies();
+        if (!list.some(e => e.date === dateStr)) {
+          list.push({ date: dateStr, reason: reason || "عندي ظرف طارئ لن أستطيع الشرح" });
+          localStorage.setItem(this.KEYS.EMERGENCIES, JSON.stringify(list));
+        }
+      },
+      removeEmergency(dateStr) {
+        let list = this.getEmergencies();
+        list = list.filter(e => e.date !== dateStr);
+        localStorage.setItem(this.KEYS.EMERGENCIES, JSON.stringify(list));
+      },
+
+      getChat() {
+        return JSON.parse(localStorage.getItem(this.KEYS.CHAT) || "[]");
+      },
+      saveChatMessage(msg) {
+        const list = this.getChat();
+        list.push(msg);
+        localStorage.setItem(this.KEYS.CHAT, JSON.stringify(list));
+      },
+
+      getNotifications() {
+        return JSON.parse(localStorage.getItem(this.KEYS.NOTIFICATIONS) || "[]");
+      },
+      addNotification(n) {
+        const list = this.getNotifications();
+        list.unshift(n);
+        localStorage.setItem(this.KEYS.NOTIFICATIONS, JSON.stringify(list));
+      },
+      clearNotifications() {
+        localStorage.setItem(this.KEYS.NOTIFICATIONS, JSON.stringify([]));
+      },
+
+      getProcessedAlerts() {
+        return JSON.parse(localStorage.getItem(this.KEYS.ALERTS_LOG) || "[]");
+      },
+      markAlertProcessed(k) {
+        const list = this.getProcessedAlerts();
+        if (!list.includes(k)) {
+          list.push(k);
+          localStorage.setItem(this.KEYS.ALERTS_LOG, JSON.stringify(list));
+        }
+      }
+    };
+
+    const AppState = {
+      currentUser: null,
+      currentTheme: localStorage.getItem(StorageService.KEYS.THEME) || "dark",
+      calendarYear: new Date().getFullYear(),
+      calendarMonth: new Date().getMonth(),
+      selectedDateStr: null,
+      selectedDayOfWeek: null,
+      pendingSlot: null,
+      activeChatStudentId: null
+    };
+
+    // صوت الرنين
+    function playNotificationChime() {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        const ctx = new AudioCtx();
+        const tone = (f, st, dur) => {
+          const osc = ctx.createOscillator();
+          const g = ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(f, ctx.currentTime + st);
+          g.gain.setValueAtTime(0.2, ctx.currentTime + st);
+          g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + st + dur);
+          osc.connect(g);
+          g.connect(ctx.destination);
+          osc.start(ctx.currentTime + st);
+          osc.stop(ctx.currentTime + st + dur);
+        };
+        tone(587.33, 0, 0.2);
+        tone(880, 0.15, 0.35);
+      } catch (e) {
+        console.warn("Chime blocked:", e);
+      }
+    }
+
+    // إرسال الإشعار للشخص المعني فقط بالجهاز والموقع
+    function triggerDeviceNotificationForTarget(targetUserId, title, body, urgent = false) {
+      // حفظ في سجل الإشعارات مع تحديد المستلم
+      StorageService.addNotification({
+        id: "notif-" + Date.now(),
+        targetUserId: targetUserId, // "admin" أو معرف الطالب
+        title: title,
+        time: new Date().toLocaleTimeString("ar-EG", { hour: "2-digit", minute: "2-digit" }),
+        content: body
+      });
+
+      const user = AppState.currentUser;
+      // التحقق: هل المستخدم المتصل حالياً هو المستلم المعني؟
+      const isTargetOnlineHere = user && (
+        (targetUserId === "admin" && user.role === "admin") ||
+        (user.id === targetUserId) ||
+        (targetUserId === "all")
+      );
+
+      if (!isTargetOnlineHere) {
+        // لا يظهر الإشعار للمرسل إطلاقاً كما طلب المستخدم!
+        return;
+      }
+
+      // تشغيل الرنين
+      playNotificationChime();
+
+      // إشعار المتصفح والجهاز الحقيقي (Native Notification)
+      if ("Notification" in window && Notification.permission === "granted") {
+        try {
+          const n = new Notification(title, {
+            body: body,
+            icon: "https://cdn-icons-png.flaticon.com/512/1051/1051277.png",
+            requireInteraction: urgent
+          });
+          n.onclick = () => {
+            window.focus();
+            document.getElementById("fullPageChatModal").classList.add("active");
+          };
+        } catch (e) {
+          console.warn("Native Notification error:", e);
+        }
+      }
+
+      // إشعار منبثق بالموقع
+      createToast({ title: title, body: body, urgent: urgent, showTeacherBtn: (user.role === "student") });
+      renderNotificationsUI();
+    }
+
+    // التهيئة
+    document.addEventListener("DOMContentLoaded", () => {
+      initTheme();
+      checkAuthGate();
+      setupGateEvents();
+      initCalendar();
+      initChat();
+      initAdminPanel();
+      initNotificationWatcher();
+      setupLogoutConfirmation();
+    });
+
+    // 1. فحص الدخول وتخصيص واجهة الأستاذ عن الطلاب
+    function checkAuthGate() {
+      const user = StorageService.getCurrentUser();
+      const gate = document.getElementById("authGateOverlay");
+      const app = document.getElementById("mainAppWrapper");
+      const nameLabel = document.getElementById("currentUserNameLabel");
+      const adminHeaderBtn = document.getElementById("adminHeaderBtn");
+
+      if (user && user.isLoggedIn) {
+        AppState.currentUser = user;
+        gate.classList.add("gate-unlocked");
+        app.classList.remove("main-app-hidden");
+
+        const isTeacher = (user.role === "admin");
+
+        if (isTeacher) {
+          nameLabel.textContent = "الأستاذ جواد بدري (المشرف العام)";
+          adminHeaderBtn.style.display = "inline-flex";
+
+          // تخصيص صفحة الأستاذ: لا توجد أزرار تواصل مع الأستاذ أو حجز له!
+          document.getElementById("navChatLabel").textContent = "محادثات الطلاب";
+          document.getElementById("heroBadgeTag").innerHTML = `<i class="fa-solid fa-user-shield"></i> مرحباً بك يا أستاذ جواد في لوحة إدارتك`;
+          document.getElementById("heroTitle").innerHTML = `إدارة حصص وبرمجة <span>HTML</span>`;
+          document.getElementById("heroDesc").textContent = `أهلاً بك أستاذ جواد، من هنا يمكنك مراجعة حجوزات الطلاب، الموافقة عليها، تعيين روابط Zoom، والتحكم بالظروف الطارئة.`;
+
+          document.getElementById("heroPrimaryAction").textContent = "معاينة جدول الحصص";
+          document.getElementById("heroChatBtnLabel").textContent = "فتح محادثات الطلاب";
+
+          // إخفاء قسم "حصصي المحجوزة" لأنه خاص بالطلاب فقط
+          document.getElementById("myBookingsContainerWrapper").style.display = "none";
+          document.getElementById("bookingSectionHeading").textContent = "معاينة جدول الحصص وتفاصيل حجز الطلاب";
+          document.getElementById("bookingSectionDesc").textContent = "يمكنك النقر على أي يوم لمعاينة الطلاب الحاجزين لكل فترة زمنية.";
+        } else {
+          nameLabel.textContent = user.fullName;
+          adminHeaderBtn.style.display = "none";
+
+          document.getElementById("navChatLabel").textContent = "الرسائل المباشرة";
+          document.getElementById("heroBadgeTag").innerHTML = `<i class="fa-solid fa-award"></i> حصص فردية ومباشرة مع الأستاذ جواد بدري`;
+          document.getElementById("heroTitle").innerHTML = `تعلم واحتراف لغة <span>HTML5</span> من الصفر وحتى الإتقان`;
+          document.getElementById("heroDesc").textContent = `حصص فردية ومباشرة عبر Zoom مع الأستاذ جواد بدري مع إشعارات ذكية بالصوت ومتابعة مستمرة عبر الواتساب والشات.`;
+
+          document.getElementById("heroPrimaryAction").textContent = "احجز موعدك من جدول الأيام";
+          document.getElementById("heroChatBtnLabel").textContent = "فتح الشات مع الأستاذ";
+
+          document.getElementById("myBookingsContainerWrapper").style.display = "block";
+          document.getElementById("bookingSectionHeading").textContent = "جدول حجز الأيام للشهر الحالي";
+          document.getElementById("bookingSectionDesc").textContent = "اضغط على أي زر يوم لمعاينة الفترات وحجز حصتك (الخميس والجمعة والسبت إجازة أسبوعية).";
+        }
+
+        renderMyBookings();
+        renderNotificationsUI();
+        renderCalendar();
+      } else {
+        AppState.currentUser = null;
+        gate.classList.remove("gate-unlocked");
+        app.classList.add("main-app-hidden");
+      }
+    }
+
+    function setupLogoutConfirmation() {
+      const triggerBtn = document.getElementById("triggerLogoutBtn");
+      const modal = document.getElementById("logoutConfirmModal");
+      const cancelBtn = document.getElementById("cancelLogoutBtn");
+      const confirmBtn = document.getElementById("confirmLogoutActionBtn");
+
+      triggerBtn?.addEventListener("click", () => modal.classList.add("active"));
+      cancelBtn?.addEventListener("click", () => modal.classList.remove("active"));
+
+      confirmBtn?.addEventListener("click", () => {
+        modal.classList.remove("active");
+        StorageService.clearCurrentUser();
+        checkAuthGate();
+        createToast({ title: "تم تسجيل الخروج بنجاح", body: "نراك قريباً في الحصص القادمة!" });
+      });
+    }
+
+    function setupGateEvents() {
+      const tabReg = document.getElementById("tabStudentRegisterBtn");
+      const tabLog = document.getElementById("tabStudentLoginBtn");
+      const tabAdm = document.getElementById("tabAdminGateBtn");
+      const formReg = document.getElementById("studentRegisterForm");
+      const formLog = document.getElementById("studentLoginForm");
+      const formAdm = document.getElementById("adminGateForm");
+
+      tabReg?.addEventListener("click", () => {
+        [tabReg, tabLog, tabAdm].forEach(t => t.classList.remove("active"));
+        [formReg, formLog, formAdm].forEach(f => f.classList.remove("active"));
+        tabReg.classList.add("active");
+        formReg.classList.add("active");
+      });
+      tabLog?.addEventListener("click", () => {
+        [tabReg, tabLog, tabAdm].forEach(t => t.classList.remove("active"));
+        [formReg, formLog, formAdm].forEach(f => f.classList.remove("active"));
+        tabLog.classList.add("active");
+        formLog.classList.add("active");
+      });
+      tabAdm?.addEventListener("click", () => {
+        [tabReg, tabLog, tabAdm].forEach(t => t.classList.remove("active"));
+        [formReg, formLog, formAdm].forEach(f => f.classList.remove("active"));
+        tabAdm.classList.add("active");
+        formAdm.classList.add("active");
+      });
+
+      // تسجيل طالب
+      formReg?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const errEl = document.getElementById("regErrorMsg");
+        errEl.style.display = "none";
+
+        const fullName = document.getElementById("regStudentFullName").value.trim();
+        const whatsapp = document.getElementById("regStudentWhatsapp").value.trim();
+        const email = document.getElementById("regStudentEmail").value.trim();
+        const pass = document.getElementById("regStudentPass").value.trim();
+        const code = document.getElementById("regSecretCode").value.trim();
+
+        if (fullName.split(/\s+/).filter(Boolean).length < 3) {
+          errEl.textContent = "يجب كتابة الاسم الثلاثي كاملاً (3 أسماء على الأقل، مثال: أحمد عبد الله المحمد)";
+          errEl.style.display = "block";
+          return;
+        }
+
+        if (code !== CONFIG.STUDENT_SECRET_CODE) {
+          errEl.textContent = "الكود السري غير صحيح! يرجى إدخال كود الأستاذ جواد بدري";
+          errEl.style.display = "block";
+          return;
+        }
+
+        const newStudent = {
+          id: "student-" + Date.now(),
+          fullName: fullName,
+          whatsapp: whatsapp,
+          email: email,
+          password: pass,
+          sessionsLimit: 3,
+          role: "student",
+          isLoggedIn: true,
+          registeredAt: new Date().toLocaleDateString("ar-EG")
+        };
+
+        StorageService.addStudent(newStudent);
+        StorageService.setCurrentUser(newStudent);
+
+        // تنبيه للأدمن بأن هناك طالباً جديداً سجل
+        triggerDeviceNotificationForTarget("admin", "طالب جديد انضم للأكاديمية!", `سجل الطالب: ${fullName} ورقم واتسابه: ${whatsapp}`);
+
+        checkAuthGate();
+        triggerDeviceNotificationForTarget(newStudent.id, "مرحباً بك في المنصة! 🎉", `أهلاً بك يا ${fullName}، تم تفعيل حسابك بنجاح.`);
+      });
+
+      // دخول طالب
+      formLog?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const errEl = document.getElementById("loginErrorMsg");
+        errEl.style.display = "none";
+
+        const contact = document.getElementById("loginStudentContact").value.trim();
+        const pass = document.getElementById("loginStudentPass").value.trim();
+        const students = StorageService.getStudents();
+
+        const st = students.find(s => (s.email.toLowerCase() === contact.toLowerCase() || s.whatsapp === contact) && s.password === pass);
+        if (st) {
+          st.isLoggedIn = true;
+          StorageService.setCurrentUser(st);
+          checkAuthGate();
+        } else {
+          errEl.textContent = "بيانات الدخول غير صحيحة!";
+          errEl.style.display = "block";
+        }
+      });
+
+      // دخول الأدمن
+      formAdm?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const errEl = document.getElementById("adminGateError");
+        errEl.style.display = "none";
+
+        const email = document.getElementById("adminGateEmail").value.trim();
+        const pass = document.getElementById("adminGatePass").value.trim();
+
+        if (email.toLowerCase() === CONFIG.ADMIN_EMAIL.toLowerCase() && pass === CONFIG.ADMIN_PASS) {
+          const adminObj = {
+            id: "admin-jawad",
+            fullName: "الأستاذ جواد بدري",
+            email: CONFIG.ADMIN_EMAIL,
+            role: "admin",
+            isLoggedIn: true
+          };
+          StorageService.setCurrentUser(adminObj);
+          checkAuthGate();
+        } else {
+          errEl.style.display = "block";
+        }
+      });
+    }
+
+    // 2. نظام التقويم مع أسماء الأيام وبادج (ظرف)
+    function initCalendar() {
+      renderCalendar();
+
+      document.getElementById("prevMonthBtn")?.addEventListener("click", () => {
+        AppState.calendarMonth--;
+        if (AppState.calendarMonth < 0) {
+          AppState.calendarMonth = 11;
+          AppState.calendarYear--;
+        }
+        renderCalendar();
+      });
+
+      document.getElementById("nextMonthBtn")?.addEventListener("click", () => {
+        AppState.calendarMonth++;
+        if (AppState.calendarMonth > 11) {
+          AppState.calendarMonth = 0;
+          AppState.calendarYear++;
+        }
+        renderCalendar();
+      });
+
+      document.getElementById("resetCurrentMonthBtn")?.addEventListener("click", () => {
+        AppState.calendarYear = new Date().getFullYear();
+        AppState.calendarMonth = new Date().getMonth();
+        renderCalendar();
+      });
+    }
+
+    function renderCalendar() {
+      const container = document.getElementById("monthDaysButtonsGrid");
+      const heading = document.getElementById("currentMonthYearHeading");
+      if (!container || !heading) return;
+
+      const y = AppState.calendarYear;
+      const m = AppState.calendarMonth;
+      heading.textContent = `${ARABIC_MONTHS[m]} ${y}`;
+      container.innerHTML = "";
+
+      const daysInMonth = new Date(y, m + 1, 0).getDate();
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const emergencies = StorageService.getEmergencies();
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dateObj = new Date(y, m, day);
+        const dayOfWeek = dateObj.getDay();
+        const dayName = ARABIC_DAYS[dayOfWeek];
+        const dateStr = `${y}-${String(m + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+
+        const isWeekend = CONFIG.WEEKEND_DAYS.includes(dayOfWeek);
+        const isPast = dateObj < today;
+        const emergencyObj = emergencies.find(e => e.date === dateStr);
+        const isSelected = AppState.selectedDateStr === dateStr;
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "day-btn";
+
+        let innerHtml = `
+          <span class="day-header-name">${dayName}</span>
+          <span class="day-number">${day}</span>
+        `;
+
+        if (emergencyObj) {
+          btn.classList.add("is-emergency");
+          btn.disabled = true;
+          innerHtml += `<span class="day-status-pill">(ظرف)</span>`;
+        } else if (isWeekend) {
+          btn.classList.add("is-weekend");
+          btn.disabled = true;
+          innerHtml += `<span class="day-status-pill">إجازة أسبوعية</span>`;
+        } else if (isPast) {
+          btn.classList.add("is-past");
+          btn.disabled = true;
+          innerHtml += `<span class="day-status-pill">انتهى</span>`;
+        } else {
+          btn.classList.add("is-available-day");
+          if (isSelected) btn.classList.add("is-selected");
+          innerHtml += `<span class="day-status-pill"><i class="fa-solid fa-check"></i> متاح</span>`;
+
+          btn.addEventListener("click", () => {
+            selectDay(dateStr, dayName, dayOfWeek);
+          });
+        }
+
+        btn.innerHTML = innerHtml;
+        container.appendChild(btn);
+      }
+
+      if (!AppState.selectedDateStr) {
+        const firstAvail = container.querySelector(".is-available-day");
+        if (firstAvail) firstAvail.click();
+      }
+    }
+
+    function selectDay(dateStr, dayName, dayOfWeek) {
+      AppState.selectedDateStr = dateStr;
+      AppState.selectedDayOfWeek = dayOfWeek;
+
+      document.querySelectorAll(".month-days-buttons-grid .day-btn").forEach(b => b.classList.remove("is-selected"));
+      renderCalendar();
+
+      document.getElementById("selectedDayText").textContent = `${dayName} (${dateStr})`;
+      renderSlotsForDay(dateStr, dayOfWeek);
+    }
+
+    // 3. فترات الحصص (الأربعاء 15 دقيقة فقط + شرط الزر المظلم + إظهار اسم الحاجز بحسب رغبته)
+    function renderSlotsForDay(dateStr, dayOfWeek) {
+      const container = document.getElementById("slotsGrid");
+      const wedNotice = document.getElementById("wednesdayNotice");
+      if (!container) return;
+
+      container.innerHTML = "";
+      const isWednesday = (dayOfWeek === 3);
+
+      if (isWednesday) {
+        wedNotice.style.display = "flex";
+      } else {
+        wedNotice.style.display = "none";
+      }
+
+      const slots = isWednesday ? CONFIG.WEDNESDAY_SLOTS : CONFIG.STANDARD_SLOTS;
+      const allBookings = StorageService.getBookings();
+      const bookedOnThisDate = allBookings.filter(b => b.date === dateStr);
+      const isTeacher = (AppState.currentUser && AppState.currentUser.role === "admin");
+
+      slots.forEach(slot => {
+        const booked = bookedOnThisDate.find(b => b.slotId === slot.id);
+
+        const card = document.createElement("button");
+        card.type = "button";
+        card.className = `slot-btn ${booked ? "is-booked" : "is-available"}`;
+
+        if (booked) {
+          card.disabled = true;
+
+          // التحقق من خيار إظهار الاسم: إذا كان واضع صح، أو إذا كان المعلم يظهر له دائماً
+          let bookedDisplayName = "محجوز لطالب (خاص)";
+          if (booked.showNamePublicly || isTeacher) {
+            bookedDisplayName = `محجوز لـ: ${booked.studentName}`;
+          }
+
+          card.innerHTML = `
+            <div class="slot-time"><i class="fa-solid fa-clock"></i> ${slot.label}</div>
+            <div class="slot-duration">المدة: ${slot.duration}</div>
+            <div class="badge-status badge-danger"><i class="fa-solid fa-ban"></i> ${bookedDisplayName}</div>
+          `;
+        } else {
+          // إذا كان معلم، يوضح له أن الفترة متاحة للطلاب
+          const actionText = isTeacher ? "فترة متاحة لاستقبال الطلاب" : "متاح للحجز الفوري";
+          card.innerHTML = `
+            <div class="slot-time"><i class="fa-regular fa-clock"></i> ${slot.label}</div>
+            <div class="slot-duration">المدة: ${slot.duration} عبر Zoom</div>
+            <div class="badge-status"><i class="fa-solid fa-check"></i> ${actionText}</div>
+          `;
+
+          card.addEventListener("click", () => {
+            {
+              
+            }
+            openBookingModal(dateStr, slot);
+          });
+        }
+
+        container.appendChild(card);
+      });
+    }
+
+    function openBookingModal(dateStr, slot) {
+      const user = AppState.currentUser;
+      if (!user) return;
+
+      if (user.role === "student") {
+        const studentBookings = StorageService.getBookings().filter(b => b.studentId === user.id);
+        const limit = user.sessionsLimit || 3;
+        if (studentBookings.length >= limit) {
+          alert(`عذراً يا ${user.fullName}، لقد وصلت إلى الحد الأقصى للحصص المسموحة لك وهو (${limit} حصص). يرجى التواصل مع الأستاذ جواد لتجديد أو زيادة عدد الحصص.`);
+          return;
+        }
+      }
+
+      AppState.pendingSlot = { date: dateStr, slot };
+      document.getElementById("summaryDayName").textContent = ARABIC_DAYS[AppState.selectedDayOfWeek];
+      document.getElementById("summaryDate").textContent = dateStr;
+      document.getElementById("summaryTime").textContent = slot.label;
+      document.getElementById("bookStudentName").value = user.fullName;
+      document.getElementById("bookStudentContact").value = user.whatsapp || user.email;
+      document.getElementById("showMyNamePublicly").checked = true; // افتراضياً معلم بصح
+
+      document.getElementById("bookModal").classList.add("active");
+    }
+
+    // تأكيد الحجز وحفظ خيار إظهار الاسم
+    document.getElementById("bookForm")?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (!AppState.pendingSlot || !AppState.currentUser) return;
+
+      const user = AppState.currentUser;
+      const notes = document.getElementById("studentNotes").value.trim();
+      const showName = document.getElementById("showMyNamePublicly").checked;
+
+      const newBooking = {
+        id: "booking-" + Date.now(),
+        studentId: user.id,
+        studentName: user.fullName,
+        studentWhatsapp: user.whatsapp,
+        studentEmail: user.email,
+        date: AppState.pendingSlot.date,
+        dayName: ARABIC_DAYS[AppState.selectedDayOfWeek],
+        slotId: AppState.pendingSlot.slot.id,
+        slotLabel: AppState.pendingSlot.slot.label,
+        duration: AppState.pendingSlot.slot.duration,
+        startTime: AppState.pendingSlot.slot.start,
+        notes: notes,
+        showNamePublicly: showName, // حفظ رغبة الطالب بإظهار أو إخفاء اسمه
+        status: "pending", // قيد انتظار موافقة الأستاذ
+        rejectionReason: "",
+        zoomLink: ""
+      };
+
+      StorageService.addBooking(newBooking);
+
+      // تنبيه للأستاذ جواد فقط بجهازه
+      triggerDeviceNotificationForTarget(
+        "admin",
+        "طلب حجز حصة جديدة!",
+        `طلب الطالب ${user.fullName} حجز حصة يوم ${newBooking.dayName} (${newBooking.date}) وقت ${newBooking.slotLabel}.`
+      );
+
+      // تنبيه للطالب نفسه بنجاح إرسال الطلب
+      triggerDeviceNotificationForTarget(
+        user.id,
+        "تم إرسال طلب الحجز للأستاذ! 🎉",
+        `تم إرسال موعدك في ${newBooking.dayName} (${newBooking.date}) بنجاح، وستصلك موافقة الأستاذ قريباً.`
+      );
+
+      document.getElementById("bookModal").classList.remove("active");
+      e.target.reset();
+
+      renderSlotsForDay(AppState.selectedDateStr, AppState.selectedDayOfWeek);
+      renderMyBookings();
+    });
+
+    document.getElementById("closeBookModal")?.addEventListener("click", () => document.getElementById("bookModal").classList.remove("active"));
+    document.getElementById("cancelBookBtn")?.addEventListener("click", () => document.getElementById("bookModal").classList.remove("active"));
+
+    // عرض حصص الطالب الحالية مع حالة الموافقة
+    function renderMyBookings() {
+      const container = document.getElementById("myBookingsList");
+      const badge = document.getElementById("myBookingsCount");
+      if (!container) return;
+
+      const user = AppState.currentUser;
+      const all = StorageService.getBookings();
+      const myBookings = (user && user.role === "admin") ? all : all.filter(b => b.studentId === (user ? user.id : ""));
+
+      badge.textContent = myBookings.length;
+
+      if (myBookings.length === 0) {
+        container.innerHTML = `<div style="padding:20px; text-align:center; color:var(--text-muted); grid-column:1/-1;">لا توجد لديك حصص محجوزة بعد. اختر يوماً من الجدول بالأعلى!</div>`;
+        return;
+      }
+
+      container.innerHTML = "";
+      myBookings.forEach(b => {
+        const card = document.createElement("div");
+        card.className = "booking-item-card";
+
+        let approvalBadge = "";
+        if (b.status === "approved") {
+          approvalBadge = `<span class="badge-approved"><i class="fa-solid fa-circle-check"></i> الاستاذ وافق على ذا اليوم</span>`;
+        } else if (b.status === "rejected") {
+          approvalBadge = `<span class="badge-status badge-danger"><i class="fa-solid fa-circle-xmark"></i> تم الاعتذار عن الحصة: ${b.rejectionReason || "ظرف طارئ"}</span>`;
+        } else {
+          approvalBadge = `<span class="badge-pending"><i class="fa-solid fa-hourglass-half"></i> قيد مراجعة الأستاذ</span>`;
+        }
+
+        let zoomSection = "";
+        if (b.status === "approved" && b.zoomLink && b.zoomLink.trim() !== "") {
+          zoomSection = `
+            <div class="zoom-cta-box">
+              <a href="${b.zoomLink}" target="_blank" class="zoom-join-btn">
+                <i class="fa-solid fa-video"></i> الدخول إلى الحصة عبر Zoom
+              </a>
+            </div>
+          `;
+        } else if (b.status === "approved") {
+          zoomSection = `
+            <div class="zoom-cta-box" style="font-size:12px; color:var(--color-warning);">
+              <i class="fa-solid fa-hourglass"></i> تمت الموافقة، وسيرفق الأستاذ جواد رابط Zoom قريباً
+            </div>
+          `;
+        } else {
+          zoomSection = `
+            <div class="zoom-cta-box" style="font-size:12px; color:var(--text-muted);">
+              <i class="fa-solid fa-lock"></i> رابط Zoom يظهر بعد موافقة الأستاذ جواد على الحصة
+            </div>
+          `;
+        }
+
+        card.innerHTML = `
+          <div class="booking-item-top">
+            <div>
+              <strong>${b.dayName || "يوم الحصة"} (${b.date})</strong>
+              <div style="color:var(--brand-orange); font-size:13px; font-weight:700;">${b.slotLabel}</div>
+            </div>
+            ${approvalBadge}
+          </div>
+          <div style="font-size:13px; color:var(--text-muted); margin:8px 0;">
+            <div><strong>الطالب:</strong> ${b.studentName}</div>
+            <div><strong>الواتساب:</strong> ${b.studentWhatsapp || b.contact}</div>
+            ${b.notes ? `<div><strong>ملاحظاتك:</strong> ${b.notes}</div>` : ""}
+          </div>
+          ${zoomSection}
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    // 4. لوحة الصلاحيات الكاملة للأستاذ جواد
+    function initAdminPanel() {
+      const modal = document.getElementById("adminDashboardModal");
+      const btn = document.getElementById("adminHeaderBtn");
+      const closeBtn = document.getElementById("closeAdminDashModal");
+
+      btn?.addEventListener("click", () => {
+        modal.classList.add("active");
+        renderAdminPermissionsTable();
+        renderAdminBookingsTable();
+        renderEmergencyList();
+      });
+
+      closeBtn?.addEventListener("click", () => modal.classList.remove("active"));
+
+      document.querySelectorAll(".admin-dash-tabs .dash-tab").forEach(t => {
+        t.addEventListener("click", () => {
+          document.querySelectorAll(".admin-dash-tabs .dash-tab").forEach(x => x.classList.remove("active"));
+          document.querySelectorAll(".admin-dash-body .dash-tab-pane").forEach(p => p.classList.remove("active"));
+          t.classList.add("active");
+          const target = document.getElementById(t.getAttribute("data-tab"));
+          if (target) target.classList.add("active");
+        });
+      });
+
+      document.getElementById("applyEmergencyDayBtn")?.addEventListener("click", () => {
+        const dateVal = document.getElementById("emergencyDateInput").value;
+        const reasonVal = document.getElementById("emergencyReasonInput").value;
+        if (!dateVal) {
+          alert("الرجاء اختيار تاريخ اليوم الذي عندك فيه ظرف!");
+          return;
+        }
+        StorageService.addEmergency(dateVal, reasonVal);
+        document.getElementById("emergencyDateInput").value = "";
+        document.getElementById("emergencyReasonInput").value = "";
+        renderEmergencyList();
+        renderCalendar();
+        createToast({ title: "تم تطبيق (ظرف) على هذا اليوم", body: "تم إغلاق اليوم أمام الحجوزات بنجاح." });
+      });
+    }
+
+    function renderAdminPermissionsTable() {
+      const tbody = document.getElementById("adminStudentsPermissionsTableBody");
+      const badge = document.getElementById("adminStudentsCountBadge");
+      const students = StorageService.getStudents();
+
+      if (!tbody) return;
+      badge.textContent = `${students.length} طالب مسجل`;
+
+      if (students.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:20px; color:var(--text-muted);">لا يوجد طلاب مسجلين حتى الآن</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = "";
+      students.forEach(s => {
+        const tr = document.createElement("tr");
+        const cleanWhatsapp = (s.whatsapp || "").replace(/[^0-9]/g, "");
+        const waBtn = cleanWhatsapp
+          ? `<a href="https://wa.me/${cleanWhatsapp}" target="_blank" class="btn btn-sm btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> واتساب</a>`
+          : `<span style="color:var(--text-muted)">غير متوفر</span>`;
+
+        tr.innerHTML = `
+          <td><strong>${s.fullName}</strong></td>
+          <td>${s.whatsapp || "لا يوجد"}</td>
+          <td>${s.email}</td>
+          <td><span class="badge-status">${s.sessionsLimit || 3} حصص</span></td>
+          <td>
+            <button class="btn btn-sm btn-primary view-student-schedule-btn" data-id="${s.id}" data-name="${s.fullName}">
+              <i class="fa-solid fa-calendar-days"></i> جدول الطالب
+            </button>
+          </td>
+          <td>${waBtn}</td>
+          <td>
+            <button class="btn btn-sm btn-secondary edit-student-btn" data-id="${s.id}">
+              <i class="fa-solid fa-pen-to-square"></i> تعديل
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-danger delete-student-btn" data-id="${s.id}" title="مسح الطالب">
+              <i class="fa-solid fa-user-xmark"></i> مسح
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      tbody.querySelectorAll(".view-student-schedule-btn").forEach(b => {
+        b.addEventListener("click", () => {
+          openStudentScheduleModal(b.getAttribute("data-id"), b.getAttribute("data-name"));
+        });
+      });
+
+      tbody.querySelectorAll(".edit-student-btn").forEach(b => {
+        b.addEventListener("click", () => {
+          openEditStudentModal(b.getAttribute("data-id"));
+        });
+      });
+
+      tbody.querySelectorAll(".delete-student-btn").forEach(b => {
+        b.addEventListener("click", () => {
+          const id = b.getAttribute("data-id");
+          if (confirm("هل تريد بالتأكيد مسح هذا الطالب نهائياً؟ (سيتم تسجيل خروجه فوراً ويتطلب منه إعادة التسجيل)")) {
+            StorageService.deleteStudent(id);
+            renderAdminPermissionsTable();
+            checkAuthGate();
+            createToast({ title: "تم مسح الطالب من المنصة", body: "تم حذف حسابه وتفاصيله بالكامل." });
+          }
+        });
+      });
+    }
+
+    // نافذة فحص جدول الطالب الفردي - مع الموافقة والرفض بالسبب وعدم إظهار حقل Zoom إلا بعد الموافقة
+    function openStudentScheduleModal(studentId, studentName) {
+      const modal = document.getElementById("studentScheduleModal");
+      const title = document.getElementById("scheduleModalTitle");
+      const tbody = document.getElementById("studentScheduleTableBody");
+
+      title.innerHTML = `<i class="fa-solid fa-calendar-days"></i> جدول الطالب: <strong>${studentName}</strong>`;
+      modal.classList.add("active");
+
+      const studentBookings = StorageService.getBookings().filter(b => b.studentId === studentId);
+
+      if (studentBookings.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:20px; color:var(--text-muted);">لم يقم الطالب باختيار أي أيام في جدوله بعد</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = "";
+      studentBookings.forEach(b => {
+        const tr = document.createElement("tr");
+
+        let statusText = "";
+        if (b.status === "approved") {
+          statusText = '<span class="badge-approved">موافق عليه</span>';
+        } else if (b.status === "rejected") {
+          statusText = `<span class="badge-status badge-danger">مرفوض: ${b.rejectionReason}</span>`;
+        } else {
+          statusText = '<span class="badge-pending">قيد الانتظار</span>';
+        }
+
+        // حقل Zoom يظهر فقط بعد الموافقة عليها كما طلب المستخدم
+        let zoomTd = "";
+        if (b.status === "approved") {
+          zoomTd = `
+            <div style="display:flex; gap:6px;">
+              <input type="text" class="custom-input" id="zoom-in-${b.id}" value="${b.zoomLink || ""}" placeholder="https://zoom.us/j/..." style="padding:6px; font-size:12px; direction:ltr;">
+              <button class="btn btn-sm btn-primary save-zoom-action" data-id="${b.id}" data-st="${studentId}">حفظ</button>
+            </div>
+          `;
+        } else {
+          zoomTd = `<small style="color:var(--text-muted);"><i class="fa-solid fa-lock"></i> يتطلب الموافقة أولاً لإدراج الرابط</small>`;
+        }
+
+        tr.innerHTML = `
+          <td><strong>${b.dayName || "يوم الحصة"} (${b.date})</strong></td>
+          <td>${b.slotLabel}</td>
+          <td>${statusText}</td>
+          <td>
+            <div style="display:flex; gap:6px;">
+              <button class="btn btn-sm btn-primary approve-session-btn" data-id="${b.id}" data-st="${studentId}">
+                <i class="fa-solid fa-check"></i> موافقة
+              </button>
+              <button class="btn btn-sm btn-danger reject-session-btn" data-id="${b.id}" data-st="${studentId}">
+                <i class="fa-solid fa-xmark"></i> اعتذار / رفض
+              </button>
+            </div>
+          </td>
+          <td>${zoomTd}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      // زر الموافقة: يرسل إشعاراً لجهاز الطالب فقط
+      tbody.querySelectorAll(".approve-session-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-id");
+          const stId = btn.getAttribute("data-st");
+          StorageService.updateBookingStatus(id, "approved");
+
+          // إرسال إشعار لجهاز الطالب فقط
+          triggerDeviceNotificationForTarget(
+            stId,
+            "وافق الأستاذ جواد على موعدك! ✅",
+            "تمت الموافقة على الحصة في جدولك، يرجى الاستعداد وحضور الدرس."
+          );
+
+          openStudentScheduleModal(studentId, studentName);
+          renderMyBookings();
+        });
+      });
+
+      // زر الرفض مع كتابة السبب: يرسل إشعاراً لجهاز الطالب بالسبب
+      tbody.querySelectorAll(".reject-session-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-id");
+          const stId = btn.getAttribute("data-st");
+          const reason = prompt("يرجى كتابة سبب الاعتذار أو الرفض ليصل كإشعار رسمي في جهاز الطالب:", "ظرف طارئ واعتذار من الأستاذ جواد");
+          if (reason !== null && reason.trim() !== "") {
+            StorageService.updateBookingStatus(id, "rejected", undefined, reason.trim());
+
+            // إرسال إشعار لجهاز الطالب فقط مع السبب
+            triggerDeviceNotificationForTarget(
+              stId,
+              "اعتذار عن موعد الحصة من الأستاذ جواد ⚠️",
+              `تم الاعتذار عن الحصة بسبب: ${reason.trim()}`
+            );
+
+            openStudentScheduleModal(studentId, studentName);
+            renderMyBookings();
+          }
+        });
+      });
+
+      tbody.querySelectorAll(".save-zoom-action").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-id");
+          const stId = btn.getAttribute("data-st");
+          const val = document.getElementById(`zoom-in-${id}`).value.trim();
+          StorageService.updateBookingStatus(id, undefined, val);
+
+          triggerDeviceNotificationForTarget(
+            stId,
+            "تمت إضافة رابط Zoom لحصتك! 🔗",
+            "أضاف الأستاذ جواد رابط القاعة الآن. يمكنك الانضمام من صفحتك."
+          );
+
+          alert("تم حفظ رابط Zoom بنجاح ووصل إشعار للطالب في جهازه!");
+          renderMyBookings();
+        });
+      });
+    }
+
+    document.getElementById("closeStudentScheduleModal")?.addEventListener("click", () => {
+      document.getElementById("studentScheduleModal").classList.remove("active");
+    });
+
+    // تعديل بيانات الطالب وصلاحياته
+    function openEditStudentModal(studentId) {
+      const student = StorageService.getStudents().find(s => s.id === studentId);
+      if (!student) return;
+
+      document.getElementById("editStudentId").value = student.id;
+      document.getElementById("editStudentName").value = student.fullName;
+      document.getElementById("editStudentWhatsapp").value = student.whatsapp || "";
+      document.getElementById("editStudentEmail").value = student.email;
+      document.getElementById("editStudentPass").value = student.password;
+      document.getElementById("editStudentLimit").value = student.sessionsLimit || 3;
+
+      document.getElementById("editStudentModal").classList.add("active");
+    }
+
+    document.getElementById("editStudentForm")?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const id = document.getElementById("editStudentId").value;
+      const student = StorageService.getStudents().find(s => s.id === id);
+      if (!student) return;
+
+      student.fullName = document.getElementById("editStudentName").value.trim();
+      student.whatsapp = document.getElementById("editStudentWhatsapp").value.trim();
+      student.email = document.getElementById("editStudentEmail").value.trim();
+      student.password = document.getElementById("editStudentPass").value.trim();
+      student.sessionsLimit = parseInt(document.getElementById("editStudentLimit").value) || 3;
+
+      StorageService.updateStudent(student);
+
+      const curr = StorageService.getCurrentUser();
+      if (curr && curr.id === id) {
+        student.isLoggedIn = true;
+        StorageService.setCurrentUser(student);
+        checkAuthGate();
+      }
+
+      document.getElementById("editStudentModal").classList.remove("active");
+      renderAdminPermissionsTable();
+      createToast({ title: "تم تحديث بيانات وصلاحيات الطالب", body: `الليميت الجديد: ${student.sessionsLimit} حصص.` });
+    });
+
+    document.getElementById("closeEditStudentModal")?.addEventListener("click", () => document.getElementById("editStudentModal").classList.remove("active"));
+    document.getElementById("cancelEditStudentBtn")?.addEventListener("click", () => document.getElementById("editStudentModal").classList.remove("active"));
+
+    // جدول الحجوزات العام للأدمن مع خيار الرفض بالسبب وحذف مع إشعار
+    function renderAdminBookingsTable() {
+      const tbody = document.getElementById("adminAllBookingsTableBody");
+      const bookings = StorageService.getBookings();
+      if (!tbody) return;
+
+      if (bookings.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:20px; color:var(--text-muted);">لا توجد أي حجوزات بعد</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = "";
+      bookings.forEach(b => {
+        const tr = document.createElement("tr");
+
+        let statusBadge = "";
+        if (b.status === "approved") {
+          statusBadge = '<span class="badge-approved">موافق عليه</span>';
+        } else if (b.status === "rejected") {
+          statusBadge = `<span class="badge-status badge-danger">مرفوض: ${b.rejectionReason}</span>`;
+        } else {
+          statusBadge = '<span class="badge-pending">قيد الانتظار</span>';
+        }
+
+        let zoomField = "";
+        if (b.status === "approved") {
+          zoomField = `
+            <div style="display:flex; gap:6px;">
+              <input type="text" class="custom-input" id="zoom-all-${b.id}" value="${b.zoomLink || ""}" placeholder="رابط Zoom" style="padding:6px; font-size:12px; direction:ltr;">
+              <button class="btn btn-sm btn-primary save-zoom-all-btn" data-id="${b.id}" data-st="${b.studentId}">حفظ</button>
+            </div>
+          `;
+        } else {
+          zoomField = `<small style="color:var(--text-muted);">يجب الموافقة أولاً</small>`;
+        }
+
+        tr.innerHTML = `
+          <td><strong>${b.studentName}</strong></td>
+          <td>${b.studentWhatsapp || b.contact || "لا يوجد"}</td>
+          <td>${b.dayName || ""} (${b.date})</td>
+          <td>${b.slotLabel}</td>
+          <td>${statusBadge}</td>
+          <td>
+            <div style="display:flex; gap:6px;">
+              <button class="btn btn-sm btn-primary approve-booking-table-btn" data-id="${b.id}" data-st="${b.studentId}">موافقة</button>
+              <button class="btn btn-sm btn-danger reject-booking-table-btn" data-id="${b.id}" data-st="${b.studentId}">رفض بالسبب</button>
+            </div>
+          </td>
+          <td>${zoomField}</td>
+          <td>
+            <button class="btn btn-sm btn-danger delete-booking-admin-btn" data-id="${b.id}" data-st="${b.studentId}" title="حذف وإشعار الطالب"><i class="fa-solid fa-trash"></i></button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      tbody.querySelectorAll(".approve-booking-table-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-id");
+          const stId = btn.getAttribute("data-st");
+          StorageService.updateBookingStatus(id, "approved");
+
+          triggerDeviceNotificationForTarget(
+            stId,
+            "وافق الأستاذ جواد على موعدك! ✅",
+            "تمت الموافقة على الحصة في جدولك، يرجى الاستعداد وحضور الدرس."
+          );
+
+          renderAdminBookingsTable();
+          renderMyBookings();
+        });
+      });
+
+      tbody.querySelectorAll(".reject-booking-table-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-id");
+          const stId = btn.getAttribute("data-st");
+          const reason = prompt("أذكر سبب الاعتذار أو الرفض ليصل للطالب بالجهاز:", "ظرف خاص بالأستاذ");
+          if (reason !== null && reason.trim() !== "") {
+            StorageService.updateBookingStatus(id, "rejected", undefined, reason.trim());
+
+            triggerDeviceNotificationForTarget(
+              stId,
+              "اعتذار عن موعد الحصة من الأستاذ جواد ⚠️",
+              `تم الاعتذار عن الحصة بسبب: ${reason.trim()}`
+            );
+
+            renderAdminBookingsTable();
+            renderMyBookings();
+          }
+        });
+      });
+
+      tbody.querySelectorAll(".save-zoom-all-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-id");
+          const stId = btn.getAttribute("data-st");
+          const val = document.getElementById(`zoom-all-${id}`).value.trim();
+          StorageService.updateBookingStatus(id, undefined, val);
+
+          triggerDeviceNotificationForTarget(
+            stId,
+            "تمت إضافة رابط Zoom لحصتك! 🔗",
+            "أضاف الأستاذ جواد رابط القاعة الآن."
+          );
+
+          alert("تم حفظ الرابط وإشعار الطالب في جهازه!");
+          renderMyBookings();
+        });
+      });
+
+      tbody.querySelectorAll(".delete-booking-admin-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-id");
+          const stId = btn.getAttribute("data-st");
+          const deleteReason = prompt("اكتب العذر أو سبب حذف الحصة ليصل كإشعار في جهاز الطالب:", "إلغاء الموعد لظرف خاص");
+          if (deleteReason !== null) {
+            StorageService.deleteBooking(id);
+
+            triggerDeviceNotificationForTarget(
+              stId,
+              "تم إلغاء موعد الحصة ❌",
+              `قام الأستاذ جواد بإلغاء الحصة بسبب: ${deleteReason.trim()}`
+            );
+
+            renderAdminBookingsTable();
+            renderMyBookings();
+            renderSlotsForDay(AppState.selectedDateStr, AppState.selectedDayOfWeek);
+          }
+        });
+      });
+    }
+
+    function renderEmergencyList() {
+      const container = document.getElementById("emergencyDaysList");
+      if (!container) return;
+      const list = StorageService.getEmergencies();
+
+      if (list.length === 0) {
+        container.innerHTML = `<small style="color:var(--text-muted)">لا توجد أيام معتذر عنها حالياً.</small>`;
+        return;
+      }
+
+      container.innerHTML = "";
+      list.forEach(item => {
+        const div = document.createElement("div");
+        div.style.cssText = "display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.2); padding:10px 14px; border-radius:8px; margin-bottom:8px;";
+        div.innerHTML = `
+          <div>
+            <strong>${item.date}:</strong> <span style="color:var(--color-warning)">${item.reason}</span>
+          </div>
+          <button class="btn btn-sm btn-secondary" onclick="removeEmergencyDayAction('${item.date}')">إلغاء الظرف وإتاحة اليوم</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    window.removeEmergencyDayAction = function(dateStr) {
+      StorageService.removeEmergency(dateStr);
+      renderEmergencyList();
+      renderCalendar();
+      createToast({ title: "تم إلغاء الظرف", body: `اليوم ${dateStr} متاح الآن للحجز مرة أخرى.` });
+    };
+
+    // 5. صفحة المحادثة الكاملة مع توجيه الإشعارات بدقة للمستلم
+    function initChat() {
+      const modal = document.getElementById("fullPageChatModal");
+      const closeBtn = document.getElementById("closeFullChatBtn");
+      const openNav = document.getElementById("navOpenChatBtn");
+      const openIcon = document.getElementById("fullChatIconBtn");
+      const heroBtn = document.getElementById("heroChatBtn");
+      const adminOpen = document.getElementById("adminOpenChatBtn");
+
+      const openFn = () => {
+        modal.classList.add("active");
+        renderStudentsRoster();
+        renderChatStream();
+      };
+
+      [openNav, openIcon, heroBtn, adminOpen].forEach(b => b?.addEventListener("click", openFn));
+      closeBtn?.addEventListener("click", () => modal.classList.remove("active"));
+
+      document.getElementById("fullChatSendForm")?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const input = document.getElementById("fullChatMessageInput");
+        const txt = input.value.trim();
+        if (!txt || !AppState.currentUser) return;
+
+        const user = AppState.currentUser;
+        const isTeacher = (user.role === "admin");
+
+        // تحديد المستلم بدقة:
+        // إذا كان المعلم يرسل لولد، فالمستلم هو الطالب المحدد AppState.activeChatStudentId
+        // وإذا كان الطالب يرسل، فالمستلم هو "admin"
+        const targetRecipientId = isTeacher ? (AppState.activeChatStudentId || "all") : "admin";
+
+        const newMsg = {
+          id: "msg-" + Date.now(),
+          sender: isTeacher ? "teacher" : "student",
+          senderName: user.fullName || "الأستاذ جواد بدري",
+          senderId: user.id,
+          recipientId: targetRecipientId,
+          text: txt,
+          time: new Date().toLocaleTimeString("ar-EG", { hour: "2-digit", minute: "2-digit" })
+        };
+
+        StorageService.saveChatMessage(newMsg);
+        input.value = "";
+        renderChatStream();
+
+        // إرسال الإشعار للشخص المعني فقط بالجهاز والموقع (لا يظهر لمن أرسل الرسالة!)
+        triggerDeviceNotificationForTarget(
+          targetRecipientId,
+          `رسالة جديدة من ${newMsg.senderName}`,
+          txt
+        );
+      });
+
+      document.getElementById("studentSearchInput")?.addEventListener("input", (e) => {
+        renderStudentsRoster(e.target.value.trim());
+      });
+
+      document.getElementById("testRealNotifBtn")?.addEventListener("click", () => {
+        if ("Notification" in window) {
+          Notification.requestPermission().then(perm => {
+            if (perm === "granted") {
+              new Notification("تجربة إشعار بالجهاز! 🔔", {
+                body: "هذا إشعار حقيقي يظهر في جهازك لتنبيهك بالحصة والرسائل.",
+                icon: "https://cdn-icons-png.flaticon.com/512/1051/1051277.png"
+              });
+              playNotificationChime();
+            } else {
+              alert("يرجى السماح بإشعارات المتصفح في إعدادات جهازك لتصلك التنبيهات الحقيقية.");
+            }
+          });
+        }
+      });
+    }
+
+    function renderStudentsRoster(q = "") {
+      const list = document.getElementById("studentsRosterList");
+      const count = document.getElementById("registeredStudentsCount");
+      const students = StorageService.getStudents();
+      if (!list) return;
+
+      count.textContent = students.length;
+      const filtered = q ? students.filter(s => s.fullName.toLowerCase().includes(q.toLowerCase())) : students;
+
+      if (filtered.length === 0) {
+        list.innerHTML = `<div style="padding:14px; text-align:center; font-size:12px; color:var(--text-muted)">لا يوجد طلاب</div>`;
+        return;
+      }
+
+      list.innerHTML = "";
+      filtered.forEach(s => {
+        const item = document.createElement("div");
+        item.className = `student-roster-item ${AppState.activeChatStudentId === s.id ? "active" : ""}`;
+        const initials = s.fullName.split(/\s+/).map(p => p[0]).slice(0, 2).join("");
+
+        item.innerHTML = `
+          <div class="roster-avatar">${initials}</div>
+          <div style="flex:1; overflow:hidden;">
+            <strong style="display:block; font-size:13px; color:var(--text-heading);">${s.fullName}</strong>
+            <span style="font-size:11px; color:var(--color-whatsapp);"><i class="fa-brands fa-whatsapp"></i> ${s.whatsapp || s.email}</span>
+          </div>
+        `;
+
+        item.addEventListener("click", () => {
+          AppState.activeChatStudentId = s.id;
+          renderStudentsRoster();
+          renderChatStream();
+        });
+
+        list.appendChild(item);
+      });
+    }
+
+    function renderChatStream() {
+      const stream = document.getElementById("conversationStream");
+      const headerName = document.getElementById("activeContactName");
+      const headerRole = document.getElementById("activeContactRole");
+      const waContainer = document.getElementById("activeContactWhatsappContainer");
+      const user = AppState.currentUser;
+      const msgs = StorageService.getChat();
+
+      if (!stream || !user) return;
+      const isTeacher = (user.role === "admin");
+
+      if (isTeacher && AppState.activeChatStudentId) {
+        const student = StorageService.getStudents().find(s => s.id === AppState.activeChatStudentId);
+        if (student) {
+          headerName.textContent = student.fullName;
+          headerRole.textContent = `طالب مسجل - الحصص: ${student.sessionsLimit || 3}`;
+          const cleanWa = (student.whatsapp || "").replace(/[^0-9]/g, "");
+          waContainer.innerHTML = cleanWa ? `<a href="https://wa.me/${cleanWa}" target="_blank" class="btn btn-sm btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> محادثة واتساب</a>` : "";
+        }
+      } else if (isTeacher) {
+        headerName.textContent = "صندوق رسائل ومحادثات الطلاب";
+        headerRole.textContent = "اختر طالباً من القائمة الجانبية لبدء المحادثة معه";
+        waContainer.innerHTML = "";
+      } else {
+        headerName.textContent = "الأستاذ جواد بدري (الإدارة والمعلم)";
+        headerRole.textContent = "معلم لغة HTML - متصل ومتاح للتواصل معك";
+        waContainer.innerHTML = "";
+      }
+
+      stream.innerHTML = "";
+      msgs.forEach(m => {
+        const isMe = (isTeacher && m.sender === "teacher") || (!isTeacher && m.sender === "student" && m.senderId === user.id);
+        const bubble = document.createElement("div");
+        bubble.className = `msg-bubble ${isMe ? "from-me" : "from-other"}`;
+        bubble.innerHTML = `
+          <div style="font-size:11px; font-weight:800; opacity:0.8; margin-bottom:2px;">${m.senderName}</div>
+          <div>${m.text}</div>
+          <div style="font-size:9px; opacity:0.6; text-align:left; margin-top:4px;">${m.time}</div>
+        `;
+        stream.appendChild(bubble);
+      });
+
+      stream.scrollTop = stream.scrollHeight;
+    }
+
+    // 6. مراقب مواعيد الحصص والتنبيهات الموقوتة بالجهاز
+    function initNotificationWatcher() {
+      checkTimedAlerts();
+      setInterval(checkTimedAlerts, 20000);
+
+      document.getElementById("reqPushPermissionBtn")?.addEventListener("click", () => {
+        if ("Notification" in window) {
+          Notification.requestPermission().then(p => {
+            if (p === "granted") {
+              triggerDeviceNotificationForTarget(AppState.currentUser ? AppState.currentUser.id : "all", "تم تفعيل إشعارات الجهاز بنجاح! 🔔", "ستصلك الآن تنبيهات الحصص فوراً بالصوت على جهازك.");
+            }
+          });
+        }
+      });
+    }
+
+    function checkTimedAlerts() {
+      const bookings = StorageService.getBookings();
+      const now = new Date();
+
+      bookings.forEach(b => {
+        // فحص التنبيهات للحصص المعتمدة فقط
+        if (b.status !== "approved") return;
+
+        const [h, min] = (b.startTime || "15:00").split(":").map(Number);
+        const [year, month, day] = b.date.split("-").map(Number);
+        const sessionDate = new Date(year, month - 1, day, h, min, 0);
+
+        const diffMin = Math.floor((sessionDate.getTime() - now.getTime()) / (1000 * 60));
+
+        if (diffMin > 1400 && diffMin <= 1440) {
+          sendTimedAlertOnce(b, "day_before", "تنبيه: حصتك مع الأستاذ جواد غداً!", `موعدك غداً الساعة ${b.slotLabel}.`);
+        } else if (diffMin > 45 && diffMin <= 60) {
+          sendTimedAlertOnce(b, "hour_before", "تنبيه: تبقى ساعة واحدة على الحصة!", `استعد لحضور حصتك بعد 60 دقيقة.`);
+        } else if (diffMin > 20 && diffMin <= 30) {
+          sendTimedAlertOnce(b, "half_hour", "تنبيه: تبقى نصف ساعة (30 دقيقة)!", `تبقى 30 دقيقة على بداية الحصة.`);
+        } else if (diffMin > 0 && diffMin <= 15) {
+          sendTimedAlertOnce(b, "quarter_hour", "تنبيه عاجل: تبقى 15 دقيقة على الحصة!", `الحصة ستبدأ بعد قليل، جهز جهازك ورابط Zoom.`, true);
+        } else if (diffMin <= 0 && diffMin >= -45) {
+          sendTimedAlertOnce(b, "started", "🔥 بدأت الحصة الآن!", `حان وقت الحصة مع الأستاذ جواد بدري. ادخل عبر Zoom.`, true);
+        }
+      });
+    }
+
+    function sendTimedAlertOnce(b, type, title, msg, urgent = false) {
+      const key = `${b.id}_${type}`;
+      if (StorageService.getProcessedAlerts().includes(key)) return;
+      StorageService.markAlertProcessed(key);
+
+      // إرسال الإشعار للطالب صاحب الحصة بجهازه
+      triggerDeviceNotificationForTarget(b.studentId, title, msg, urgent);
+    }
+
+    function createToast({ title, body, urgent = false, showTeacherBtn = false }) {
+      const c = document.getElementById("toastContainer");
+      if (!c) return;
+
+      const toast = document.createElement("div");
+      toast.className = `toast ${urgent ? "toast-urgent" : ""}`;
+
+      let btn = "";
+      if (showTeacherBtn) {
+        btn = `<button class="toast-btn" onclick="document.getElementById('fullPageChatModal').classList.add('active')"><i class="fa-solid fa-comments"></i> تواصل مع الأستاذ الآن</button>`;
+      }
+
+      toast.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; font-weight:800; font-size:14px; color:var(--text-heading);">
+          <span><i class="fa-solid fa-bullhorn"></i> ${title}</span>
+          <button style="background:none; border:none; color:var(--text-muted); cursor:pointer;" onclick="this.parentElement.parentElement.remove()">&times;</button>
+        </div>
+        <div style="font-size:13px; color:var(--text-muted);">${body}</div>
+        ${btn}
+      `;
+
+      c.appendChild(toast);
+      if (!urgent) setTimeout(() => toast.remove(), 10000);
+    }
+
+    function renderNotificationsUI() {
+      const list = document.getElementById("notifList");
+      const badge = document.getElementById("notifBadge");
+      const allNotifs = StorageService.getNotifications();
+      const user = AppState.currentUser;
+      if (!list) return;
+
+      // تصفية الإشعارات لتظهر فقط للمستلم الموجه له
+      const myNotifs = allNotifs.filter(n => {
+        if (!user) return false;
+        if (n.targetUserId === "all") return true;
+        if (user.role === "admin" && n.targetUserId === "admin") return true;
+        return n.targetUserId === user.id;
+      });
+
+      badge.textContent = myNotifs.length;
+      if (myNotifs.length === 0) {
+        list.innerHTML = `<div style="text-align:center; padding:20px; color:var(--text-muted)">لا توجد إشعارات جديدة</div>`;
+        return;
+      }
+
+      list.innerHTML = "";
+      myNotifs.forEach(n => {
+        const item = document.createElement("div");
+        item.className = "notif-item";
+
+        let actionBtnHtml = "";
+        if (user && user.role === "student") {
+          actionBtnHtml = `
+            <button class="btn btn-sm btn-primary btn-block" onclick="document.getElementById('fullPageChatModal').classList.add('active')">
+              <i class="fa-solid fa-comments"></i> تواصل مع الأستاذ
+            </button>
+          `;
+        }
+
+        item.innerHTML = `
+          <div style="font-weight:700; font-size:13px; color:var(--text-heading);"><i class="fa-solid fa-bell"></i> ${n.title}</div>
+          <div style="font-size:11px; color:var(--text-muted);">${n.time}</div>
+          <div style="font-size:12px; margin:6px 0;">${n.content}</div>
+          ${actionBtnHtml}
+        `;
+        list.appendChild(item);
+      });
+    }
+
+    function initTheme() {
+      setTheme(AppState.currentTheme);
+      document.getElementById("dayThemeBtn")?.addEventListener("click", () => setTheme("light"));
+      document.getElementById("nightThemeBtn")?.addEventListener("click", () => setTheme("dark"));
+
+      const notifBell = document.getElementById("notifBellBtn");
+      const notifDropdown = document.getElementById("notifDropdown");
+      notifBell?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        notifDropdown.classList.toggle("active");
+      });
+      document.addEventListener("click", (e) => {
+        if (!notifDropdown?.contains(e.target) && e.target !== notifBell) {
+          notifDropdown?.classList.remove("active");
+        }
+      });
+      document.getElementById("clearNotifsBtn")?.addEventListener("click", () => {
+        StorageService.clearNotifications();
+        renderNotificationsUI();
+      });
+
+      const setModal = document.getElementById("settingsModal");
+      document.getElementById("settingsBtn")?.addEventListener("click", () => setModal.classList.add("active"));
+      document.getElementById("closeSettingsModal")?.addEventListener("click", () => setModal.classList.remove("active"));
+    }
+
+    function setTheme(t) {
+      AppState.currentTheme = t;
+      document.documentElement.setAttribute("data-theme", t);
+      localStorage.setItem(StorageService.KEYS.THEME, t);
+    }
+  </script>
+
+  <!-- ========================================================
+     ربط ملفك الأصلي بـ Firebase Realtime Database & Auth
+     ======================================================== -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import { getDatabase, ref, set, get, onValue, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+  // إعدادات فايربيس الخاصة بمشروعك
+  const firebaseConfig = {
+    apiKey: "AIzaSyDYuDvEIFgLKFDld8DmL3InGVvtOEn0_-E",
+    authDomain: "jawad-s-protection-program.firebaseapp.com",
+    databaseURL: "https://jawad-s-protection-program-default-rtdb.firebaseio.com",
+    projectId: "jawad-s-protection-program",
+    storageBucket: "jawad-s-protection-program.firebasestorage.app",
+    messagingSenderId: "597843839821",
+    appId: "1:597843839821:web:81be5650b3fa606df6c504",
+    measurementId: "G-FY3SM2K4BH"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getDatabase(app);
+
+  // ربط أحداث تسجيل الدخول والـ Auth الحقيقي بفايربيس
+  window.addEventListener('DOMContentLoaded', () => {
+    // تفعيل الاستماع لحالة المستخدم عبر فايربيس
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        // إذا كان المشرف هو الأستاذ جواد
+        if (user.email.toLowerCase() === "jawadbadry8@gmail.com".toLowerCase()) {
+          const adminUser = { id: user.uid, fullName: "الأستاذ جواد بدري", role: "admin", isLoggedIn: true };
+          localStorage.setItem("jawad_html_user_v5", JSON.stringify(adminUser));
+        } else {
+          // جلب بيانات الطالب من قاعدة البيانات
+          const snap = await get(ref(db, 'users/' + user.uid));
+          if (snap.exists()) {
+            const studentData = snap.val();
+            studentData.isLoggedIn = true;
+            localStorage.setItem("jawad_html_user_v5", JSON.stringify(studentData));
+          }
+        }
+      }
+    });
+  });
+</script>
+<script>
+  // Hamburger menu toggle
+  (function () {
+    var btn = document.getElementById('mobileMenuBtn');
+    var links = document.getElementById('navLinks');
+    if (!btn || !links) return;
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      links.classList.toggle('active');
+      var icon = btn.querySelector('i');
+      if (icon) {
+        icon.classList.toggle('fa-bars', !links.classList.contains('active'));
+        icon.classList.toggle('fa-xmark', links.classList.contains('active'));
+      }
+    });
+    function closeMenu() {
+      links.classList.remove('active');
+      var icon = btn.querySelector('i');
+      if (icon) { icon.classList.add('fa-bars'); icon.classList.remove('fa-xmark'); }
+    }
+    links.addEventListener('click', function (e) {
+      if (e.target.closest('a, button')) closeMenu();
+    });
+    document.addEventListener('click', function (e) {
+      if (!links.contains(e.target) && !btn.contains(e.target)) closeMenu();
+    });
+    window.addEventListener('resize', function () { if (window.innerWidth > 768) closeMenu(); });
+  })();
+</script>
+</body>
+</html>
