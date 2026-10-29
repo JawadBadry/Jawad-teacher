@@ -114,8 +114,8 @@
     .nav-links.active { display: flex; animation: fadeInDown 0.2s ease-out; }
     .nav-link { color: var(--text-muted); text-decoration: none; font-weight: 600; font-size: 13px; padding: 10px 14px; border-radius: var(--radius-sm); transition: var(--transition); display: flex; align-items: center; gap: 8px; border: none; background: transparent; font-family: var(--font-arabic); cursor: pointer; width: 100%; text-align: right; }
     .nav-link:hover, .nav-link.active { color: var(--brand-orange); background-color: rgba(255, 109, 0, 0.08); }
-    .special-nav-link { background: rgba(2, 132, 199, 0.12); color: var(--brand-blue); font-weight: 700; }
-    .special-nav-link:hover { background: var(--brand-blue); color: #fff !important; }
+    .special-nav-link { background: rgba(37, 211, 102, 0.12); color: var(--color-whatsapp); font-weight: 700; }
+    .special-nav-link:hover { background: var(--color-whatsapp); color: #fff !important; }
 
     .nav-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; position: relative; z-index: 1050; }
     
@@ -201,27 +201,15 @@
     .zoom-cta-box { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border-color); }
     .zoom-join-btn { display: flex; align-items: center; justify-content: center; gap: 6px; background: var(--color-meet); color: #fff; text-decoration: none; font-weight: 700; padding: 8px; border-radius: var(--radius-sm); font-size: 11px; width: 100%; }
 
-    /* Full Page Chat */
-    .full-page-chat-modal { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(16px); z-index: 4000; display: none; align-items: center; justify-content: center; padding: 8px; }
-    .full-page-chat-modal.active { display: flex; }
-    .full-chat-wrapper { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-lg); width: 100%; max-width: 1050px; height: 88vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: var(--shadow-lg); }
-    .full-chat-topbar { background: #0f172a; border-bottom: 1px solid var(--border-color); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; color: #fff; width: 100%; box-sizing: border-box; }
-    .full-chat-layout { flex: 1; display: grid; grid-template-columns: 1fr; overflow: hidden; width: 100%; }
-    @media(min-width: 768px) { .full-chat-layout { grid-template-columns: 260px 1fr; } }
-    .chat-sidebar { background: rgba(0, 0, 0, 0.15); border-left: 1px solid var(--border-color); display: flex; flex-direction: column; overflow: hidden; max-height: 30vh; }
-    @media(min-width: 768px) { .chat-sidebar { max-height: none; } }
-    .sidebar-search { padding: 10px; border-bottom: 1px solid var(--border-color); width: 100%; box-sizing: border-box; }
-    .students-roster-list { flex: 1; overflow-y: auto; padding: 6px; display: flex; flex-direction: column; gap: 5px; width: 100%; }
-    .student-roster-item { padding: 8px 10px; border-radius: var(--radius-sm); background: var(--bg-card); border: 1px solid var(--border-color); cursor: pointer; display: flex; align-items: center; gap: 8px; width: 100%; box-sizing: border-box; }
-    .student-roster-item.active { border-color: var(--brand-orange); background: rgba(255, 109, 0, 0.12); }
-    .roster-avatar { width: 32px; height: 32px; min-width: 32px; background: var(--brand-gradient); color: #fff; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; }
-    .chat-conversation-area { display: flex; flex-direction: column; background: var(--bg-primary); overflow: hidden; width: 100%; }
-    .conversation-messages-stream { flex: 1; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; width: 100%; box-sizing: border-box; }
-    .msg-bubble { max-width: 85%; padding: 10px 12px; border-radius: 12px; font-size: 12px; line-height: 1.5; word-break: break-word; }
-    .msg-bubble.from-me { align-self: flex-start; background: var(--brand-blue); color: #fff; border-bottom-right-radius: 2px; }
-    .msg-bubble.from-other { align-self: flex-end; background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main); border-bottom-left-radius: 2px; }
-    .conversation-input-bar { padding: 10px 14px; background: var(--bg-secondary); border-top: 1px solid var(--border-color); display: flex; gap: 6px; width: 100%; box-sizing: border-box; }
-    .conversation-input-bar input { flex: 1; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: var(--radius-full); padding: 8px 14px; color: var(--text-main); font-size: 12px; min-width: 0; }
+    /* نافذة قائمة الواتساب المحدثة */
+    .whatsapp-directory-modal { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(12px); z-index: 4000; display: none; align-items: center; justify-content: center; padding: 12px; }
+    .whatsapp-directory-modal.active { display: flex; }
+    .whatsapp-directory-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-lg); width: 100%; max-width: 520px; max-height: 85vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: var(--shadow-lg); }
+    .whatsapp-directory-header { background: #0f172a; border-bottom: 1px solid var(--border-color); padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; color: #fff; }
+    .whatsapp-directory-body { padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+
+    .wa-contact-row { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .wa-avatar { width: 38px; height: 38px; min-width: 38px; background: var(--color-whatsapp); color: #fff; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; }
 
     /* Modals & Admin Panel */
     .modal { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); backdrop-filter: var(--glass-backdrop); display: none; align-items: center; justify-content: center; z-index: 3000; padding: 8px; }
@@ -250,7 +238,7 @@
     .toast { background: var(--bg-secondary); border: 1px solid var(--border-color); border-left: 4px solid var(--brand-orange); border-radius: var(--radius-md); padding: 12px; box-shadow: var(--shadow-lg); display: flex; flex-direction: column; gap: 5px; width: 100%; box-sizing: border-box; }
     .toast.toast-urgent { border-left-color: var(--color-danger); background: #1b1722; }
 
-    /* Hero Section الأصلي */
+    /* Hero Section */
     .hero-section { padding: 30px 0 20px; width: 100%; box-sizing: border-box; }
     .hero-container { display: grid; grid-template-columns: 1fr; align-items: center; gap: 24px; width: 100%; box-sizing: border-box; }
     @media (min-width: 992px) { .hero-container { grid-template-columns: 1.15fr 0.85fr; } }
@@ -382,7 +370,7 @@
       <form id="adminGateForm" class="gate-form">
         <div class="form-group">
           <label><i class="fa-solid fa-envelope"></i> البريد الإلكتروني للإدارة:</label>
-          <input type="email" id="adminGateEmail" class="custom-input" value="Jawadbadry8@gmail.com" readonly required autocomplete="off">
+          <input type="email" id="adminGateEmail" class="custom-input" placeholder="ادخل ايميل الاداره" readonly required autocomplete="off">
         </div>
 
         <div class="form-group">
@@ -412,12 +400,12 @@
           </div>
         </div>
 
-        <!-- القائمة الجانبية المكتملة -->
+        <!-- القائمة الجانبية -->
         <nav class="nav-links" id="navLinks">
           <a href="#hero" class="nav-link active"><i class="fa-solid fa-house"></i> الرئيسية</a>
           <a href="#booking" class="nav-link"><i class="fa-solid fa-calendar-check"></i> جدول الحصص</a>
           <a href="#code-playground" class="nav-link"><i class="fa-solid fa-laptop-code"></i> مختبر الأكواد</a>
-          <button id="navOpenChatBtn" class="nav-link special-nav-link"><i class="fa-solid fa-comments"></i> <span id="navChatLabel">الرسائل المباشرة</span></button>
+          <button id="navOpenChatBtn" class="nav-link special-nav-link"><i class="fa-brands fa-whatsapp" style="font-size:16px;"></i> <span id="navChatLabel">التواصل واتساب</span></button>
           <button id="teacherPermissionsMenuBtn" class="nav-link" style="color:var(--brand-orange); font-weight:800; display:none;"><i class="fa-solid fa-user-shield"></i> لوحة الصلاحيات وإدارة الحصص</button>
           <button id="mobileSettingsBtn" class="nav-link"><i class="fa-solid fa-gear"></i> إعدادات المنصة</button>
           <button id="mobileTriggerLogoutBtn" class="nav-link" style="color:var(--color-danger);"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج</button>
@@ -447,7 +435,7 @@
       </div>
     </header>
 
-    <!-- Hero Section المكتمل -->
+    <!-- Hero Section -->
     <section class="hero-section" id="hero">
       <div class="hero-container">
         <div class="hero-content" style="width:100%;">
@@ -474,7 +462,7 @@
 
           <div class="hero-cta">
             <a href="#booking" class="btn btn-primary btn-lg" id="heroPrimaryAction"><i class="fa-solid fa-calendar-plus"></i> احجز موعدك من جدول الأيام</a>
-            <button id="heroChatBtn" class="btn btn-secondary btn-lg"><i class="fa-solid fa-comments"></i> <span id="heroChatBtnLabel">فتح الشات مع الأستاذ</span></button>
+            <button id="heroChatBtn" class="btn btn-whatsapp btn-lg"><i class="fa-brands fa-whatsapp"></i> <span id="heroChatBtnLabel">التواصل واتساب</span></button>
           </div>
         </div>
 
@@ -499,7 +487,7 @@
       </div>
     </section>
 
-    <!-- جدول الحجز المتكامل -->
+    <!-- جدول الحجز -->
     <section class="booking-section" id="booking">
       <div class="section-container">
         <div class="section-header">
@@ -613,53 +601,24 @@
     </div>
   </div>
 
-  <!-- Modal Full Page Chat الشامل -->
-  <div class="full-page-chat-modal" id="fullPageChatModal">
-    <div class="full-chat-wrapper">
-      <div class="full-chat-topbar">
+  <!-- نافذة قائمة الواتساب -->
+  <div class="whatsapp-directory-modal" id="whatsappDirectoryModal">
+    <div class="whatsapp-directory-card">
+      <div class="whatsapp-directory-header">
         <div style="display:flex; align-items:center; gap:8px;">
-          <i class="fa-solid fa-comments" style="font-size:20px; color:var(--brand-orange)"></i>
+          <i class="fa-brands fa-whatsapp" style="font-size:22px; color:var(--color-whatsapp)"></i>
           <div>
-            <h3 style="font-size:14px; font-weight:800;">مركز الرسائل والمحادثات المباشرة</h3>
-            <span style="font-size:10px; color:#94a3b8;">تواصل بين الأستاذ والطلاب</span>
+            <h3 style="font-size:14px; font-weight:800;" id="waModalTitle">التواصل عبر الواتساب</h3>
+            <span style="font-size:10px; color:#94a3b8;" id="waModalSubtitle">قائمة التواصل المباشر</span>
           </div>
         </div>
-        <button class="close-modal-btn" id="closeFullChatBtn">&times;</button>
+        <button class="close-modal-btn" id="closeWhatsappModal">&times;</button>
       </div>
-
-      <div class="full-chat-layout">
-        <aside class="chat-sidebar">
-          <div class="sidebar-search">
-            <input type="text" id="studentSearchInput" placeholder="بحث بالاسم..." class="custom-input">
-          </div>
-          <div style="padding:6px 10px; display:flex; justify-content:space-between; font-size:10px; font-weight:700; color:var(--text-muted);">
-            <span>الطلاب:</span>
-            <span class="badge-status" id="registeredStudentsCount">0</span>
-          </div>
-          <div class="students-roster-list" id="studentsRosterList"></div>
-        </aside>
-
-        <main class="chat-conversation-area">
-          <div style="padding:10px 14px; background:var(--bg-secondary); border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center;">
-            <div>
-              <h4 id="activeContactName" style="font-weight:800; font-size:13px; color:var(--text-heading);">المحادثة</h4>
-              <p id="activeContactRole" style="font-size:10px; color:var(--text-muted);">حالة الاتصال</p>
-            </div>
-            <div id="activeContactWhatsappContainer"></div>
-          </div>
-
-          <div class="conversation-messages-stream" id="conversationStream"></div>
-
-          <form class="conversation-input-bar" id="fullChatSendForm">
-            <input type="text" id="fullChatMessageInput" placeholder="اكتب رسالتك..." autocomplete="off">
-            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i></button>
-          </form>
-        </main>
-      </div>
+      <div class="whatsapp-directory-body" id="whatsappDirectoryBody"></div>
     </div>
   </div>
 
-  <!-- Admin Panel Dashboard المكتمل -->
+  <!-- Admin Panel Dashboard -->
   <div class="modal full-modal" id="adminDashboardModal">
     <div class="modal-content">
       <div class="modal-header" style="background:#0f172a; color:#fff;">
@@ -671,7 +630,7 @@
           </div>
         </div>
         <div style="display:flex; align-items:center; gap:6px;">
-          <button class="btn btn-sm btn-secondary" id="adminOpenChatBtn"><i class="fa-solid fa-comments"></i> الشات</button>
+          <button class="btn btn-sm btn-whatsapp" id="adminOpenWhatsappBtn"><i class="fa-brands fa-whatsapp"></i> قائمة الواتساب</button>
           <button class="close-modal-btn" id="closeAdminDashModal">&times;</button>
         </div>
       </div>
@@ -685,7 +644,7 @@
       <div class="admin-dash-body">
         <div class="dash-tab-pane active" id="tab-permissions">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:6px;">
-            <h4 style="font-size:13px;"><i class="fa-solid fa-users-gear"></i> طلبات الطلاب (إذا مسحت طالباً سيتم إخراجه ومنعه من الدخول):</h4>
+            <h4 style="font-size:13px;"><i class="fa-solid fa-users-gear"></i> طلبات الطلاب (إذا مسحت طالباً سيتم إخراجه ومسحه نهائياً):</h4>
             <span class="badge-status" id="adminStudentsCountBadge">0 طالب</span>
           </div>
 
@@ -695,12 +654,12 @@
                 <tr>
                   <th>الاسم الثلاثي</th>
                   <th>الواتساب</th>
-                  <th>الكود السري (لك وحدك)</th>
+                  <th>الكود السري</th>
                   <th>ليميت الحصص</th>
                   <th>جدول الطالب</th>
                   <th>واتساب</th>
                   <th>تعديل</th>
-                  <th>مسح</th>
+                  <th>مسح نهائي</th>
                 </tr>
               </thead>
               <tbody id="adminStudentsPermissionsTableBody"></tbody>
@@ -871,10 +830,10 @@
 
   <div class="toast-container" id="toastContainer"></div>
 
-  <!-- Firebase Integration الكاملة للسحابة المباشرة -->
+  <!-- Firebase Integration -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getDatabase, ref, set, onValue, push, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+    import { getDatabase, ref, set, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDYuDvEIFgLKFDld8DmL3InGVvtOEn0_-E",
@@ -890,7 +849,6 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // تفعيل الربط السحابي المباشر بالكامل
     window.FirebaseDB = {
       saveStudent(st) { set(ref(db, 'students/' + st.id), st); },
       listenStudents(callback) { onValue(ref(db, 'students'), (snap) => { callback(Object.values(snap.val() || {})); }); },
@@ -898,19 +856,18 @@
       saveBooking(b) { set(ref(db, 'bookings/' + b.id), b); },
       listenBookings(callback) { onValue(ref(db, 'bookings'), (snap) => { callback(Object.values(snap.val() || {})); }); },
       deleteBooking(id) { remove(ref(db, 'bookings/' + id)); },
-      saveMessage(msg) { push(ref(db, 'chats'), msg); },
-      listenChats(callback) { onValue(ref(db, 'chats'), (snap) => { callback(Object.values(snap.val() || {})); }); },
       saveEmergency(dateStr, reason) { set(ref(db, 'emergencies/' + dateStr.replace(/-/g, "_")), { date: dateStr, reason }); },
       listenEmergencies(callback) { onValue(ref(db, 'emergencies'), (snap) => { callback(Object.values(snap.val() || {})); }); },
       removeEmergency(dateStr) { remove(ref(db, 'emergencies/' + dateStr.replace(/-/g, "_"))); }
     };
   </script>
 
-  <!-- Main Application Logic مع المزامنة السحابية الشاملة -->
+  <!-- Main Application Logic -->
   <script>
     const CONFIG = {
       ADMIN_EMAIL: "Jawadbadry8@gmail.com",
       ADMIN_PASS: "J102013",
+      TEACHER_WHATSAPP: "966559912398", // تم الاستبدال برقمك المباشر
       DEFAULT_SECRET_CODE: "123456",
       WEEKEND_DAYS: [5, 6],
       STANDARD_SLOTS: [
@@ -929,14 +886,13 @@
 
     const StorageService = {
       KEYS: {
-        STUDENTS: "jawad_html_students_v12",
-        CURRENT_USER: "jawad_html_user_v12",
-        SAVED_ACCOUNTS: "jawad_saved_accounts_v12",
-        BOOKINGS: "jawad_html_bookings_v12",
-        EMERGENCIES: "jawad_html_emergencies_v12",
-        NOTIFICATIONS: "jawad_html_notifs_v12",
-        CHAT: "jawad_html_chat_v12",
-        THEME: "jawad_html_theme_v12"
+        STUDENTS: "jawad_html_students_v14",
+        CURRENT_USER: "jawad_html_user_v14",
+        SAVED_ACCOUNTS: "jawad_saved_accounts_v14",
+        BOOKINGS: "jawad_html_bookings_v14",
+        EMERGENCIES: "jawad_html_emergencies_v14",
+        NOTIFICATIONS: "jawad_html_notifs_v14",
+        THEME: "jawad_html_theme_v14"
       },
       getStudents() { return JSON.parse(localStorage.getItem(this.KEYS.STUDENTS) || "[]"); },
       saveStudents(list) { localStorage.setItem(this.KEYS.STUDENTS, JSON.stringify(list)); },
@@ -1001,8 +957,6 @@
       getEmergencies() { return JSON.parse(localStorage.getItem(this.KEYS.EMERGENCIES) || "[]"); },
       addEmergency(dateStr, reason) { if (window.FirebaseDB) window.FirebaseDB.saveEmergency(dateStr, reason); },
       removeEmergency(dateStr) { if (window.FirebaseDB) window.FirebaseDB.removeEmergency(dateStr); },
-      getChat() { return JSON.parse(localStorage.getItem(this.KEYS.CHAT) || "[]"); },
-      saveChatMessage(msg) { if (window.FirebaseDB) window.FirebaseDB.saveMessage(msg); },
       getNotifications() { return JSON.parse(localStorage.getItem(this.KEYS.NOTIFICATIONS) || "[]"); },
       addNotification(n) {
         const list = this.getNotifications();
@@ -1018,8 +972,7 @@
       calendarMonth: new Date().getMonth(),
       selectedDateStr: null,
       selectedDayOfWeek: null,
-      pendingSlot: null,
-      activeChatStudentId: null
+      pendingSlot: null
     };
 
     function triggerDeviceNotificationForTarget(targetUserId, title, body, urgent = false) {
@@ -1041,29 +994,30 @@
       checkAuthGate();
       setupGateEvents();
       initCalendar();
-      initChat();
+      initWhatsappDirectory();
       initAdminPanel();
       setupLogoutConfirmation();
       setupAccountSwitcher();
 
-      // الاستماع المباشر للتغييرات عبر الفايربيس للكمبيوتر والجوال بنفس اللحظة
       setTimeout(() => {
         if (window.FirebaseDB) {
           window.FirebaseDB.listenStudents((list) => {
             StorageService.saveStudents(list);
             
+            // فلترة القوائم المسجلة والتحقق من صلاحية الحساب المباشر
             const current = StorageService.getCurrentUser();
             if (current && current.role === "student") {
               const exists = list.some(s => s.id === current.id);
               if (!exists) {
                 StorageService.clearCurrentUser();
                 checkAuthGate();
-                alert("تم حذف حسابك من قبل الإدارة. يرجى التواصل مع الأستاذ جواد.");
+                alert("تم حذف حسابك نهائياً من قبل الإدارة.");
               }
             }
 
             renderAdminPermissionsTable();
-            renderStudentsRoster();
+            renderWhatsappDirectory();
+            renderAccountSwitcherUI();
           });
           
           window.FirebaseDB.listenBookings((list) => {
@@ -1071,11 +1025,6 @@
             renderMyBookings();
             renderAdminBookingsTable();
             if (AppState.selectedDateStr) renderSlotsForDay(AppState.selectedDateStr, AppState.selectedDayOfWeek);
-          });
-
-          window.FirebaseDB.listenChats((list) => {
-            localStorage.setItem(StorageService.KEYS.CHAT, JSON.stringify(list));
-            renderChatStream();
           });
 
           window.FirebaseDB.listenEmergencies((list) => {
@@ -1114,22 +1063,22 @@
         if (isTeacher) {
           nameLabel.textContent = "الأستاذ جواد بدري (الإدارة)";
           teacherPermissionsMenuBtn.style.display = "flex";
-          document.getElementById("navChatLabel").textContent = "محادثات الطلاب";
+          document.getElementById("navChatLabel").textContent = "قائمة الواتساب للطلاب";
           document.getElementById("heroBadgeTag").innerHTML = `<i class="fa-solid fa-user-shield"></i> لوحة تحكم الأستاذ جواد بدري`;
           document.getElementById("heroTitle").innerHTML = `إدارة حصص وبرمجة <span>HTML</span>`;
-          document.getElementById("heroDesc").textContent = `أهلاً بك أستاذ جواد، يمكنك متابعة طلبات الأكواد وإدارة الحصص من قائمة الخيارات الجانبية (☰).`;
+          document.getElementById("heroDesc").textContent = `أهلاً بك أستاذ جواد، يمكنك متابعة طلبات الأكواد وإدارة الحصص وتواصل الواتساب مع طلابك.`;
           document.getElementById("heroPrimaryAction").textContent = "معاينة جدول الحصص";
-          document.getElementById("heroChatBtnLabel").textContent = "فتح محادثات الطلاب";
+          document.getElementById("heroChatBtnLabel").textContent = "قائمة الواتساب للطلاب";
           document.getElementById("myBookingsContainerWrapper").style.display = "none";
         } else {
           nameLabel.textContent = user.fullName;
           teacherPermissionsMenuBtn.style.display = "none";
-          document.getElementById("navChatLabel").textContent = "الرسائل المباشرة";
+          document.getElementById("navChatLabel").textContent = "التواصل مع الأستاذ";
           document.getElementById("heroBadgeTag").innerHTML = `<i class="fa-solid fa-award"></i> حصص فردية ومباشرة مع الأستاذ جواد بدري`;
           document.getElementById("heroTitle").innerHTML = `تعلم واحتراف لغة <span>HTML5</span> من الصفر وحتى الإتقان`;
-          document.getElementById("heroDesc").textContent = `حصص فردية ومباشرة عبر Google Meet مع الأستاذ جواد بدري مع متابعة مستمرة.`;
+          document.getElementById("heroDesc").textContent = `حصص فردية ومباشرة عبر Google Meet مع الأستاذ جواد بدري.`;
           document.getElementById("heroPrimaryAction").textContent = "احجز موعدك من جدول الأيام";
-          document.getElementById("heroChatBtnLabel").textContent = "فتح الشات مع الأستاذ";
+          document.getElementById("heroChatBtnLabel").textContent = "التواصل مع الأستاذ جواد";
           document.getElementById("myBookingsContainerWrapper").style.display = "block";
         }
         renderMyBookings();
@@ -1161,10 +1110,18 @@
     function renderAccountSwitcherUI() {
       const container = document.getElementById("accountsListContainer");
       if (!container) return;
-      const accounts = StorageService.getSavedAccounts();
-      const current = AppState.currentUser;
+      
+      // التصفية للتأكد من استبعاد الحسابات المحذوفة
+      const studentsList = StorageService.getStudents();
+      let accounts = StorageService.getSavedAccounts().filter(acc => {
+        if (acc.role === "admin") return true;
+        return studentsList.some(s => s.id === acc.id);
+      });
+      localStorage.setItem(StorageService.KEYS.SAVED_ACCOUNTS, JSON.stringify(accounts));
 
+      const current = AppState.currentUser;
       container.innerHTML = "";
+
       accounts.forEach(acc => {
         const item = document.createElement("div");
         const isActive = current && current.id === acc.id;
@@ -1234,24 +1191,28 @@
           return;
         }
 
+        const students = StorageService.getStudents();
+        // الربط الذكي بالرقم للوقاية من الدوبلكيت والحسابات المتعددة
+        let existingStudent = students.find(s => s.whatsapp === whatsapp || (email && s.email === email));
+        
         const randomCode = Math.floor(100000 + Math.random() * 900000).toString();
         
-        const tempStudent = {
-          id: "student-" + Date.now(),
+        const targetStudent = {
+          id: existingStudent ? existingStudent.id : "student-" + Date.now(),
           fullName: fullName,
           whatsapp: whatsapp,
-          email: email || `${Date.now()}@student.com`,
-          password: pass || "123456",
+          email: email || (existingStudent ? existingStudent.email : `${Date.now()}@student.com`),
+          password: pass || (existingStudent ? existingStudent.password : "123456"),
           secretCode: randomCode,
-          sessionsLimit: 3,
+          sessionsLimit: existingStudent ? existingStudent.sessionsLimit : 3,
           role: "student",
           isLoggedIn: false,
           registeredAt: new Date().toLocaleDateString("ar-EG")
         };
 
-        StorageService.addStudent(tempStudent);
+        StorageService.addStudent(targetStudent);
         document.getElementById("secretCodeStatusHint").innerHTML = `<span style="color:var(--color-success); font-weight:800;"><i class="fa-solid fa-circle-check"></i> تم إرسال طلبك للأستاذ جواد بنجاح! تواصل معه لإعطائك الكود بعد الدفع.</span>`;
-        alert(`تم إرسال طلبك بنجاح إلى لوحة الأستاذ جواد عبر السحابة! تواصل معه عبر الواتساب لتزويدك بالكود السري الخاص بك.`);
+        alert(`تم إرسال طلبك بنجاح إلى لوحة الأستاذ جواد عبر السحابة! تواصل معه عبر الواتساب لتزويدك بالكود السري.`);
       });
 
       formReg?.addEventListener("submit", (e) => {
@@ -1271,7 +1232,7 @@
         }
 
         const students = StorageService.getStudents();
-        let existing = students.find(s => s.whatsapp === whatsapp || s.email === email);
+        let existing = students.find(s => s.whatsapp === whatsapp || (email && s.email === email));
 
         if (existing) {
           if (existing.secretCode && existing.secretCode !== code) {
@@ -1623,7 +1584,7 @@
           <td><button class="btn btn-sm btn-primary view-student-schedule-btn" data-id="${s.id}" data-name="${s.fullName}">الجدول</button></td>
           <td>${waBtn}</td>
           <td><button class="btn btn-sm btn-secondary edit-student-btn" data-id="${s.id}">تعديل</button></td>
-          <td><button class="btn btn-sm btn-danger delete-student-btn" data-id="${s.id}"><i class="fa-solid fa-trash"></i> مسح ومنع</button></td>
+          <td><button class="btn btn-sm btn-danger delete-student-btn" data-id="${s.id}"><i class="fa-solid fa-trash"></i> مسح نهائي</button></td>
         `;
         tbody.appendChild(tr);
       });
@@ -1636,12 +1597,12 @@
       });
       tbody.querySelectorAll(".delete-student-btn").forEach(b => {
         b.addEventListener("click", () => {
-          if (confirm("هل تريد حقاً مسح هذا الطالب؟ سيتم طرده ومنعه من الدخول ولن يتمكن من الدخول إلا بتسجيل جديد.")) {
+          if (confirm("هل تريد حقاً مسح هذا الطالب مسحاً نهائياً؟ سيتم طرده ومنعه من كافة الأجهزة ونفاد حسابه.")) {
             const studentIdToDelete = b.getAttribute("data-id");
             StorageService.deleteStudent(studentIdToDelete);
             renderAdminPermissionsTable();
             checkAuthGate();
-            createToast({ title: "تم حذف الطالب بنجاح", body: "تم إيقاف صلاحية وحساب الطالب ومنعه من الدخول.", urgent: true });
+            createToast({ title: "تم الحذف النهائي", body: "تم إزالة الحساب نهائياً ومنع الدخول إطلاقاً.", urgent: true });
           }
         });
       });
@@ -1839,121 +1800,79 @@
       renderEmergencyList(); renderCalendar();
     };
 
-    function initChat() {
-      const modal = document.getElementById("fullPageChatModal");
-      const closeBtn = document.getElementById("closeFullChatBtn");
+    function initWhatsappDirectory() {
+      const modal = document.getElementById("whatsappDirectoryModal");
+      const closeBtn = document.getElementById("closeWhatsappModal");
       const openNav = document.getElementById("navOpenChatBtn");
       const heroBtn = document.getElementById("heroChatBtn");
+      const adminBtn = document.getElementById("adminOpenWhatsappBtn");
 
-      const openFn = () => { modal.classList.add("active"); renderStudentsRoster(); renderChatStream(); };
-      [openNav, heroBtn].forEach(b => b?.addEventListener("click", openFn));
+      const openFn = () => {
+        modal.classList.add("active");
+        renderWhatsappDirectory();
+      };
+
+      [openNav, heroBtn, adminBtn].forEach(b => b?.addEventListener("click", openFn));
       closeBtn?.addEventListener("click", () => modal.classList.remove("active"));
-      document.getElementById("adminOpenChatBtn")?.addEventListener("click", openFn);
-
-      document.getElementById("fullChatSendForm")?.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const input = document.getElementById("fullChatMessageInput");
-        const txt = input.value.trim();
-        if (!txt || !AppState.currentUser) return;
-
-        const user = AppState.currentUser;
-        const isTeacher = (user.role === "admin");
-        const targetRecipientId = isTeacher ? (AppState.activeChatStudentId || "all") : "admin";
-
-        const newMsg = {
-          id: "msg-" + Date.now(),
-          sender: isTeacher ? "teacher" : "student",
-          senderName: user.fullName,
-          senderId: user.id,
-          recipientId: targetRecipientId,
-          text: txt,
-          time: new Date().toLocaleTimeString("ar-EG", { hour: "2-digit", minute: "2-digit" })
-        };
-
-        StorageService.saveChatMessage(newMsg);
-        input.value = "";
-        renderChatStream();
-        triggerDeviceNotificationForTarget(targetRecipientId, `رسالة من ${newMsg.senderName}`, txt);
-      });
     }
 
-    function renderStudentsRoster(q = "") {
-      const list = document.getElementById("studentsRosterList");
-      const count = document.getElementById("registeredStudentsCount");
-      const students = StorageService.getStudents();
-      if (!list) return;
-
-      count.textContent = students.length;
-      const filtered = q ? students.filter(s => s.fullName.toLowerCase().includes(q.toLowerCase())) : students;
-
-      if (filtered.length === 0) {
-        list.innerHTML = `<div style="padding:8px; text-align:center; font-size:10px; color:var(--text-muted)">لا يوجد طلاب</div>`;
-        return;
-      }
-
-      list.innerHTML = "";
-      filtered.forEach(s => {
-        const item = document.createElement("div");
-        item.className = `student-roster-item ${AppState.activeChatStudentId === s.id ? "active" : ""}`;
-        const initials = s.fullName.split(/\s+/).map(p => p[0]).slice(0, 2).join("");
-        item.innerHTML = `
-          <div class="roster-avatar">${initials}</div>
-          <div style="flex:1; overflow:hidden;">
-            <strong style="display:block; font-size:11px; color:var(--text-heading);">${s.fullName}</strong>
-            <span style="font-size:9px; color:var(--color-whatsapp);"><i class="fa-brands fa-whatsapp"></i> ${s.whatsapp || s.email}</span>
-          </div>
-        `;
-        item.addEventListener("click", () => {
-          AppState.activeChatStudentId = s.id;
-          renderStudentsRoster();
-          renderChatStream();
-        });
-        list.appendChild(item);
-      });
-    }
-
-    function renderChatStream() {
-      const stream = document.getElementById("conversationStream");
-      const headerName = document.getElementById("activeContactName");
-      const headerRole = document.getElementById("activeContactRole");
-      const waContainer = document.getElementById("activeContactWhatsappContainer");
+    function renderWhatsappDirectory() {
+      const body = document.getElementById("whatsappDirectoryBody");
+      const modalTitle = document.getElementById("waModalTitle");
+      const modalSubtitle = document.getElementById("waModalSubtitle");
       const user = AppState.currentUser;
-      const msgs = StorageService.getChat();
+      if (!body || !user) return;
 
-      if (!stream || !user) return;
       const isTeacher = (user.role === "admin");
 
-      if (isTeacher && AppState.activeChatStudentId) {
-        const student = StorageService.getStudents().find(s => s.id === AppState.activeChatStudentId);
-        if (student) {
-          headerName.textContent = student.fullName;
-          headerRole.textContent = `طالب - حصص: ${student.sessionsLimit || 3}`;
-          const cleanWa = (student.whatsapp || "").replace(/[^0-9]/g, "");
-          waContainer.innerHTML = cleanWa ? `<a href="https://wa.me/${cleanWa}" target="_blank" class="btn btn-sm btn-whatsapp"><i class="fa-brands fa-whatsapp"></i></a>` : "";
-        }
-      } else if (isTeacher) {
-        headerName.textContent = "صندوق رسائل الطلاب";
-        headerRole.textContent = "اختر طالباً";
-        waContainer.innerHTML = "";
-      } else {
-        headerName.textContent = "الأستاذ جواد بدري";
-        headerRole.textContent = "المعلم - متصل";
-        waContainer.innerHTML = "";
-      }
+      if (isTeacher) {
+        modalTitle.textContent = "قائمة الطلاب للتواصل عبر الواتساب";
+        modalSubtitle.textContent = "اضغط على زر الواتساب لمراسلة أي طالب فوراً";
+        const students = StorageService.getStudents();
 
-      stream.innerHTML = "";
-      msgs.forEach(m => {
-        const isMe = (isTeacher && m.sender === "teacher") || (!isTeacher && m.sender === "student" && m.senderId === user.id);
-        const bubble = document.createElement("div");
-        bubble.className = `msg-bubble ${isMe ? "from-me" : "from-other"}`;
-        bubble.innerHTML = `
-          <div style="font-size:9px; font-weight:800; opacity:0.8; margin-bottom:2px;">${m.senderName}</div>
-          <div>${m.text}</div>
-          <div style="font-size:8px; opacity:0.6; text-align:left; margin-top:2px;">${m.time}</div>
+        if (students.length === 0) {
+          body.innerHTML = `<div style="text-align:center; padding:20px; color:var(--text-muted); font-size:12px;">لا توجد حسابات طلاب مسجلة حتى الآن.</div>`;
+          return;
+        }
+
+        body.innerHTML = "";
+        students.forEach(s => {
+          const cleanWa = (s.whatsapp || "").replace(/[^0-9]/g, "");
+          const row = document.createElement("div");
+          row.className = "wa-contact-row";
+          const initials = s.fullName.split(/\s+/).map(p => p[0]).slice(0, 2).join("");
+          
+          row.innerHTML = `
+            <div style="display:flex; align-items:center; gap:10px; flex:1; overflow:hidden;">
+              <div class="wa-avatar">${initials}</div>
+              <div style="overflow:hidden;">
+                <strong style="display:block; font-size:12px; color:var(--text-heading);">${s.fullName}</strong>
+                <span style="font-size:10px; color:var(--color-whatsapp);"><i class="fa-brands fa-whatsapp"></i> ${s.whatsapp || "بدون رقم"}</span>
+              </div>
+            </div>
+            ${cleanWa ? `<a href="https://wa.me/${cleanWa}" target="_blank" class="btn btn-sm btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> مراسلة</a>` : '<span style="font-size:10px; color:var(--color-danger);">رقم غير متوفر</span>'}
+          `;
+          body.appendChild(row);
+        });
+      } else {
+        modalTitle.textContent = "التواصل مع الأستاذ جواد بدري";
+        modalSubtitle.textContent = "قناة التواصل المباشر عبر الواتساب";
+        
+        body.innerHTML = `
+          <div class="wa-contact-row" style="background:rgba(37,211,102,0.08); border-color:rgba(37,211,102,0.3);">
+            <div style="display:flex; align-items:center; gap:12px; flex:1; overflow:hidden;">
+              <div class="wa-avatar" style="background:var(--brand-gradient);"><i class="fa-solid fa-user-tie"></i></div>
+              <div style="overflow:hidden;">
+                <strong style="display:block; font-size:13px; color:var(--text-heading);">الأستاذ جواد بدري</strong>
+                <span style="font-size:11px; color:var(--color-whatsapp);">معلم لغة HTML وبرمجة الويب</span>
+              </div>
+            </div>
+            <a href="https://wa.me/${CONFIG.TEACHER_WHATSAPP}" target="_blank" class="btn btn-sm btn-whatsapp" style="padding:8px 14px;">
+              <i class="fa-brands fa-whatsapp" style="font-size:14px;"></i> مراسلة الأستاذ
+            </a>
+          </div>
         `;
-        stream.appendChild(bubble);
-      });
-      stream.scrollTop = stream.scrollHeight;
+      }
     }
 
     function createToast({ title, body, urgent = false }) {
@@ -1989,7 +1908,7 @@
     }
   </script>
 
-  <!-- Script التفاعل مع أزرار التنقل والقائمة الجانبية -->
+  <!-- Script التفاعل مع أزرار القائمة الجانبية -->
   <script>
     (function () {
       var btn = document.getElementById('mobileMenuBtn');
