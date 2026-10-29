@@ -4,13 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>أكاديمية HTML مع الأستاذ جواد بدري | منصة الحصص والبرمجة الشاملة</title>
+  
+  <!-- الأيقونة والـ Manifest -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300d2ff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='16 18 22 12 16 6'></polyline><polyline points='8 6 2 12 8 18'></polyline><line x1='14' y1='4' x2='10' y2='20'></line></svg>">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#030712">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Fira+Code:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300d2ff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='16 18 22 12 16 6'></polyline><polyline points='8 6 2 12 8 18'></polyline><line x1='14' y1='4' x2='10' y2='20'></line></svg>">
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#030712">
+
   <style>
     :root {
       --bg-primary: #0b0f19;
@@ -76,7 +80,6 @@
 
     .main-app-hidden { display: none !important; }
     .nav-container, .hero-container, .section-container, .footer-container { max-width: 1240px; margin: 0 auto; padding: 0 16px; width: 100%; box-sizing: border-box; }
-    .authorized-email-link { color: var(--brand-orange) !important; text-decoration: none; font-weight: 800; transition: var(--transition); display: inline-flex; align-items: center; gap: 6px; }
 
     /* Auth Gate Screen */
     .auth-gate-overlay { position: fixed; inset: 0; background: radial-gradient(circle at center, #172138 0%, #080c16 100%); z-index: 5000; display: flex; align-items: center; justify-content: center; padding: 12px; overflow-y: auto; }
@@ -201,7 +204,7 @@
     .zoom-cta-box { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border-color); }
     .zoom-join-btn { display: flex; align-items: center; justify-content: center; gap: 6px; background: var(--color-meet); color: #fff; text-decoration: none; font-weight: 700; padding: 8px; border-radius: var(--radius-sm); font-size: 11px; width: 100%; }
 
-    /* نافذة قائمة الواتساب المحدثة */
+    /* نافذة قائمة الواتساب */
     .whatsapp-directory-modal { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(12px); z-index: 4000; display: none; align-items: center; justify-content: center; padding: 12px; }
     .whatsapp-directory-modal.active { display: flex; }
     .whatsapp-directory-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-lg); width: 100%; max-width: 520px; max-height: 85vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: var(--shadow-lg); }
@@ -366,19 +369,19 @@
         </button>
       </form>
 
-      <!-- نموذج دخول الأستاذ جواد -->
+      <!-- نموذج دخول الإدارة (بالأخذ بالطلب: الإيميل والباسورد المباشرين) -->
       <form id="adminGateForm" class="gate-form">
         <div class="form-group">
-          <label><i class="fa-solid fa-envelope"></i> البريد الإلكتروني للإدارة:</label>
-          <input type="email" id="adminGateEmail" class="custom-input" placeholder="ادخل ايميل الاداره" readonly required autocomplete="off">
+          <label><i class="fa-solid fa-envelope"></i> بريد الإدارة:</label>
+          <input type="email" id="adminEmail" class="custom-input" value="jawad@admin.com" required>
         </div>
 
         <div class="form-group">
           <label><i class="fa-solid fa-lock"></i> كلمة المرور:</label>
-          <input type="password" id="adminGatePass" class="custom-input" placeholder="أدخل كلمة المرور" required autocomplete="off">
+          <input type="password" id="adminPass" class="custom-input" placeholder="أدخل كلمة المرور" required>
         </div>
 
-        <div id="adminGateError" class="error-msg" style="display:none">كلمة المرور غير صحيحة!</div>
+        <div id="adminGateError" class="error-msg" style="display:none">البريد أو كلمة المرور غير صحيحة!</div>
 
         <button type="submit" class="btn btn-warning btn-block btn-lg">
           <i class="fa-solid fa-shield-halved"></i> دخول لوحة تحكم الأستاذ جواد
@@ -578,7 +581,6 @@
           <p>منصة تعليمية متكاملة للحصص الفردية والمباشرة.</p>
         </div>
         <div class="footer-info">
-          <p><i class="fa-solid fa-envelope" style="color:var(--brand-orange)"></i> البريد المعتمد: <a href="mailto:Jawadbadry8@gmail.com" class="authorized-email-link">Jawadbadry8@gmail.com</a></p>
           <p><i class="fa-solid fa-calendar-check"></i> مواعيد الحصص: الأحد إلى الخميس (3:00 م - 6:00 م)</p>
         </div>
       </div>
@@ -862,12 +864,12 @@
     };
   </script>
 
-  <!-- Main Application Logic -->
+  <!-- Main Application Logic (مع إيميل وباسورد الإدارة المباشرين) -->
   <script>
     const CONFIG = {
-      ADMIN_EMAIL: "Jawadbadry8@gmail.com",
-      ADMIN_PASS: "J102013",
-      TEACHER_WHATSAPP: "966559912398", // تم الاستبدال برقمك المباشر
+      ADMIN_EMAIL: "jawad@admin.com",
+      ADMIN_PASS: "جواد و كريم",
+      TEACHER_WHATSAPP: "966559912398", 
       DEFAULT_SECRET_CODE: "123456",
       WEEKEND_DAYS: [5, 6],
       STANDARD_SLOTS: [
@@ -1004,7 +1006,6 @@
           window.FirebaseDB.listenStudents((list) => {
             StorageService.saveStudents(list);
             
-            // فلترة القوائم المسجلة والتحقق من صلاحية الحساب المباشر
             const current = StorageService.getCurrentUser();
             if (current && current.role === "student") {
               const exists = list.some(s => s.id === current.id);
@@ -1111,7 +1112,6 @@
       const container = document.getElementById("accountsListContainer");
       if (!container) return;
       
-      // التصفية للتأكد من استبعاد الحسابات المحذوفة
       const studentsList = StorageService.getStudents();
       let accounts = StorageService.getSavedAccounts().filter(acc => {
         if (acc.role === "admin") return true;
@@ -1192,7 +1192,6 @@
         }
 
         const students = StorageService.getStudents();
-        // الربط الذكي بالرقم للوقاية من الدوبلكيت والحسابات المتعددة
         let existingStudent = students.find(s => s.whatsapp === whatsapp || (email && s.email === email));
         
         const randomCode = Math.floor(100000 + Math.random() * 900000).toString();
@@ -1272,13 +1271,15 @@
         }
       });
 
+      // التحقق المباشر لإدارة الأستاذ جواد (الإيميل وكلمة المرور)
       formAdm?.addEventListener("submit", (e) => {
         e.preventDefault();
         const errEl = document.getElementById("adminGateError");
         errEl.style.display = "none";
-        const pass = document.getElementById("adminGatePass").value.trim();
+        const emailInput = document.getElementById("adminEmail").value.trim();
+        const passInput = document.getElementById("adminPass").value.trim();
 
-        if (pass === CONFIG.ADMIN_PASS) {
+        if (emailInput === CONFIG.ADMIN_EMAIL && passInput === CONFIG.ADMIN_PASS) {
           const adminObj = {
             id: "admin-jawad",
             fullName: "الأستاذ جواد بدري",
@@ -1867,7 +1868,7 @@
                 <span style="font-size:11px; color:var(--color-whatsapp);">معلم لغة HTML وبرمجة الويب</span>
               </div>
             </div>
-            <a href="https://wa.me/${CONFIG.TEACHER_WHATSAPP}" target="_blank" class="btn btn-sm btn-whatsapp" style="padding:8px 14px;">
+            <a href="https://wa.me/${+966559912398}" target="_blank" class="btn btn-sm btn-whatsapp" style="padding:8px 14px;">
               <i class="fa-brands fa-whatsapp" style="font-size:14px;"></i> مراسلة الأستاذ
             </a>
           </div>
